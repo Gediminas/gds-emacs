@@ -35,8 +35,8 @@
 (require 'use-package) ; guess what this one does too ?
 
 ;; Font
-;(add-to-list 'default-frame-alist '(height . 24))
-;(add-to-list 'default-frame-alist '(width . 80))
+(add-to-list 'default-frame-alist '(height . 24))
+(add-to-list 'default-frame-alist '(width . 80))
 ;(set-face-attribute 'default nil :font "Hack" :height 120)
 
 ;; Vim mode
