@@ -11,7 +11,7 @@
 (scroll-bar-mode -1)
 (tool-bar-mode   -1)
 (tooltip-mode    -1)
-(menu-bar-mode   -1)
+;(menu-bar-mode   -1)
 
 ;; Sane defaults
 (setq delete-old-versions -1 )		; delete excess backup versions silently
@@ -26,13 +26,21 @@
 (setq coding-system-for-write 'utf-8 )
 (setq sentence-end-double-space nil)	; sentence SHOULD end with only a point.
 (setq default-fill-column 80)		; toggle wrapping text at the 80th character
-(setq initial-scratch-message "Welcome in Emacs") ; print a default message in the empty scratch buffer opened at startup
+(setq initial-scratch-message "Emacs 0123456789 0Oo 1Il jgae") ; print a default message in the empty scratch buffer opened at startup
 
 ;; Bootstrap `use-package'
 (unless (package-installed-p 'use-package) ; unless it is already installed
   (package-refresh-contents) ; updage packages archive
   (package-install 'use-package)) ; and install the most recent version of use-package
 (require 'use-package) ; guess what this one does too ?
+
+;(use-package hack-font :ensure t :config )
+;(setq doom-font (font-spec :family "hack" :size 14))
+;(add-to-list 'default-frame-alist '(font . "hack-14")
+
+;(add-to-list 'default-frame-alist '(height . 24))
+;(add-to-list 'default-frame-alist '(width . 80))
+;(set-face-attribute 'default nil :font "Hack" :height 120)
 
 ;; Vim mode
 (use-package evil
@@ -137,4 +145,4 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(default ((t (:family "Hack" :foundry "outline" :slant normal :weight normal :height 120 :width normal)))))
