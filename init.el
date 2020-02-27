@@ -98,7 +98,7 @@
 (setq ns-use-proxy-icon  nil)
 (setq frame-title-format nil)
 
-
+(setq mac-command-modifier 'control)
 
 ;(use-package avy :ensure t
 ;  :commands (avy-goto-word-1))
