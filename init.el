@@ -34,10 +34,7 @@
   (package-install 'use-package)) ; and install the most recent version of use-package
 (require 'use-package) ; guess what this one does too ?
 
-;(use-package hack-font :ensure t :config )
-;(setq doom-font (font-spec :family "hack" :size 14))
-;(add-to-list 'default-frame-alist '(font . "hack-14")
-
+;; Font
 ;(add-to-list 'default-frame-alist '(height . 24))
 ;(add-to-list 'default-frame-alist '(width . 80))
 ;(set-face-attribute 'default nil :font "Hack" :height 120)
@@ -133,16 +130,6 @@
 ;
 ;
 
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages (quote (avy use-package))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:family "Hack" :foundry "outline" :slant normal :weight normal :height 120 :width normal)))))
+;; Keep 'Customize' stuff separated
+(setq custom-file (concat user-emacs-directory "custom.el"))
+(load custom-file 'noerror)
