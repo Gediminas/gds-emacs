@@ -34,6 +34,12 @@
   (package-install 'use-package)) ; and install the most recent version of use-package
 (require 'use-package) ; guess what this one does too ?
 
+;; Vim mode
+(use-package evil
+  :ensure t
+  :config
+  (evil-mode 1))
+
 ;(use-package avy :ensure t
 ;  :commands (avy-goto-word-1))
 ;
