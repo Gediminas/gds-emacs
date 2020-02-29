@@ -59,10 +59,17 @@
 ;; Which Key
 (use-package which-key
    :ensure t
+   :init
+   (which-key-mode t)
    :config
-   (setq which-key-separator " ")
-   (setq which-key-prefix-prefix "+")
-   (which-key-mode t))
+   (which-key-setup-side-window-right-bottom)
+   (setq which-key-sort-order 'which-key-key-order-alpha
+         which-key-side-window-max-width 0.33
+         which-key-idle-delay 0.05
+         which-key-separator " "
+         which-key-prefix-prefix "+")
+   :diminish (which-key-mode . "Ꙍ")  
+   )
 
 ; ;; Helm/ivy
 (use-package ivy :ensure t
@@ -70,6 +77,35 @@
     (setq ivy-use-virtual-buffers t
           ivy-count-format "%d/%d ")
     (ivy-mode t))
+
+(use-package ranger :ensure t
+  :commands (ranger)
+  :bind (("C-x d" . deer))
+  :config
+  (setq ranger-cleanup-eagerly t)
+  )
+
+(use-package general :ensure t
+  :config
+  (general-evil-setup t)
+
+  (general-define-key
+   :states '(normal insert emacs)
+   :prefix "C-SPC"
+   :non-normal-prefix "C-SPC"
+   ;"l" '(avy-goto-line)
+   "a" 'align-regexp
+   )
+
+  (general-define-key
+   :states '(normal motion insert emacs)
+   :prefix "SPC"
+   ;"a" 'align-regexp
+   ;"ar" '(ranger :which-key "call ranger")
+   ;"g"  '(:ignore t :which-key "Git")
+   ;"gs" '(magit-status :which-key "git status")
+   )
+)
 
 ; ;; Custom keybinding
 ; (use-package general
