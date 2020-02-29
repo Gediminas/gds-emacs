@@ -40,11 +40,16 @@
 ; package-install -> zenburn-theme
 ; customize-themes -> zenburn -> apply -> save
 
-; ;; Bootstrap `use-package'
-; (unless (package-installed-p 'use-package) ; unless it is already installed
-;   (package-refresh-contents) ; updage packages archive
-;   (package-install 'use-package)) ; and install the most recent version of use-package
-; (require 'use-package) ; guess what this one does too ?
+;; Bootstrap `use-package'
+(unless (package-installed-p 'use-package) ; unless it is already installed
+  (package-refresh-contents) ; updage packages archive
+  (package-install 'use-package)) ; and install the most recent version of use-package
+(require 'use-package) ; guess what this one does too ?
+
+;; Themes
+(use-package zenburn-theme :ensure t :config (load-theme 'zenburn t))
+(use-package doom-themes :ensure t)
+(use-package spacemacs-common :ensure spacemacs-theme)
 
 ; ;; Font
 ; (add-to-list 'default-frame-alist '(height . 24))
@@ -56,13 +61,6 @@
 ;   :ensure t
 ;   :config
 ;   (evil-mode 1))
-
-; ;; Theme
-; ;(use-package doom-themes :ensure t)
-; (use-package zenburn-theme
-;   :ensure t
-;   :config
-;   (load-theme 'zenburn t))  
 
 ; ;; Helm/ivy
 ; (use-package ivy
