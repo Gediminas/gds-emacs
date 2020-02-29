@@ -57,22 +57,22 @@
 (use-package evil
   :ensure t
   :config
-  (evil-mode 1))
+  (evil-mode t))
+
+;; Which Key
+(use-package which-key
+   :ensure t
+   :init
+   (setq which-key-separator " ")
+   (setq which-key-prefix-prefix "+")
+;   :config
+   (which-key-mode t))
 
 ; ;; Helm/ivy
 ; (use-package ivy
 ;   :ensure t
 ;   :init
 ;   (ivy-mode 1))
-
-; ;; Which Key
-; (use-package which-key
-;   :ensure t
-;   :init
-;   (setq which-key-separator " ")
-;   (setq which-key-prefix-prefix "+")
-;   :config
-;   (which-key-mode))
 
 ; ;; Custom keybinding
 ; (use-package general
