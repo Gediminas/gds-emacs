@@ -69,6 +69,12 @@
    (which-key-mode t))
 
 ; ;; Helm/ivy
+(use-package ivy :ensure t
+    :config
+    (setq ivy-use-virtual-buffers t
+          ivy-count-format "%d/%d ")
+    (ivy-mode t))
+
 ; (use-package ivy
 ;   :ensure t
 ;   :init
