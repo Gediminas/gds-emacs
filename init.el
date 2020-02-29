@@ -90,21 +90,37 @@
   (general-evil-setup t)
 
   (general-define-key
-   :states '(normal insert emacs)
-   :prefix "C-SPC"
-   :non-normal-prefix "C-SPC"
-   ;"l" '(avy-goto-line)
-   "a" 'align-regexp
+   :keymaps '(normal)
+   :prefix "SPC"
+   "dd" 'deer
+   "qq" 'save-buffers-kill-terminal
+   "w/" 'split-window-right
+   "w-" 'split-window-below
    )
 
   (general-define-key
-   :states '(normal motion insert emacs)
+   :keymaps '(normal insert emacs)
    :prefix "SPC"
-   ;"a" 'align-regexp
-   ;"ar" '(ranger :which-key "call ranger")
-   ;"g"  '(:ignore t :which-key "Git")
-   ;"gs" '(magit-status :which-key "git status")
+   :non-normal-prefix "C-SPC"
+   "/" 'swiper
    )
+
+  ; (general-define-key
+  ;  :states '(normal insert emacs)
+  ;  :prefix "C-SPC"
+  ;  :non-normal-prefix "C-SPC"
+  ;  ;"l" '(avy-goto-line)
+  ;  "a" 'align-regexp
+  ;  )
+
+  ; (general-define-key
+  ;  :states '(normal motion insert emacs)
+  ;  :prefix "SPC"
+  ;  ;"a" 'align-regexp
+  ;  ;"ar" '(ranger :which-key "call ranger")
+  ;  ;"g"  '(:ignore t :which-key "Git")
+  ;  ;"gs" '(magit-status :which-key "git status")
+  ;  )
 )
 
 ; ;; Custom keybinding
