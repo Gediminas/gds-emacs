@@ -53,11 +53,11 @@
 (use-package doom-themes :ensure t)
 (use-package spacemacs-common :ensure spacemacs-theme)
 
-; ;; Vim mode
-; (use-package evil
-;   :ensure t
-;   :config
-;   (evil-mode 1))
+;; Vim mode
+(use-package evil
+  :ensure t
+  :config
+  (evil-mode 1))
 
 ; ;; Helm/ivy
 ; (use-package ivy
