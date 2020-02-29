@@ -7,6 +7,21 @@
                          ("marmalade" . "http://marmalade-repo.org/packages/")))
 (package-initialize)
 
+;; Sane defaults
+(setq delete-old-versions -1 )    ; delete excess backup versions silently
+(setq version-control t )   ; use version control
+(setq vc-make-backup-files t )    ; make backups file even when in version controlled dir
+(setq backup-directory-alist `(("." . "~/.emacs.local/backups")) ) ; which directory to put backups file
+(setq vc-follow-symlinks t )               ; don't ask for confirmation when opening symlinked file
+(setq auto-save-file-name-transforms '((".*" "~/.emacs.local/auto-save-list/" t)) ) ;transform backups file name
+(setq inhibit-startup-screen t )  ; inhibit useless and old-school startup screen
+(setq ring-bell-function 'ignore )  ; silent bell when you make a mistake
+(setq coding-system-for-read 'utf-8 ) ; use utf-8 by default
+(setq coding-system-for-write 'utf-8 )
+(setq sentence-end-double-space nil)  ; sentence SHOULD end with only a point.
+(setq default-fill-column 80)   ; toggle wrapping text at the 80th character
+(setq initial-scratch-message "Emacs 0123456789 0Oo 1Il jgae") ; print a default message in the empty scratch buffer opened at startup
+
 ;; UI
 (add-to-list 'default-frame-alist '(height . 24))
 (add-to-list 'default-frame-alist '(width . 80))
@@ -15,7 +30,7 @@
 (tooltip-mode    -1)
 (menu-bar-mode   -1)
 
-;; Fancy titlebar for MacOS
+;; MacOS: Fancy titlebar
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
 (add-to-list 'default-frame-alist '(ns-appearance . dark))
 (setq ns-use-proxy-icon  nil)
@@ -23,24 +38,6 @@
 
 ;; MacOS
 (setq mac-command-modifier 'control)
-
-;; Sane defaults
-(setq delete-old-versions -1 )		; delete excess backup versions silently
-(setq version-control t )		; use version control
-(setq vc-make-backup-files t )		; make backups file even when in version controlled dir
-(setq backup-directory-alist `(("." . "~/.emacs.local/backups")) ) ; which directory to put backups file
-(setq vc-follow-symlinks t )				       ; don't ask for confirmation when opening symlinked file
-(setq auto-save-file-name-transforms '((".*" "~/.emacs.local/auto-save-list/" t)) ) ;transform backups file name
-(setq inhibit-startup-screen t )	; inhibit useless and old-school startup screen
-(setq ring-bell-function 'ignore )	; silent bell when you make a mistake
-(setq coding-system-for-read 'utf-8 )	; use utf-8 by default
-(setq coding-system-for-write 'utf-8 )
-(setq sentence-end-double-space nil)	; sentence SHOULD end with only a point.
-(setq default-fill-column 80)		; toggle wrapping text at the 80th character
-(setq initial-scratch-message "Emacs 0123456789 0Oo 1Il jgae") ; print a default message in the empty scratch buffer opened at startup
-
-; package-install -> zenburn-theme
-; customize-themes -> zenburn -> apply -> save
 
 ;; Bootstrap `use-package'
 (unless (package-installed-p 'use-package) ; unless it is already installed
@@ -73,11 +70,6 @@
     (setq ivy-use-virtual-buffers t
           ivy-count-format "%d/%d ")
     (ivy-mode t))
-
-; (use-package ivy
-;   :ensure t
-;   :init
-;   (ivy-mode 1))
 
 ; ;; Custom keybinding
 ; (use-package general
