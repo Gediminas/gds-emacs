@@ -13,6 +13,15 @@
 (tooltip-mode    -1)
 ;(menu-bar-mode   -1)
 
+;; Fancy titlebar for MacOS
+(add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+(add-to-list 'default-frame-alist '(ns-appearance . dark))
+(setq ns-use-proxy-icon  nil)
+(setq frame-title-format nil)
+
+;; MacOS
+(setq mac-command-modifier 'control)
+
 ;; Sane defaults
 (setq delete-old-versions -1 )		; delete excess backup versions silently
 (setq version-control t )		; use version control
@@ -28,77 +37,73 @@
 (setq default-fill-column 80)		; toggle wrapping text at the 80th character
 (setq initial-scratch-message "Emacs 0123456789 0Oo 1Il jgae") ; print a default message in the empty scratch buffer opened at startup
 
-;; Bootstrap `use-package'
-(unless (package-installed-p 'use-package) ; unless it is already installed
-  (package-refresh-contents) ; updage packages archive
-  (package-install 'use-package)) ; and install the most recent version of use-package
-(require 'use-package) ; guess what this one does too ?
+; package-install -> zenburn-theme
+; customize-themes -> zenburn -> apply -> save
 
-;; Font
-(add-to-list 'default-frame-alist '(height . 24))
-(add-to-list 'default-frame-alist '(width . 80))
-;(set-face-attribute 'default nil :font "Hack" :height 120)
+; ;; Bootstrap `use-package'
+; (unless (package-installed-p 'use-package) ; unless it is already installed
+;   (package-refresh-contents) ; updage packages archive
+;   (package-install 'use-package)) ; and install the most recent version of use-package
+; (require 'use-package) ; guess what this one does too ?
 
-;; Vim mode
-(use-package evil
-  :ensure t
-  :config
-  (evil-mode 1))
+; ;; Font
+; (add-to-list 'default-frame-alist '(height . 24))
+; (add-to-list 'default-frame-alist '(width . 80))
+; ;(set-face-attribute 'default nil :font "Hack" :height 120)
 
-;; Theme
-;(use-package doom-themes :ensure t)
-(use-package zenburn-theme
-  :ensure t
-  :config
-  (load-theme 'zenburn t))  
+; ;; Vim mode
+; (use-package evil
+;   :ensure t
+;   :config
+;   (evil-mode 1))
 
-;; Helm/ivy
-(use-package ivy
-  :ensure t
-  :init
-  (ivy-mode 1))
+; ;; Theme
+; ;(use-package doom-themes :ensure t)
+; (use-package zenburn-theme
+;   :ensure t
+;   :config
+;   (load-theme 'zenburn t))  
 
-;; Which Key
-(use-package which-key
-  :ensure t
-  :init
-  (setq which-key-separator " ")
-  (setq which-key-prefix-prefix "+")
-  :config
-  (which-key-mode))
+; ;; Helm/ivy
+; (use-package ivy
+;   :ensure t
+;   :init
+;   (ivy-mode 1))
 
-;; Custom keybinding
-(use-package general
-  :ensure t
-  :config (general-define-key
-  :states '(normal visual insert emacs)
-  :prefix "SPC"
-  :non-normal-prefix "M-SPC"
-  ;; "/"   '(counsel-rg :which-key "ripgrep") ; You'll need counsel package for this
-  "TAB" '(switch-to-prev-buffer :which-key "previous buffer")
-  "SPC" '(helm-M-x :which-key "M-x")
-  "pf"  '(helm-find-file :which-key "find files")
-  ;; Buffers
-  "bb"  '(helm-buffers-list :which-key "buffers list")
-  ;; Window
-  "wl"  '(windmove-right :which-key "move right")
-  "wh"  '(windmove-left :which-key "move left")
-  "wk"  '(windmove-up :which-key "move up")
-  "wj"  '(windmove-down :which-key "move bottom")
-  "w/"  '(split-window-right :which-key "split right")
-  "w-"  '(split-window-below :which-key "split bottom")
-  "wx"  '(delete-window :which-key "delete window")
-  ;; Others
-  "at"  '(ansi-term :which-key "open terminal")
-))
+; ;; Which Key
+; (use-package which-key
+;   :ensure t
+;   :init
+;   (setq which-key-separator " ")
+;   (setq which-key-prefix-prefix "+")
+;   :config
+;   (which-key-mode))
 
-;; Fancy titlebar for MacOS
-(add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
-(add-to-list 'default-frame-alist '(ns-appearance . dark))
-(setq ns-use-proxy-icon  nil)
-(setq frame-title-format nil)
+; ;; Custom keybinding
+; (use-package general
+;   :ensure t
+;   :config (general-define-key
+;   :states '(normal visual insert emacs)
+;   :prefix "SPC"
+;   :non-normal-prefix "M-SPC"
+;   ;; "/"   '(counsel-rg :which-key "ripgrep") ; You'll need counsel package for this
+;   "TAB" '(switch-to-prev-buffer :which-key "previous buffer")
+;   "SPC" '(helm-M-x :which-key "M-x")
+;   "pf"  '(helm-find-file :which-key "find files")
+;   ;; Buffers
+;   "bb"  '(helm-buffers-list :which-key "buffers list")
+;   ;; Window
+;   "wl"  '(windmove-right :which-key "move right")
+;   "wh"  '(windmove-left :which-key "move left")
+;   "wk"  '(windmove-up :which-key "move up")
+;   "wj"  '(windmove-down :which-key "move bottom")
+;   "w/"  '(split-window-right :which-key "split right")
+;   "w-"  '(split-window-below :which-key "split bottom")
+;   "wx"  '(delete-window :which-key "delete window")
+;   ;; Others
+;   "at"  '(ansi-term :which-key "open terminal")
+;))
 
-(setq mac-command-modifier 'control)
 
 ;(use-package avy :ensure t
 ;  :commands (avy-goto-word-1))
