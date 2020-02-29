@@ -7,11 +7,13 @@
                          ("marmalade" . "http://marmalade-repo.org/packages/")))
 (package-initialize)
 
-;; Minimal UI
+;; UI
+(add-to-list 'default-frame-alist '(height . 24))
+(add-to-list 'default-frame-alist '(width . 80))
 (scroll-bar-mode -1)
 (tool-bar-mode   -1)
 (tooltip-mode    -1)
-;(menu-bar-mode   -1)
+(menu-bar-mode   -1)
 
 ;; Fancy titlebar for MacOS
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
@@ -50,11 +52,6 @@
 (use-package zenburn-theme :ensure t :config (load-theme 'zenburn t))
 (use-package doom-themes :ensure t)
 (use-package spacemacs-common :ensure spacemacs-theme)
-
-; ;; Font
-; (add-to-list 'default-frame-alist '(height . 24))
-; (add-to-list 'default-frame-alist '(width . 80))
-; ;(set-face-attribute 'default nil :font "Hack" :height 120)
 
 ; ;; Vim mode
 ; (use-package evil
