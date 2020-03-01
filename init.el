@@ -20,7 +20,10 @@
 (setq coding-system-for-write 'utf-8 )
 (setq sentence-end-double-space nil)  ; sentence SHOULD end with only a point.
 (setq default-fill-column 80)   ; toggle wrapping text at the 80th character
-(setq initial-scratch-message "Emacs 0123456789 0Oo 1Il jgae") ; print a default message in the empty scratch buffer opened at startup
+(setq initial-scratch-message
+ "Emacs
+0123456789 0Oo 1Il jgae
+C-h m minor-modes") ; print a default message in the empty scratch buffer opened at startup
 
 ;; UI
 (add-to-list 'default-frame-alist '(height . 24))
@@ -50,11 +53,22 @@
 (use-package doom-themes :ensure t)
 (use-package spacemacs-common :ensure spacemacs-theme)
 
+;; Minimize mode-line
+(use-package diminish
+  :ensure t
+  :config
+  (add-hook 'emacs-lisp-mode-hook 
+    (lambda()
+      (setq mode-name "el")))  
+  )
+
 ;; Vim mode
 (use-package evil
   :ensure t
   :config
-  (evil-mode t))
+  (evil-mode t)
+  :diminish (evil-mode . " e ")  
+)
 
 ;; Which Key
 (use-package which-key
@@ -68,7 +82,7 @@
          which-key-idle-delay 0.05
          which-key-separator " "
          which-key-prefix-prefix "+")
-   :diminish (which-key-mode . "Ꙍ")  
+   :diminish (which-key-mode . " Ꙍ ")  
    )
 
 ; ;; Helm/ivy
@@ -76,7 +90,9 @@
     :config
     (setq ivy-use-virtual-buffers t
           ivy-count-format "%d/%d ")
-    (ivy-mode t))
+    (ivy-mode t)
+   :diminish (ivy-mode . " i ")
+   ) 
 
 (use-package ranger :ensure t
   :commands (ranger)
