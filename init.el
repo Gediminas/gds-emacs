@@ -114,7 +114,7 @@ C-h m / SPC h m / minor-modes") ; print a default message in the empty scratch b
   :commands (ranger)
   :bind (("C-x d" . deer))
   :config
-  (setq ranger-cleanup-eagerly t)
+  (setq ranger-cleanup-eagerly t) ; kill the buffer just after you move to another entry in the dired buffer.
   )
 
 ;; General
