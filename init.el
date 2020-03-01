@@ -23,10 +23,10 @@
 (setq initial-scratch-message
  "Emacs
 0123456789 0Oo 1Il jgae
-C-h m minor-modes") ; print a default message in the empty scratch buffer opened at startup
+C-h m / SPC h m / minor-modes") ; print a default message in the empty scratch buffer opened at startup
 
 ;; UI
-(add-to-list 'default-frame-alist '(height . 24))
+(add-to-list 'default-frame-alist '(height . 40))
 (add-to-list 'default-frame-alist '(width . 80))
 (scroll-bar-mode -1)
 (tool-bar-mode   -1)
@@ -74,46 +74,74 @@ C-h m minor-modes") ; print a default message in the empty scratch buffer opened
 
 ;; Which Key
 (use-package which-key
-   :ensure t
-   :init
-   (which-key-mode t)
-   :config
-   (which-key-setup-side-window-right-bottom)
-   (setq which-key-sort-order 'which-key-key-order-alpha
-         which-key-side-window-max-width 0.33
-         which-key-idle-delay 0.05
-         which-key-separator " "
-         which-key-prefix-prefix "+")
-   :diminish (which-key-mode . " Ꙍ ")  
-   )
+  :ensure t
+  :init
+  (which-key-mode t)
+  :config
+  (which-key-setup-side-window-right-bottom)
+  (setq
+    which-key-sort-order 'which-key-key-order-alpha
+    which-key-side-window-max-width 0.33
+    which-key-idle-delay 0.05
+    which-key-separator " "
+    which-key-prefix-prefix "+")
+  :diminish (which-key-mode . ""))
 
-; ;; Helm/ivy
-(use-package ivy :ensure t
-    :config
-    (setq ivy-use-virtual-buffers t
-          ivy-count-format "%d/%d ")
-    (ivy-mode t)
-   :diminish (ivy-mode . " i ")
+;; Ivy
+(use-package ivy
+  :ensure t
+  :config
+  (ivy-mode t)
+  (setq 
+    ivy-use-virtual-buffers t ; add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’
+    ivy-height 10             ; number of result lines to display
+    ivy-count-format "%d/%d " ; count candidates
+    ivy-initial-inputs-alist nil ; no regexp by default
+    ivy-re-builders-alist     ; configure regexp engine.
+        '((t   . ivy--regex-ignore-order));; allow input not in order
    ) 
+  :diminish (ivy-mode . ""))
 
-(use-package ranger :ensure t
+(use-package counsel
+  :ensure t
+  :config
+  (counsel-mode t)
+)
+
+;; Ranger (test)
+(use-package ranger
+  :ensure t
   :commands (ranger)
   :bind (("C-x d" . deer))
   :config
   (setq ranger-cleanup-eagerly t)
   )
 
-(use-package general :ensure t
+;; General
+(use-package general
+  :ensure t
   :config
   (general-evil-setup t)
 
   (general-define-key
    :keymaps '(normal)
    :prefix "SPC"
-   "dd" 'deer
+   "SPC"  'counsel-M-x
+   "TAB" '(switch-to-prev-buffer :which-key "previous buffer")
+   "b"  '(:ignore t :which-key "buffer")
+   "bb"  'ivy-switch-buffer
+   "f"  '(:ignore t :which-key "file")
+   "fd" 'deer
+   "h"  '(:ignore t :which-key "help")
+   "hm" 'describe-mode
+   "q"  '(:ignore t :which-key "quit")
    "qq" 'save-buffers-kill-terminal
+   "w"  '(:ignore t :which-key "window")
+   "ww" 'evil-next-window
    "w/" 'split-window-right
    "w-" 'split-window-below
+   "x"  '(:ignore t :which-key "x-files")
+   "xx" 'eval-buffer
    )
 
   (general-define-key
