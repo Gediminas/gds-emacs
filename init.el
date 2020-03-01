@@ -59,7 +59,10 @@ C-h m minor-modes") ; print a default message in the empty scratch buffer opened
   :config
   (add-hook 'emacs-lisp-mode-hook 
     (lambda()
-      (setq mode-name "el")))  
+      (setq mode-name "El")))  
+  (with-eval-after-load 'undo-tree
+    (diminish 'undo-tree-mode "Un")) 
+  (diminish 'eldoc-mode "Ed")
   )
 
 ;; Vim mode
@@ -67,7 +70,6 @@ C-h m minor-modes") ; print a default message in the empty scratch buffer opened
   :ensure t
   :config
   (evil-mode t)
-  :diminish (evil-mode . " e ")  
 )
 
 ;; Which Key
