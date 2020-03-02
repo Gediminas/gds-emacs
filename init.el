@@ -59,10 +59,10 @@ C-h m / SPC h m / minor-modes") ; print a default message in the empty scratch b
   :config
   (add-hook 'emacs-lisp-mode-hook 
     (lambda()
-      (setq mode-name "El")))  
+      (setq mode-name "")))  
   (with-eval-after-load 'undo-tree
-    (diminish 'undo-tree-mode "Un")) 
-  (diminish 'eldoc-mode "Ed")
+    (diminish 'undo-tree-mode "")) 
+  (diminish 'eldoc-mode "")
   )
 
 ;; Vim mode
@@ -106,6 +106,7 @@ C-h m / SPC h m / minor-modes") ; print a default message in the empty scratch b
   :ensure t
   :config
   (counsel-mode t)
+  :diminish (counsel-mode . "")
 )
 
 ;; Ranger (test)
