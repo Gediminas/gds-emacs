@@ -147,6 +147,8 @@ C-h m / SPC h m / minor-modes") ; print a default message in the empty scratch b
    "hm" 'describe-mode
    "q"  '(:ignore t :which-key "quit")
    "qq" 'save-buffers-kill-terminal
+   "t"  '(:ignore t :which-key "tweak/toggle")
+   "tw" 'toggle-truncate-lines
    "w"  '(:ignore t :which-key "window")
    "wd" 'evil-window-delete
    "ww" 'evil-next-window
