@@ -42,6 +42,9 @@ C-h m / SPC h m / minor-modes") ; print a default message in the empty scratch b
 ;; MacOS
 (setq mac-command-modifier 'control)
 
+;; Session auto save/load
+(desktop-save-mode 1)
+
 ;; Bootstrap `use-package'
 (unless (package-installed-p 'use-package) ; unless it is already installed
   (package-refresh-contents) ; updage packages archive
