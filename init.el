@@ -45,7 +45,9 @@ C-h m / SPC h m / minor-modes") ; print a default message in the empty scratch b
 
 ;; Advanced settings
 (desktop-save-mode t)     ;auto save/load session,window-size
-(toggle-truncate-lines t) ;do not wrap lines
+
+(setq-default truncate-lines t ;do not wrap lines
+ )
 
 ;; Bootstrap `use-package'
 (unless (package-installed-p 'use-package) ; unless it is already installed
@@ -83,7 +85,7 @@ C-h m / SPC h m / minor-modes") ; print a default message in the empty scratch b
   :init
   (which-key-mode t)
   :config
-  (which-key-setup-side-window-right-bottom)
+  (which-key-setup-side-window-bottom)
   (setq
     which-key-sort-order 'which-key-key-order-alpha
     which-key-side-window-max-width 0.33
