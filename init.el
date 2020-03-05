@@ -26,8 +26,8 @@
 C-h m / SPC h m / minor-modes") ; print a default message in the empty scratch buffer opened at startup
 
 ;; UI
-(add-to-list 'default-frame-alist '(height . 40))
-(add-to-list 'default-frame-alist '(width . 80))
+;(add-to-list 'default-frame-alist '(height . 40))
+;(add-to-list 'default-frame-alist '(width . 80))
 (scroll-bar-mode -1)
 (tool-bar-mode   -1)
 (tooltip-mode    -1)
@@ -42,8 +42,10 @@ C-h m / SPC h m / minor-modes") ; print a default message in the empty scratch b
 ;; MacOS
 (setq mac-command-modifier 'control)
 
-;; Session auto save/load
-(desktop-save-mode 1)
+
+;; Advanced settings
+(desktop-save-mode t)     ;auto save/load session,window-size
+(toggle-truncate-lines t) ;do not wrap lines
 
 ;; Bootstrap `use-package'
 (unless (package-installed-p 'use-package) ; unless it is already installed
