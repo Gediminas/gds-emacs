@@ -118,6 +118,8 @@ C-h m / SPC h m / minor-modes") ; print a default message in the empty scratch b
   (setq ranger-cleanup-eagerly t) ; kill the buffer just after you move to another entry in the dired buffer.
   )
 
+;(global-set-key (kbd "<C-tab>") 'next-buffer)
+
 ;; General
 (use-package general
   :ensure t
@@ -131,6 +133,7 @@ C-h m / SPC h m / minor-modes") ; print a default message in the empty scratch b
    "TAB" '(switch-to-prev-buffer :which-key "previous buffer")
    "b"  '(:ignore t :which-key "buffer")
    "bb"  'ivy-switch-buffer
+   "bd"  'kill-current-buffer
    "f"  '(:ignore t :which-key "file")
    "fd" 'deer
    "h"  '(:ignore t :which-key "help")
@@ -138,6 +141,7 @@ C-h m / SPC h m / minor-modes") ; print a default message in the empty scratch b
    "q"  '(:ignore t :which-key "quit")
    "qq" 'save-buffers-kill-terminal
    "w"  '(:ignore t :which-key "window")
+   "wd" 'evil-window-delete
    "ww" 'evil-next-window
    "w/" 'split-window-right
    "w-" 'split-window-below
