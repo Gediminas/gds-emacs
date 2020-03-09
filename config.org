@@ -1,8 +1,6 @@
 * Advanced
-** Settings
+** Sane defaults
 #+BEGIN_SRC emacs-lisp
-
-;; Sane defaults
 (setq delete-old-versions -1 )    ; delete excess backup versions silently
 (setq version-control t )   ; use version control
 (setq vc-make-backup-files t )    ; make backups file even when in version controlled dir
@@ -19,7 +17,27 @@
  "Emacs
 0123456789 0Oo 1Il jgae
 C-h m / SPC h m / minor-modes") ; print a default message in the empty scratch buffer opened at startup
+#+END_SRC
 
-(desktop-save-mode t)     ;auto save/load session,window-size
+* Automation
+** Desktop auto-save/load (session,window-size)
+#+BEGIN_SRC emacs-lisp
+(desktop-save-mode t)
+#+END_SRC
+
+** Buffer auto-refresh
+#+BEGIN_SRC emacs-lisp
+(global-auto-revert-mode 1)
+(setq global-auto-revert-non-file-buffers t) ;(e.g. dired)
+#+END_SRC
+
+* Navigation
+** Windows
+#+BEGIN_SRC emacs-lisp
+
+(global-set-key (kbd "<C-tab>") 'other-window)
+
+(with-eval-after-load 'org
+  (define-key org-mode-map [(control tab)] nil))
 
 #+END_SRC
