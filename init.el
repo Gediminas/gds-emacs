@@ -125,6 +125,7 @@
    "b"  '(:ignore t :which-key "buffer")
    "bb"  'ivy-switch-buffer
    "bd"  'kill-current-buffer
+   "br"  'revert-buffer
    "f"  '(:ignore t :which-key "file")
    "fd" 'deer
    "h"  '(:ignore t :which-key "help")
@@ -135,6 +136,8 @@
    "tw" 'toggle-truncate-lines
    "w"  '(:ignore t :which-key "window")
    "wd" 'evil-window-delete
+   "wr" 'evil-window-rotate-upwards
+   "wR" 'evil-window-rotate-downwards
    "ww" 'evil-next-window
    "w/" 'split-window-right
    "w-" 'split-window-below
