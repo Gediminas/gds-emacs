@@ -1,14 +1,5 @@
 (org-babel-load-file (expand-file-name "~/.emacs.d/config.org"))
 
-;; Package configs
-(require 'package)
-(setq package-enable-at-startup nil) ; tells emacs not to load any packages before starting up
-(setq package-archives '(("org"   . "http://orgmode.org/elpa/")
-                         ("gnu"   . "http://elpa.gnu.org/packages/")
-                         ("melpa" . "https://melpa.org/packages/")
-                         ("marmalade" . "http://marmalade-repo.org/packages/")))
-(package-initialize)
-
 ;; UI
 ;(add-to-list 'default-frame-alist '(height . 40))
 ;(add-to-list 'default-frame-alist '(width . 80))
@@ -32,17 +23,6 @@
 
 (setq-default truncate-lines t ;do not wrap lines
  )
-
-;; Bootstrap `use-package'
-(unless (package-installed-p 'use-package) ; unless it is already installed
-  (package-refresh-contents) ; updage packages archive
-  (package-install 'use-package)) ; and install the most recent version of use-package
-(require 'use-package) ; guess what this one does too ?
-
-;; Themes
-(use-package zenburn-theme :ensure t :config (load-theme 'zenburn t))
-(use-package doom-themes :ensure t)
-(use-package spacemacs-common :ensure spacemacs-theme)
 
 ;; Minimize mode-line
 (use-package diminish
@@ -109,6 +89,9 @@
   (setq ranger-cleanup-eagerly t) ; kill the buffer just after you move to another entry in the dired buffer.
   )
 
+;(use-package avy :ensure t
+;  :commands (avy-goto-word-1))
+
 ;(global-set-key (kbd "<C-tab>") 'next-buffer)
 
 ;; General
@@ -143,40 +126,19 @@
    "w-" 'split-window-below
    "x"  '(:ignore t :which-key "x-files")
    "xx" 'eval-buffer
-   )
-
-  (general-define-key
-   :keymaps '(normal insert emacs)
-   :prefix "SPC"
-   :non-normal-prefix "C-SPC"
-   "/" 'swiper
-   )
-
-  ; (general-define-key
-  ;  :states '(normal insert emacs)
-  ;  :prefix "C-SPC"
-  ;  :non-normal-prefix "C-SPC"
-  ;  ;"l" '(avy-goto-line)
-  ;  "a" 'align-regexp
-  ;  )
-
-  ; (general-define-key
-  ;  :states '(normal motion insert emacs)
-  ;  :prefix "SPC"
   ;  ;"a" 'align-regexp
   ;  ;"ar" '(ranger :which-key "call ranger")
   ;  ;"g"  '(:ignore t :which-key "Git")
   ;  ;"gs" '(magit-status :which-key "git status")
-  ;  )
-)
-
-; ;; Custom keybinding
-; (use-package general
-;   :ensure t
-;   :config (general-define-key
-;   :states '(normal visual insert emacs)
-;   :prefix "SPC"
-;   :non-normal-prefix "M-SPC"
+; ;; bind to simple key press
+;  "b"	'ivy-switch-buffer  ; change buffer, chose using ivy
+;  "/"   'counsel-git-grep   ; find string in git project
+;  ;; bind to double key press
+;  "f"   '(:ignore t :which-key "files")
+;  "ff"  'counsel-find-file
+;  "fr"	'counsel-recentf
+;  "p"   '(:ignore t :which-key "project")
+;  "pf"  '(counsel-git :which-key "find file in git dir")
 ;   ;; "/"   '(counsel-rg :which-key "ripgrep") ; You'll need counsel package for this
 ;   "TAB" '(switch-to-prev-buffer :which-key "previous buffer")
 ;   "SPC" '(helm-M-x :which-key "M-x")
@@ -193,38 +155,23 @@
 ;   "wx"  '(delete-window :which-key "delete window")
 ;   ;; Others
 ;   "at"  '(ansi-term :which-key "open terminal")
-;))
+   )
 
+  (general-define-key
+   :keymaps '(normal insert emacs)
+   :prefix "SPC"
+   :non-normal-prefix "C-SPC"
+   "/" 'swiper
+  ;  ;"l" '(avy-goto-line)
+  ;  "a" 'align-regexp
+   )
 
-;(use-package avy :ensure t
-;  :commands (avy-goto-word-1))
-;
-;(use-package general :ensure t
-;  :config
-;  (general-define-key "C-'" 'avy-goto-word-1)
-;  )
-;
-;(general-define-key
-; :prefix "C-c"
-; ;; bind to simple key press
-;  "b"	'ivy-switch-buffer  ; change buffer, chose using ivy
-;  "/"   'counsel-git-grep   ; find string in git project
-;  ;; bind to double key press
-;  "f"   '(:ignore t :which-key "files")
-;  "ff"  'counsel-find-file
-;  "fr"	'counsel-recentf
-;  "p"   '(:ignore t :which-key "project")
-;  "pf"  '(counsel-git :which-key "find file in git dir")
-;  )
-;
-;;(general-define-key
-;  ;;; replace default keybindings
+;  (general-define-key
+;  "C-'" 'avy-goto-word-1
 ;  ;"C-s" 'swiper             ; search for string in current buffer
 ;  ;"M-x" 'counsel-M-x        ; replace default M-x with ivy backend
-;  ;)
-;
-;
-;
+;  )
+)
 
 ;; Keep 'Customize' stuff separated
 (setq custom-file (concat user-emacs-directory "custom.el"))

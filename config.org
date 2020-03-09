@@ -1,3 +1,29 @@
+* Init
+#+BEGIN_SRC emacs-lisp
+;; Package configs
+(require 'package)
+(setq package-enable-at-startup nil) ; tells emacs not to load any packages before starting up
+(setq package-archives '(("org"   . "http://orgmode.org/elpa/")
+                         ("gnu"   . "http://elpa.gnu.org/packages/")
+                         ("melpa" . "https://melpa.org/packages/")
+                         ("marmalade" . "http://marmalade-repo.org/packages/")))
+(package-initialize)
+
+;; Bootstrap `use-package'
+(unless (package-installed-p 'use-package) ; unless it is already installed
+  (package-refresh-contents) ; updage packages archive
+  (package-install 'use-package)) ; and install the most recent version of use-package
+(require 'use-package) ; guess what this one does too ?
+
+#+END_SRC
+
+* Themes
+#+BEGIN_SRC emacs-lisp
+(use-package zenburn-theme :ensure t :config (load-theme 'zenburn t))
+(use-package doom-themes :ensure t)
+(use-package spacemacs-common :ensure spacemacs-theme)
+#+END_SRC
+
 * Advanced
 ** Sane defaults
 #+BEGIN_SRC emacs-lisp
@@ -34,13 +60,12 @@ C-h m / SPC h m / minor-modes") ; print a default message in the empty scratch b
 * Navigation
 ** Windows
 #+BEGIN_SRC emacs-lisp
-
 (global-set-key (kbd "<C-tab>") 'other-window)
 
 (with-eval-after-load 'org
   (define-key org-mode-map [(control tab)] nil))
-
 #+END_SRC
+
 * Copy/Paste clipboard
 #+BEGIN_SRC emacs-lisp
 (setq select-enable-primary t)
@@ -48,4 +73,8 @@ C-h m / SPC h m / minor-modes") ; print a default message in the empty scratch b
 (setq save-interprogram-paste-before-kill t)
 (setq kill-do-not-save-duplicates t)
 ;; https://www.reddit.com/r/emacs/comments/5n9t3f/copypaste_from_system_clipboard_on_windows/
+#+END_SRC
+
+* Keys
+#+BEGIN_SRC emacs-lisp
 #+END_SRC
