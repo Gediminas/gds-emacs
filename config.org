@@ -41,3 +41,11 @@ C-h m / SPC h m / minor-modes") ; print a default message in the empty scratch b
   (define-key org-mode-map [(control tab)] nil))
 
 #+END_SRC
+* Copy/Paste clipboard
+#+BEGIN_SRC emacs-lisp
+(setq select-enable-primary t)
+(setq select-enable-clipboard t)
+(setq save-interprogram-paste-before-kill t)
+(setq kill-do-not-save-duplicates t)
+;; https://www.reddit.com/r/emacs/comments/5n9t3f/copypaste_from_system_clipboard_on_windows/
+#+END_SRC
