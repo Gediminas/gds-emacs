@@ -11,6 +11,10 @@
 ;; For macOS users:
 ;open -n /Applications/Emacs.app --args -q --eval='(message "%s" (emacs-init-time))'
 
+;; Make startup faster by reducing the frequency of garbage
+;; collection.  The default is 800 kilobytes.  Measured in bytes.
+(setq gc-cons-threshold (* 50 1000 1000))
+
 (require 'package)
 (setq package-enable-at-startup nil) ; tells emacs not to load any packages before starting up
 (setq package-archives '(("org"   . "http://orgmode.org/elpa/")
@@ -30,10 +34,6 @@
 (use-package spacemacs-common :ensure spacemacs-theme)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; Make startup faster by reducing the frequency of garbage
-;; collection.  The default is 800 kilobytes.  Measured in bytes.
-(setq gc-cons-threshold (* 50 1000 1000))
 
 
 (org-babel-load-file (expand-file-name "~/.emacs.d/config.org"))

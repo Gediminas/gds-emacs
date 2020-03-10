@@ -85,6 +85,16 @@ C-h m / SPC h m / minor-modes") ; print a default message in the empty scratch b
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode))))
 #+END_SRC
 
+* Projectile
+#+BEGIN_SRC emacs-lisp
+(use-package projectile
+ :ensure t
+ :init
+ (setq projectile-require-project-root nil)
+ :config
+ (projectile-mode t))
+#+END_SRC
+
 * Keys
 #+BEGIN_SRC emacs-lisp
 
