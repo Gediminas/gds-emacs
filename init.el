@@ -11,6 +11,25 @@
 ;; For macOS users:
 ;open -n /Applications/Emacs.app --args -q --eval='(message "%s" (emacs-init-time))'
 
+(require 'package)
+(setq package-enable-at-startup nil) ; tells emacs not to load any packages before starting up
+(setq package-archives '(("org"   . "http://orgmode.org/elpa/")
+                         ("gnu"   . "http://elpa.gnu.org/packages/")
+                         ("melpa" . "https://melpa.org/packages/")
+                         ("marmalade" . "http://marmalade-repo.org/packages/")))
+(package-initialize)
+
+;; Bootstrap `use-package'
+(unless (package-installed-p 'use-package) ; unless it is already installed
+  (package-refresh-contents) ; updage packages archive
+  (package-install 'use-package)) ; and install the most recent version of use-package
+(require 'use-package) ; guess what this one does too ?
+
+(use-package zenburn-theme :ensure t :config (load-theme 'zenburn t))
+(use-package doom-themes :ensure t)
+(use-package spacemacs-common :ensure spacemacs-theme)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Make startup faster by reducing the frequency of garbage
 ;; collection.  The default is 800 kilobytes.  Measured in bytes.
