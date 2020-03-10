@@ -90,7 +90,7 @@ C-h m / SPC h m / minor-modes") ; print a default message in the empty scratch b
 (use-package projectile
  :ensure t
  :init
- (setq projectile-require-project-root nil)
+ (setq projectile-require-project-root nil) ;any folder as prj
  :config
  (projectile-mode t))
 #+END_SRC
