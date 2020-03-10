@@ -1,3 +1,22 @@
+;; Use a hook so the message doesn't get clobbered by other messages.
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (message "Emacs ready in %s with %d garbage collections."
+                     (format "%.2f seconds"
+                             (float-time
+                              (time-subtract after-init-time before-init-time)))
+                     gcs-done)))
+;;# -q ignores personal Emacs files but loads the site files.
+;emacs -q --eval='(message "%s" (emacs-init-time))'
+;; For macOS users:
+;open -n /Applications/Emacs.app --args -q --eval='(message "%s" (emacs-init-time))'
+
+
+;; Make startup faster by reducing the frequency of garbage
+;; collection.  The default is 800 kilobytes.  Measured in bytes.
+(setq gc-cons-threshold (* 50 1000 1000))
+
+
 (org-babel-load-file (expand-file-name "~/.emacs.d/config.org"))
 
 ;; UI
@@ -94,84 +113,6 @@
 
 ;(global-set-key (kbd "<C-tab>") 'next-buffer)
 
-;; General
-(use-package general
-  :ensure t
-  :config
-  (general-evil-setup t)
-
-  (general-define-key
-   :keymaps '(normal)
-   :prefix "SPC"
-   "SPC"  'counsel-M-x
-   "TAB" '(switch-to-prev-buffer :which-key "previous buffer")
-   "b"  '(:ignore t :which-key "buffer")
-   "bb"  'ivy-switch-buffer
-   "bd"  'kill-current-buffer
-   "br"  'revert-buffer
-   "f"  '(:ignore t :which-key "file")
-   "fd" 'deer
-   "h"  '(:ignore t :which-key "help")
-   "hm" 'describe-mode
-   "q"  '(:ignore t :which-key "quit")
-   "qq" 'save-buffers-kill-terminal
-   "t"  '(:ignore t :which-key "tweak/toggle")
-   "tw" 'toggle-truncate-lines
-   "w"  '(:ignore t :which-key "window")
-   "wd" 'evil-window-delete
-   "wr" 'evil-window-rotate-upwards
-   "wR" 'evil-window-rotate-downwards
-   "ww" 'evil-next-window
-   "w/" 'split-window-right
-   "w-" 'split-window-below
-   "x"  '(:ignore t :which-key "x-files")
-   "xx" 'eval-buffer
-  ;  ;"a" 'align-regexp
-  ;  ;"ar" '(ranger :which-key "call ranger")
-  ;  ;"g"  '(:ignore t :which-key "Git")
-  ;  ;"gs" '(magit-status :which-key "git status")
-; ;; bind to simple key press
-;  "b"	'ivy-switch-buffer  ; change buffer, chose using ivy
-;  "/"   'counsel-git-grep   ; find string in git project
-;  ;; bind to double key press
-;  "f"   '(:ignore t :which-key "files")
-;  "ff"  'counsel-find-file
-;  "fr"	'counsel-recentf
-;  "p"   '(:ignore t :which-key "project")
-;  "pf"  '(counsel-git :which-key "find file in git dir")
-;   ;; "/"   '(counsel-rg :which-key "ripgrep") ; You'll need counsel package for this
-;   "TAB" '(switch-to-prev-buffer :which-key "previous buffer")
-;   "SPC" '(helm-M-x :which-key "M-x")
-;   "pf"  '(helm-find-file :which-key "find files")
-;   ;; Buffers
-;   "bb"  '(helm-buffers-list :which-key "buffers list")
-;   ;; Window
-;   "wl"  '(windmove-right :which-key "move right")
-;   "wh"  '(windmove-left :which-key "move left")
-;   "wk"  '(windmove-up :which-key "move up")
-;   "wj"  '(windmove-down :which-key "move bottom")
-;   "w/"  '(split-window-right :which-key "split right")
-;   "w-"  '(split-window-below :which-key "split bottom")
-;   "wx"  '(delete-window :which-key "delete window")
-;   ;; Others
-;   "at"  '(ansi-term :which-key "open terminal")
-   )
-
-  (general-define-key
-   :keymaps '(normal insert emacs)
-   :prefix "SPC"
-   :non-normal-prefix "C-SPC"
-   "/" 'swiper
-  ;  ;"l" '(avy-goto-line)
-  ;  "a" 'align-regexp
-   )
-
-;  (general-define-key
-;  "C-'" 'avy-goto-word-1
-;  ;"C-s" 'swiper             ; search for string in current buffer
-;  ;"M-x" 'counsel-M-x        ; replace default M-x with ivy backend
-;  )
-)
 
 ;; Keep 'Customize' stuff separated
 (setq custom-file (concat user-emacs-directory "custom.el"))
