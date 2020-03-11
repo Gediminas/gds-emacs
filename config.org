@@ -7,8 +7,7 @@
 
 (setq-default truncate-lines t) ;do not wrap lines
 
-;(setq-default display-line-numbers 'relative)
-;(setq display-line-numbers 'relative)
+(setq display-line-numbers-type 'relative)
 (global-display-line-numbers-mode)
 
 #+END_SRC
