@@ -7,7 +7,9 @@
 
 (setq-default truncate-lines t) ;do not wrap lines
 
-
+;(setq-default display-line-numbers 'relative)
+;(setq display-line-numbers 'relative)
+(global-display-line-numbers-mode)
 
 #+END_SRC
 
@@ -32,7 +34,13 @@
 #+BEGIN_SRC emacs-lisp
 (use-package doom-modeline
   :ensure t
-  :init (doom-modeline-mode 1))
+  :init 
+  (doom-modeline-mode 1)
+  :config
+  (setq doom-modeline-height 1)
+  (set-face-attribute 'mode-line nil :family "Arial Narrow" :height 70)
+  (set-face-attribute 'mode-line-inactive nil :family "Arial Narrow" :height 70)
+)
 #+END_SRC
 
 * Packages
@@ -185,7 +193,7 @@ C-h m / SPC h m / minor-modes") ; print a default message in the empty scratch b
 #+END_SRC
 
 * Keys
-  ** Misc
+** Misc
 #+BEGIN_SRC emacs-lisp
 ;(global-set-key (kbd "<C-tab>") 'next-buffer)
 #+END_SRC
@@ -233,6 +241,7 @@ C-h m / SPC h m / minor-modes") ; print a default message in the empty scratch b
    "bb"  'ivy-switch-buffer
    "bd"  'kill-current-buffer
    "br"  'revert-buffer
+   "bs"  'save-buffer
    "f"  '(:ignore t :which-key "file")
    "fd" 'deer
    "h"  '(:ignore t :which-key "help")
@@ -250,6 +259,7 @@ C-h m / SPC h m / minor-modes") ; print a default message in the empty scratch b
    "*" 'swiper-isearch-thing-at-point
    "t"  '(:ignore t :which-key "tweak/toggle")
    "tw" 'toggle-truncate-lines
+   "tl" 'display-line-numbers-mode
    "w"  '(:ignore t :which-key "window")
    "wd" 'evil-window-delete
    "wr" 'evil-window-rotate-upwards
