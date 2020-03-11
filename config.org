@@ -1,5 +1,110 @@
-* Themes
+* Init
 #+BEGIN_SRC emacs-lisp
+
+
+;; Advanced settings
+(desktop-save-mode t)     ;auto save/load session,window-size
+
+(setq-default truncate-lines t) ;do not wrap lines
+
+
+
+#+END_SRC
+
+* UI
+** Controls
+#+BEGIN_SRC emacs-lisp
+(scroll-bar-mode -1)
+(tool-bar-mode   -1)
+(tooltip-mode    -1)
+(menu-bar-mode   -1)
+#+END_SRC
+
+** MacOS: Fancy titlebar
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+(add-to-list 'default-frame-alist '(ns-appearance . dark))
+(setq ns-use-proxy-icon  nil)
+(setq frame-title-format nil)
+#+END_SRC
+
+** Modeline
+#+BEGIN_SRC emacs-lisp
+(use-package doom-modeline
+  :ensure t
+  :init (doom-modeline-mode 1))
+#+END_SRC
+
+* Packages
+#+BEGIN_SRC emacs-lisp
+;; Minimize mode-line
+(use-package diminish
+  :ensure t
+  :config
+  (add-hook 'emacs-lisp-mode-hook 
+    (lambda()
+      (setq mode-name "")))  
+  (with-eval-after-load 'undo-tree
+    (diminish 'undo-tree-mode "")) 
+  (diminish 'eldoc-mode "")
+  )
+
+;; Vim mode
+(use-package evil
+  :ensure t
+  :config
+  (evil-mode t)
+)
+
+;; Which Key
+(use-package which-key
+  :ensure t
+  :init
+  (which-key-mode t)
+  :config
+  (which-key-setup-side-window-bottom)
+  (setq
+    which-key-sort-order 'which-key-key-order-alpha
+    which-key-side-window-max-width 0.33
+    which-key-idle-delay 0.05
+    which-key-separator " "
+    which-key-prefix-prefix "+")
+  :diminish (which-key-mode . ""))
+
+;; Ivy
+(use-package ivy
+  :ensure t
+  :config
+  (ivy-mode t)
+  (setq 
+    ivy-use-virtual-buffers t ; add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’
+    ivy-height 10             ; number of result lines to display
+    ivy-count-format "%d/%d " ; count candidates
+    ivy-initial-inputs-alist nil ; no regexp by default
+    ivy-re-builders-alist     ; configure regexp engine.
+        '((t   . ivy--regex-ignore-order));; allow input not in order
+   ) 
+  :diminish (ivy-mode . ""))
+
+(use-package counsel
+  :ensure t
+  :config
+  (counsel-mode t)
+  :diminish (counsel-mode . "")
+)
+
+;; Ranger (test)
+(use-package ranger
+  :ensure t
+  :commands (ranger)
+  :bind (("C-x d" . deer))
+  :config
+  (setq ranger-cleanup-eagerly t) ; kill the buffer just after you move to another entry in the dired buffer.
+  )
+
+;(use-package avy :ensure t
+;  :commands (avy-goto-word-1))
+
 #+END_SRC
 
 * Advanced
@@ -33,30 +138,6 @@ C-h m / SPC h m / minor-modes") ; print a default message in the empty scratch b
 #+BEGIN_SRC emacs-lisp
 (global-auto-revert-mode 1)
 (setq global-auto-revert-non-file-buffers t) ;(e.g. dired)
-#+END_SRC
-
-* Navigation
-** Windows
-#+BEGIN_SRC emacs-lisp
-(global-set-key (kbd "<C-tab>") 'other-window)
-
-(with-eval-after-load 'org
-  (define-key org-mode-map [(control tab)] nil))
-
-(use-package winum
-  :ensure t
-  :config
-  (setq window-numbering-scope            'local
-        winum-reverse-frame-list          nil
-        winum-auto-assign-0-to-minibuffer t
-        ;winum-assign-func                 'my-winum-assign-func
-        winum-auto-setup-mode-line        t
-        ;winum-format                      " %s "
-        winum-mode-line-position          1
-        winum-ignored-buffers             '(" *which-key*")
-        winum-ignored-buffers-regexp      '(" \\*Treemacs-.*"))
-  (winum-mode t)
-)
 #+END_SRC
 
 * Copy/Paste clipboard
@@ -104,8 +185,40 @@ C-h m / SPC h m / minor-modes") ; print a default message in the empty scratch b
 #+END_SRC
 
 * Keys
+  ** Misc
 #+BEGIN_SRC emacs-lisp
+;(global-set-key (kbd "<C-tab>") 'next-buffer)
+#+END_SRC
 
+** Windows
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "<C-tab>") 'other-window)
+
+(with-eval-after-load 'org
+  (define-key org-mode-map [(control tab)] nil))
+
+(use-package winum
+  :ensure t
+  :config
+  (setq window-numbering-scope            'local
+        winum-reverse-frame-list          nil
+        winum-auto-assign-0-to-minibuffer t
+        ;winum-assign-func                 'my-winum-assign-func
+        winum-auto-setup-mode-line        t
+        ;winum-format                      " %s "
+        winum-mode-line-position          1
+        winum-ignored-buffers             '(" *which-key*")
+        winum-ignored-buffers-regexp      '(" \\*Treemacs-.*"))
+  (winum-mode t)
+)
+#+END_SRC
+** MacOS
+#+BEGIN_SRC emacs-lisp
+(setq mac-command-modifier 'control)
+#+END_SRC
+
+** SPC leader
+#+BEGIN_SRC emacs-lisp
 (use-package general
   :ensure t
   :config
@@ -206,117 +319,11 @@ C-h m / SPC h m / minor-modes") ; print a default message in the empty scratch b
 )
 #+END_SRC
 
-* UI
-#+BEGIN_SRC emacs-lisp
-;; UI
-;(add-to-list 'default-frame-alist '(height . 40))
-;(add-to-list 'default-frame-alist '(width . 80))
-(scroll-bar-mode -1)
-(tool-bar-mode   -1)
-(tooltip-mode    -1)
-(menu-bar-mode   -1)
-
-;; MacOS: Fancy titlebar
-(add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
-(add-to-list 'default-frame-alist '(ns-appearance . dark))
-(setq ns-use-proxy-icon  nil)
-(setq frame-title-format nil)
-#+END_SRC
-
-* Packages
-#+BEGIN_SRC emacs-lisp
-;; Minimize mode-line
-(use-package diminish
-  :ensure t
-  :config
-  (add-hook 'emacs-lisp-mode-hook 
-    (lambda()
-      (setq mode-name "")))  
-  (with-eval-after-load 'undo-tree
-    (diminish 'undo-tree-mode "")) 
-  (diminish 'eldoc-mode "")
-  )
-
-;; Vim mode
-(use-package evil
-  :ensure t
-  :config
-  (evil-mode t)
-)
-
-;; Which Key
-(use-package which-key
-  :ensure t
-  :init
-  (which-key-mode t)
-  :config
-  (which-key-setup-side-window-bottom)
-  (setq
-    which-key-sort-order 'which-key-key-order-alpha
-    which-key-side-window-max-width 0.33
-    which-key-idle-delay 0.05
-    which-key-separator " "
-    which-key-prefix-prefix "+")
-  :diminish (which-key-mode . ""))
-
-;; Ivy
-(use-package ivy
-  :ensure t
-  :config
-  (ivy-mode t)
-  (setq 
-    ivy-use-virtual-buffers t ; add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’
-    ivy-height 10             ; number of result lines to display
-    ivy-count-format "%d/%d " ; count candidates
-    ivy-initial-inputs-alist nil ; no regexp by default
-    ivy-re-builders-alist     ; configure regexp engine.
-        '((t   . ivy--regex-ignore-order));; allow input not in order
-   ) 
-  :diminish (ivy-mode . ""))
-
-(use-package counsel
-  :ensure t
-  :config
-  (counsel-mode t)
-  :diminish (counsel-mode . "")
-)
-
-;; Ranger (test)
-(use-package ranger
-  :ensure t
-  :commands (ranger)
-  :bind (("C-x d" . deer))
-  :config
-  (setq ranger-cleanup-eagerly t) ; kill the buffer just after you move to another entry in the dired buffer.
-  )
-
-;(use-package avy :ensure t
-;  :commands (avy-goto-word-1))
-
-#+END_SRC
-
-* Init
-#+BEGIN_SRC emacs-lisp
-;; MacOS
-(setq mac-command-modifier 'control)
-
-
-;; Advanced settings
-(desktop-save-mode t)     ;auto save/load session,window-size
-
-(setq-default truncate-lines t ;do not wrap lines
- )
-
-;(global-set-key (kbd "<C-tab>") 'next-buffer)
-
-
-#+END_SRC
-
-* Todo
+* Todo1
 #+BEGIN_SRC emacs-lisp
 #+END_SRC
 
-* Todo
+* Todo2
 #+BEGIN_SRC emacs-lisp
 #+END_SRC
 
