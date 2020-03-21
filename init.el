@@ -1,4 +1,5 @@
 ;;BOOT-TIMER
+
 ;; Use a hook so the message doesn't get clobbered by other messages.
 (add-hook 'emacs-startup-hook
           (lambda ()
@@ -17,19 +18,24 @@
 ;; collection.  The default is 800 kilobytes.  Measured in bytes.
 (setq gc-cons-threshold (* 50 1000 1000))
 
+;; INIT
+
 (require 'package)
 (setq package-enable-at-startup nil) ; tells emacs not to load any packages before starting up
 (setq package-archives '(("org"   . "http://orgmode.org/elpa/")
-                         ;("gnu"   . "http://elpa.gnu.org/packages/")
+                         ("gnu"   . "http://elpa.gnu.org/packages/")
                          ("melpa" . "https://melpa.org/packages/")
+			 ("melpa-stable" . "https://stable.melpa.org/packages/")
                          ("marmalade" . "http://marmalade-repo.org/packages/")))
 (package-initialize)
 
 ;;USE-PACKAGE
+
 (unless (package-installed-p 'use-package) ; unless it is already installed
   (package-refresh-contents) ; updage packages archive
   (package-install 'use-package)) ; and install the most recent version of use-package
 (require 'use-package) ; guess what this one does too ?
+(setq use-package-always-ensure t)
 
 ;;THEME
 (use-package zenburn-theme :ensure t :config (load-theme 'zenburn t))
