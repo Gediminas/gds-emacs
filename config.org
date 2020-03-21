@@ -240,12 +240,15 @@ C-h m / SPC h m / minor-modes") ; print a default message in the empty scratch b
    "SPC"  'counsel-M-x
    "TAB" '(switch-to-prev-buffer :which-key "previous buffer")
    "b"  '(:ignore t :which-key "buffer")
-   "bb"  'ivy-switch-buffer
-   "bd"  'kill-current-buffer
-   "br"  'revert-buffer
-   "bs"  'save-buffer
+   "bb" 'ivy-switch-buffer
+   "bd" 'kill-current-buffer
+   "br" 'revert-buffer
+   "bs" 'save-buffer
    "f"  '(:ignore t :which-key "file")
+   "ff" 'counsel-projectile-find-file
+   ;"fF" 'find-file-under-here
    "fd" 'deer
+   "fr" 'counsel-recentf
    "h"  '(:ignore t :which-key "help")
    "hm" 'describe-mode
    "p"  '(:ignore t :which-key "project")
@@ -258,7 +261,7 @@ C-h m / SPC h m / minor-modes") ; print a default message in the empty scratch b
    "s"  '(:ignore t :which-key "search")
    "ss" 'swiper-isearch
    "sS" 'swiper-isearch-thing-at-point
-   "*" 'swiper-isearch-thing-at-point
+   "*"  'swiper-isearch-thing-at-point
    "t"  '(:ignore t :which-key "tweak/toggle")
    "tw" 'toggle-truncate-lines
    "tl" 'display-line-numbers-mode
@@ -292,8 +295,6 @@ C-h m / SPC h m / minor-modes") ; print a default message in the empty scratch b
 ;  "/"   'counsel-git-grep   ; find string in git project
 ;  ;; bind to double key press
 ;  "f"   '(:ignore t :which-key "files")
-;  "ff"  'counsel-find-file
-;  "fr"	'counsel-recentf
 ;  "p"   '(:ignore t :which-key "project")
 ;  "pf"  '(counsel-git :which-key "find file in git dir")
 ;   ;; "/"   '(counsel-rg :which-key "ripgrep") ; You'll need counsel package for this
