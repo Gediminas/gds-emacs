@@ -26,7 +26,7 @@
      ("\\?\\?\\?+" . "#dc752f"))))
  '(package-selected-packages
    (quote
-    (flycheck doom-modeline projectile spacemacs-theme zenburn-theme))))
+    (magit-gitflow flycheck doom-modeline projectile spacemacs-theme zenburn-theme))))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
