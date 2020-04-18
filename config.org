@@ -210,19 +210,13 @@ C-h m / SPC h m / minor-modes") ; print a default message in the empty scratch b
          ("C-c l" . magit-file-log)
          ("C-c f" . magit-grep))
   :config
-    ;;; C-f in the magit status buffer invokes the magit-gitflow popup. If you
-    ;;; would like to use a different key, set the magit-gitflow-popup-key variable
-    ;;; before loading magit-gitflow
-    ;; (setq magit-gitflow-popup-key "C-n")
-    ;;
-    ;; brew install git-flow
-    (use-package magit-gitflow
-    :config
-      (add-hook 'magit-mode-hook 'turn-on-magit-gitflow)
-    )
 )
 
+(use-package evil-magit)
 
+(use-package git-timemachine
+  :ensure t
+  :bind (("C-c t" . git-timemachine)))
 #+END_SRC
 
 * Keys -> Misc
