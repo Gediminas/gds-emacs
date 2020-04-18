@@ -11,10 +11,9 @@
 
 ;; Highlight current line
 (global-hl-line-mode t)
-
 #+END_SRC
-* UI
-** Controls
+
+* UI -> Controls
 #+BEGIN_SRC emacs-lisp
 (scroll-bar-mode -1)
 (tool-bar-mode   -1)
@@ -22,7 +21,7 @@
 (menu-bar-mode   -1)
 #+END_SRC
 
-** MacOS: Fancy titlebar
+* UI -> MacOS: Fancy titlebar
 #+BEGIN_SRC emacs-lisp
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
 (add-to-list 'default-frame-alist '(ns-appearance . dark))
@@ -30,7 +29,7 @@
 (setq frame-title-format nil)
 #+END_SRC
 
-** Modeline
+* UI -> Modeline
 #+BEGIN_SRC emacs-lisp
 (use-package doom-modeline
   :ensure t
@@ -41,6 +40,19 @@
   (set-face-attribute 'mode-line nil :family "Arial Narrow" :height 70)
   (set-face-attribute 'mode-line-inactive nil :family "Arial Narrow" :height 70)
 )
+#+END_SRC
+
+* UI -> Theme toggle
+#+BEGIN_SRC emacs-lisp
+(use-package theme-looper
+ :ensure t
+ :init
+ :config
+ (theme-looper-set-favorite-themes '(zenburn spacemacs-light))
+ ;(theme-looper t)
+)
+
+  (global-set-key [f5] 'theme-looper-enable-next-theme)
 #+END_SRC
 
 * Packages
@@ -115,8 +127,7 @@
 
 #+END_SRC
 
-* Advanced
-** Sane defaults
+* A la sane defaults
 #+BEGIN_SRC emacs-lisp
 (setq delete-old-versions -1 )    ; delete excess backup versions silently
 (setq version-control t )   ; use version control
@@ -138,20 +149,18 @@ C-h m / SPC h m / minor-modes") ; print a default message in the empty scratch b
 
 (setq make-backup-files nil)
 
-* Automation
-** Desktop auto-save/load (session,window-size)
+* Desktop auto-save/load (session,window-size)
 #+BEGIN_SRC emacs-lisp
 (desktop-save-mode t)
 #+END_SRC
 
-** Buffer auto-refresh
+* Buffer auto-refresh
 #+BEGIN_SRC emacs-lisp
 (global-auto-revert-mode 1)
 (setq global-auto-revert-non-file-buffers t) ;(e.g. dired)
 #+END_SRC
 
-* Copy/Paste clipboard
-#+BEGIN_SRC emacs-lisp
+* Copy/Paste clipboard emacs-lisp
 (setq select-enable-primary t)
 (setq select-enable-clipboard t)
 (setq save-interprogram-paste-before-kill t)
@@ -168,8 +177,7 @@ C-h m / SPC h m / minor-modes") ; print a default message in the empty scratch b
   (ad-activate 'ansi-term)
 #+END_SRC
 
-* Org
-** Org bullets
+* Org bullets
 #+BEGIN_SRC emacs-lisp
 (use-package org-bullets
   :ensure t
@@ -194,13 +202,12 @@ C-h m / SPC h m / minor-modes") ; print a default message in the empty scratch b
  (counsel-projectile-mode t))
 #+END_SRC
 
-* Keys
-** Misc
+* Keys -> Misc
 #+BEGIN_SRC emacs-lisp
 ;(global-set-key (kbd "<C-tab>") 'next-buffer)
 #+END_SRC
 
-** Windows
+* Keys -> Windows
 #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "<C-tab>") 'other-window)
 
@@ -222,12 +229,13 @@ C-h m / SPC h m / minor-modes") ; print a default message in the empty scratch b
   (winum-mode t)
 )
 #+END_SRC
-** MacOS
+
+* Keys -> MacOS
 #+BEGIN_SRC emacs-lisp
 (setq mac-command-modifier 'control)
 #+END_SRC
 
-** SPC leader
+* Keys -> SPC leader
 #+BEGIN_SRC emacs-lisp
 (use-package general
   :ensure t
@@ -264,12 +272,14 @@ C-h m / SPC h m / minor-modes") ; print a default message in the empty scratch b
    "ss" 'swiper-isearch
    "sS" 'swiper-isearch-thing-at-point
    "*"  'swiper-isearch-thing-at-point
-   "t"  '(:ignore t :which-key "tweak/toggle")
+   "t"  '(:ignore t :which-key "tweak/toggle/theme")
    "tw" 'toggle-truncate-lines
    "tl" 'display-line-numbers-mode
    "tf" 'flycheck-mode
-   "tt"  '(:ignore t :which-key "tweak")
-   "ttt" 'counsel-load-theme
+   ;; "tt"  '(:ignore t :which-key "tweak")
+   ;; "ttt" 'counsel-load-theme
+   "tt" '(theme-looper-enable-next-theme :which-key "Theme toggle")
+   "tl" '(counsel-load-theme             :which-key "Theme list")
    "w"  '(:ignore t :which-key "window")
    "wd" 'evil-window-delete
    "wr" 'evil-window-rotate-upwards
@@ -351,7 +361,7 @@ C-h m / SPC h m / minor-modes") ; print a default message in the empty scratch b
 )
 #+END_SRC
 
-* Escape
+* Keys -> Escape
 #+BEGIN_SRC emacs-lisp
 ;;; esc quits
 (defun minibuffer-keyboard-quit ()
@@ -405,6 +415,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   (global-flycheck-mode t)
 )
 #+END_SRC
-* Todo2
+
+* Todo
 #+BEGIN_SRC emacs-lisp
 #+END_SRC
