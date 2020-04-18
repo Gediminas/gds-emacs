@@ -204,19 +204,11 @@ C-h m / SPC h m / minor-modes") ; print a default message in the empty scratch b
 
 * Git
 #+BEGIN_SRC emacs-lisp
-(use-package magit
-  :ensure t
-  :bind (("C-c g" . magit-status)
-         ("C-c l" . magit-file-log)
-         ("C-c f" . magit-grep))
-  :config
-)
-
+(use-package magit)
 (use-package evil-magit)
-
-(use-package git-timemachine
-  :ensure t
-  :bind (("C-c t" . git-timemachine)))
+(use-package git-timemachine)
+(setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1)
+(setq projectile-switch-project-action 'magit-status) ;;?
 #+END_SRC
 
 * Keys -> Misc
@@ -279,6 +271,7 @@ C-h m / SPC h m / minor-modes") ; print a default message in the empty scratch b
    "g"  '(:ignore t :which-key "git")
    "gg" '(magit-status      :which-key "Git status")
    "gl" '(magit-file-log    :which-key "Git log")
+   "gt" '(git-timemachine   :which-key "Git time-machine")
    "h"  '(:ignore t :which-key "help")
    "hm" 'describe-mode
    "p"  '(:ignore t :which-key "project")
