@@ -57,9 +57,9 @@
 
 
 ;;THEME
-(use-package zenburn-theme :ensure t :config (load-theme 'zenburn t))
-(use-package doom-themes :ensure t)
-;(use-package spacemacs-common :ensure spacemacs-theme)
+(use-package zenburn-theme :config (load-theme 'zenburn t))
+(use-package doom-themes)
+(use-package spacemacs-theme :defer t)
 
 ;;CONFIG.ORG
 (org-babel-load-file (expand-file-name "~/.emacs.d/config.org"))
