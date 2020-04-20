@@ -26,7 +26,6 @@
      ("FIXME" . "#dc752f")
      ("XXX+" . "#dc752f")
      ("\\?\\?\\?+" . "#dc752f"))))
- '(menu-bar-mode nil)
  '(package-selected-packages
    (quote
     (magit-gitflow flycheck doom-modeline projectile spacemacs-theme zenburn-theme)))
