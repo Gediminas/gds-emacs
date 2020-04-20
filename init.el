@@ -20,27 +20,46 @@
 
 ;; INIT
 
-(require 'package)
-(setq package-enable-at-startup nil) ; tells emacs not to load any packages before starting up
-(setq package-archives '(("org"   . "http://orgmode.org/elpa/")
-                         ("gnu"   . "http://elpa.gnu.org/packages/")
-                         ("melpa" . "https://melpa.org/packages/")
-			 ("melpa-stable" . "https://stable.melpa.org/packages/")
-                         ("marmalade" . "http://marmalade-repo.org/packages/")))
-(package-initialize)
+;(require 'package)
+;(setq package-enable-at-startup nil) ; tells emacs not to load any packages before starting up
+;(setq package-archives '(("org"   . "http://orgmode.org/elpa/")
+                         ;("gnu"   . "http://elpa.gnu.org/packages/")
+                         ;("melpa" . "https://melpa.org/packages/")
+			 ;("melpa-stable" . "https://stable.melpa.org/packages/")
+                         ;("marmalade" . "http://marmalade-repo.org/packages/")))
+;(package-initialize)
+;
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+
+
 
 ;;USE-PACKAGE
 
-(unless (package-installed-p 'use-package) ; unless it is already installed
-  (package-refresh-contents) ; updage packages archive
-  (package-install 'use-package)) ; and install the most recent version of use-package
-(require 'use-package) ; guess what this one does too ?
-(setq use-package-always-ensure t)
+;(unless (package-installed-p 'use-package) ; unless it is already installed
+  ;(package-refresh-contents) ; updage packages archive
+  ;(package-install 'use-package)) ; and install the most recent version of use-package
+;(require 'use-package) ; guess what this one does too ?
+;(setq use-package-always-ensure t)
+
+(straight-use-package 'use-package)
+(setq straight-use-package-by-default t)
+
 
 ;;THEME
 (use-package zenburn-theme :ensure t :config (load-theme 'zenburn t))
 (use-package doom-themes :ensure t)
-(use-package spacemacs-common :ensure spacemacs-theme)
+;(use-package spacemacs-common :ensure spacemacs-theme)
 
 ;;CONFIG.ORG
 (org-babel-load-file (expand-file-name "~/.emacs.d/config.org"))
