@@ -7,6 +7,8 @@
  '(custom-safe-themes
    (quote
     ("bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" "fa2b58bb98b62c3b8cf3b6f02f058ef7827a8e497125de0254f56e373abee088" "0f0a4dca8bb029dc5139f447ff25bc3c18d31872c30a46d03c6bbc706ded3586" default)))
+ '(display-line-numbers-type (quote relative))
+ '(global-display-line-numbers-mode t)
  '(hl-todo-keyword-faces
    (quote
     (("TODO" . "#dc752f")
@@ -24,14 +26,16 @@
      ("FIXME" . "#dc752f")
      ("XXX+" . "#dc752f")
      ("\\?\\?\\?+" . "#dc752f"))))
+ '(menu-bar-mode nil)
  '(package-selected-packages
    (quote
-    (magit-gitflow flycheck doom-modeline projectile spacemacs-theme zenburn-theme))))
+    (magit-gitflow flycheck doom-modeline projectile spacemacs-theme zenburn-theme)))
+ '(tool-bar-mode nil))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 130 :width normal :foundry "nil" :family "Hack"))))
+ '(default ((t (:inherit nil :stipple nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 98 :width normal :foundry "outline" :family "Hack"))))
  '(region ((t (:background "blue4")))))
