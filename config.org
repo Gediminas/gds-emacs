@@ -192,7 +192,10 @@ C-h m / SPC h m / minor-modes") ; print a default message in the empty scratch b
  :init
  (setq projectile-require-project-root nil) ;any folder as prj
  :config
- (setq projectile-project-search-path '("~/dev/repo"))
+ (if (eq system-type 'darwin)
+   (setq projectile-project-search-path '("~/dev/repo"))
+   (setq projectile-project-search-path '("d:/dev/repo"))
+ )
  (projectile-mode t))
 
 (use-package counsel-projectile
