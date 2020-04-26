@@ -308,6 +308,11 @@ C-h m / SPC h m / minor-modes") ; print a default message in the empty scratch b
 (setq projectile-switch-project-action 'magit-status) ;;?
 #+END_SRC
 
+* Commenting
+#+BEGIN_SRC emacs-lisp
+(use-package evil-nerd-commenter)
+#+END_SRC
+
 * Keys -> Misc
 #+BEGIN_SRC emacs-lisp
 ;(global-set-key (kbd "<C-tab>") 'next-buffer)
@@ -407,6 +412,16 @@ C-h m / SPC h m / minor-modes") ; print a default message in the empty scratch b
    "TF" 'treemacs-find-file
    "TG" 'treemacs-find-tag
    "TD" 'treemacs-delete-other-windows
+
+   ;; ";i" 'evilnc-comment-or-uncomment-lines
+   ;; ";l" 'evilnc-quick-comment-or-uncomment-to-the-line
+   ;; ";l" 'evilnc-quick-comment-or-uncomment-to-the-line
+   ;; ";c" 'evilnc-copy-and-comment-lines
+   ;; ";p" 'evilnc-comment-or-uncomment-paragraphs
+   ;; ";r" 'comment-or-uncomment-region
+   ;; ";v" 'evilnc-toggle-invert-comment-line-by-line
+   ;; "."  'evilnc-copy-and-comment-operator
+    ";" 'evilnc-comment-operator
 
    "0"  'treemacs-select-window
    "1"  'winum-select-window-1
