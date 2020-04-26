@@ -354,8 +354,9 @@ C-h m / SPC h m / minor-modes") ; print a default message in the empty scratch b
   (general-evil-setup t)
 
   (general-define-key
-   :keymaps '(normal)
+   :keymaps '(normal visual)
    :prefix "SPC"
+   :non-normal-prefix "C-SPC"
    "SPC"  'counsel-M-x
    "TAB" '(switch-to-prev-buffer :which-key "previous buffer")
    "b"  '(:ignore t :which-key "buffer")
