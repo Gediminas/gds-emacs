@@ -256,20 +256,22 @@
 #+BEGIN_SRC emacs-lisp
 (setq delete-old-versions -1 )    ; delete excess backup versions silently
 (setq version-control t )   ; use version control
-;(setq vc-make-backup-files t )    ; make backups file even when in version controlled dir
-;(setq backup-directory-alist `(("." . "~/.emacs.local/backups")) ) ; which directory to put backups file
 (setq vc-follow-symlinks t )               ; don't ask for confirmation when opening symlinked file
-(setq auto-save-file-name-transforms '((".*" "~/.emacs.local/auto-save-list/" t)) ) ;transform backups file name
 (setq inhibit-startup-screen t )  ; inhibit useless and old-school startup screen
 (setq ring-bell-function 'ignore )  ; silent bell when you make a mistake
 (setq coding-system-for-read 'utf-8 ) ; use utf-8 by default
 (setq coding-system-for-write 'utf-8 )
 (setq sentence-end-double-space nil)  ; sentence SHOULD end with only a point.
 (setq default-fill-column 80)   ; toggle wrapping text at the 80th character
-(setq initial-scratch-message
- "Emacs
-0123456789 0Oo 1Il jgae
-C-h m / SPC h m / minor-modes") ; print a default message in the empty scratch buffer opened at startup
+(setq initial-scratch-message "") ; print a default message in the empty scratch buffer opened at startup
+
+;(setq vc-make-backup-files t )    ; make backups file even when in version controlled dir
+;(setq backup-directory-alist `(("." . "~/.emacs.local/backups")) ) ; which directory to put backups file
+
+;; stop creating those #auto-save# files
+(setq auto-save-file-name-transforms '((".*" "~/.emacs.local/auto-save-list/" t)) ) ;transform backups file name
+(setq auto-save-default nil)
+
 #+END_SRC
 
 (setq make-backup-files nil)
@@ -391,7 +393,7 @@ C-h m / SPC h m / minor-modes") ; print a default message in the empty scratch b
    :prefix "SPC"
    :non-normal-prefix "C-SPC"
    "SPC" '(counsel-M-x :which-key "M-x")
-   "TAB" '(switch-to-prev-buffer :which-key "previous buffer")
+   "TAB" '(gds/alternate-buffer :which-key "previous buffer")
 
    "b"  '(:ignore t :which-key "buffer")
    "bb" 'ivy-switch-buffer
@@ -620,7 +622,24 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 #+BEGIN_SRC emacs-lisp
 ;https://emacs.stackexchange.com/questions/44697/how-to-skip-some-buffers-when-use-prev-buffer-next-buffer
 (defun my-buffer-predicate (buffer)
-  (if (string-match "Messages" (buffer-name buffer)) nil t))
+  (if (string-match "Messages" (buffer-name buffer)) nil t)
+  (if (string-match "Straight-process" (buffer-name buffer)) nil t))
 (set-frame-parameter nil 'buffer-predicate 'my-buffer-predicate)
+
+(defun gds/alternate-buffer (&optional window)
+  "Switch back and forth between current and last buffer in the
+current window."
+  (interactive)
+  (cl-destructuring-bind (buf start pos)
+    (or (cl-find (window-buffer window) (window-prev-buffers)
+                     :key #'car :test-not #'eq)
+           (list (other-buffer) nil nil))
+    (if (not buf)
+        (message "Last buffer not found.")
+      (set-window-buffer-start-and-point window buf start pos))))
+
 #+END_SRC
+
+* Links
+https://github.com/sho-87/dotfiles/blob/master/emacs/init.el
 
