@@ -107,7 +107,7 @@
     ;; The default width and height of the icons is 22 pixels. If you are
     ;; using a Hi-DPI display, uncomment this to double the icon size.
     ;;(treemacs-resize-icons 44)
-
+    
     (treemacs-follow-mode t)
     (treemacs-filewatch-mode t)
     (treemacs-fringe-indicator-mode t)
@@ -117,14 +117,7 @@
        (treemacs-git-mode 'deferred))
       (`(t . _)
        (treemacs-git-mode 'simple))))
-  :bind
-  (:map global-map
-        ("M-0"       . treemacs-select-window)
-        ("C-x t 1"   . treemacs-delete-other-windows)
-        ("C-x t t"   . treemacs)
-        ("C-x t B"   . treemacs-bookmark)
-        ("C-x t C-t" . treemacs-find-file)
-        ("C-x t M-t" . treemacs-find-tag)))
+  )
 
 (use-package treemacs-evil
   :after treemacs evil
@@ -147,6 +140,44 @@
   :after treemacs persp-mode
   :ensure t
   :config (treemacs-set-scope-type 'Perspectives))
+#+END_SRC
+
+* UI -> Font Auto Zoom
+#+BEGIN_SRC emacs-lisp
+;; https://emacs.stackexchange.com/questions/28390/quickly-adjusting-text-to-dpi-changes
+(defun my-dpi (&optional frame)
+  "Get the DPI of FRAME (or current if nil)."
+  (cl-flet ((pyth (lambda (w h)
+                    (sqrt (+ (* w w)
+                             (* h h)))))
+            (mm2in (lambda (mm)
+                     (/ mm 25.4))))
+    (let* ((atts (frame-monitor-attributes frame))
+           (pix-w (cl-fourth (assoc 'geometry atts)))
+           (pix-h (cl-fifth (assoc 'geometry atts)))
+           (pix-d (pyth pix-w pix-h))
+           (mm-w (cl-second (assoc 'mm-size atts)))
+           (mm-h (cl-third (assoc 'mm-size atts)))
+           (mm-d (pyth mm-w mm-h)))
+      (/ pix-d (mm2in mm-d)))))
+
+(defvar my-zoom-frm-wanted-dpi 70
+  "The DPI I want to achieve when using `my-zoom-frm-by-dpi'.")
+
+(defun my-zoom-frm-by-dpi (&optional frame)
+  "Zoom FRAME so the DPI is closer to `my-zoom-frm-wanted-dpi'."
+  (interactive)
+  (let ((frame (or frame (selected-frame))))
+    (when (frame-parameter frame 'zoomed)
+      (zoom-frm-unzoom frame))
+    (let ((frame-zoom-font-difference (1- (round (/ (my-dpi frame)
+                                                    my-zoom-frm-wanted-dpi)))))
+      (when (called-interactively-p 'interactive)
+        (message "Zooming by %S" frame-zoom-font-difference))
+      (zoom-frm-in frame))))
+
+;; Apply the scaling I want to each newly created frame:
+(add-hook 'after-make-frame-functions #'my-zoom-frm-by-dpi)
 #+END_SRC
 
 * Packages
@@ -315,7 +346,9 @@ C-h m / SPC h m / minor-modes") ; print a default message in the empty scratch b
 
 * Keys -> Misc
 #+BEGIN_SRC emacs-lisp
-;(global-set-key (kbd "<C-tab>") 'next-buffer)
+(global-set-key (kbd "<C-j>") 'previous-buffer)
+(global-set-key (kbd "<C-k>") 'next-buffer)
+;(global-set-key (kbd "<C-tab>") 'bury-buffer)
 #+END_SRC
 
 * Keys -> Windows
@@ -357,7 +390,7 @@ C-h m / SPC h m / minor-modes") ; print a default message in the empty scratch b
    :keymaps '(normal visual)
    :prefix "SPC"
    :non-normal-prefix "C-SPC"
-   "SPC"  'counsel-M-x
+   "SPC" '(counsel-M-x :which-key "M-x")
    "TAB" '(switch-to-prev-buffer :which-key "previous buffer")
    "b"  '(:ignore t :which-key "buffer")
    "bb" 'ivy-switch-buffer
@@ -368,6 +401,7 @@ C-h m / SPC h m / minor-modes") ; print a default message in the empty scratch b
    "cx" '(flycheck-list-errors :which-key "previous buffer")
    "f"  '(:ignore t :which-key "file")
    "ff" 'counsel-projectile-find-file
+   "fg" '(counsel-git :which-key "find in git dir")
    ;"fF" 'find-file-under-here
    "fd" 'deer
    "fr" 'counsel-recentf
@@ -494,6 +528,8 @@ C-h m / SPC h m / minor-modes") ; print a default message in the empty scratch b
     :keymaps 'flycheck-mode-map
     "C-n" 'flycheck-next-error
     "C-p" 'flycheck-previous-error
+    "C-j" 'switch-to-prev-buffer
+    "C-k" 'switch-to-next-buffer
   )
 
   (define-key org-mode-map [(control tab)] nil)
@@ -555,40 +591,11 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 )
 #+END_SRC
 
-* UI -> Font Auto Zoom
+* Buffers
 #+BEGIN_SRC emacs-lisp
-;; https://emacs.stackexchange.com/questions/28390/quickly-adjusting-text-to-dpi-changes
-(defun my-dpi (&optional frame)
-  "Get the DPI of FRAME (or current if nil)."
-  (cl-flet ((pyth (lambda (w h)
-                    (sqrt (+ (* w w)
-                             (* h h)))))
-            (mm2in (lambda (mm)
-                     (/ mm 25.4))))
-    (let* ((atts (frame-monitor-attributes frame))
-           (pix-w (cl-fourth (assoc 'geometry atts)))
-           (pix-h (cl-fifth (assoc 'geometry atts)))
-           (pix-d (pyth pix-w pix-h))
-           (mm-w (cl-second (assoc 'mm-size atts)))
-           (mm-h (cl-third (assoc 'mm-size atts)))
-           (mm-d (pyth mm-w mm-h)))
-      (/ pix-d (mm2in mm-d)))))
-
-(defvar my-zoom-frm-wanted-dpi 70
-  "The DPI I want to achieve when using `my-zoom-frm-by-dpi'.")
-
-(defun my-zoom-frm-by-dpi (&optional frame)
-  "Zoom FRAME so the DPI is closer to `my-zoom-frm-wanted-dpi'."
-  (interactive)
-  (let ((frame (or frame (selected-frame))))
-    (when (frame-parameter frame 'zoomed)
-      (zoom-frm-unzoom frame))
-    (let ((frame-zoom-font-difference (1- (round (/ (my-dpi frame)
-                                                    my-zoom-frm-wanted-dpi)))))
-      (when (called-interactively-p 'interactive)
-        (message "Zooming by %S" frame-zoom-font-difference))
-      (zoom-frm-in frame))))
-
-;; Apply the scaling I want to each newly created frame:
-(add-hook 'after-make-frame-functions #'my-zoom-frm-by-dpi)
+;https://emacs.stackexchange.com/questions/44697/how-to-skip-some-buffers-when-use-prev-buffer-next-buffer
+(defun my-buffer-predicate (buffer)
+  (if (string-match "Messages" (buffer-name buffer)) nil t))
+(set-frame-parameter nil 'buffer-predicate 'my-buffer-predicate)
 #+END_SRC
+
