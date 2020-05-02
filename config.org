@@ -222,7 +222,7 @@
   :config
   (ivy-mode t)
   (setq 
-    ivy-use-virtual-buffers t ; add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’
+    ivy-use-virtual-buffers nil ; add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’
     ivy-height 10             ; number of result lines to display
     ivy-count-format "%d/%d " ; count candidates
     ivy-initial-inputs-alist nil ; no regexp by default
@@ -392,36 +392,59 @@ C-h m / SPC h m / minor-modes") ; print a default message in the empty scratch b
    :non-normal-prefix "C-SPC"
    "SPC" '(counsel-M-x :which-key "M-x")
    "TAB" '(switch-to-prev-buffer :which-key "previous buffer")
+
    "b"  '(:ignore t :which-key "buffer")
    "bb" 'ivy-switch-buffer
    "bd" 'kill-current-buffer
    "br" 'revert-buffer
    "bs" 'save-buffer
+
    "c"  '(:ignore t :which-key "code")
    "cx" '(flycheck-list-errors :which-key "previous buffer")
+
    "f"  '(:ignore t :which-key "file")
    "ff" 'counsel-projectile-find-file
    "fg" '(counsel-git :which-key "find in git dir")
    ;"fF" 'find-file-under-here
    "fd" 'deer
    "fr" 'counsel-recentf
+
    "g"  '(:ignore t :which-key "git")
    "gg" '(magit-status      :which-key "Git status")
    "gl" '(magit-file-log    :which-key "Git log")
    "gt" '(git-timemachine   :which-key "Git time-machine")
+
    "h"  '(:ignore t :which-key "help")
+   "he" 'view-echo-area-messages
+   "hl" 'view-lossage
+   "hc" 'describe-coding-system
+   "hI" 'describe-input-method
+   "hb" 'describe-bindings
+   "hk" 'describe-key
+   "hw" 'where-is
+   "hf" 'describe-function
+   "hp" 'describe-package
    "hm" 'describe-mode
+   "hv" 'describe-variable
+   "hy" 'describe-syntax
+   "ha" 'apropos-command
+   "hd" 'apropos-documentation
+   "hs" 'info-lookup-symbol
+
    "p"  '(:ignore t :which-key "project")
    "pd" 'counsel-projectile-find-dir
    "pp" 'counsel-projectile-switch-project
    "pf" 'counsel-projectile-find-file
    "pg" 'counsel-projectile-grep
+
    "q"  '(:ignore t :which-key "quit")
    "qq" 'save-buffers-kill-terminal
+
    "s"  '(:ignore t :which-key "search")
    "ss" 'swiper-isearch
    "sS" 'swiper-isearch-thing-at-point
    "*"  'swiper-isearch-thing-at-point
+
    "t"  '(:ignore t :which-key "tweak/toggle/theme")
    "tw" 'toggle-truncate-lines
    "tl" 'display-line-numbers-mode
@@ -430,6 +453,7 @@ C-h m / SPC h m / minor-modes") ; print a default message in the empty scratch b
    ;; "ttt" 'counsel-load-theme
    "tt" '(theme-looper-enable-next-theme :which-key "Theme toggle")
    "tl" '(counsel-load-theme             :which-key "Theme list")
+
    "w"  '(:ignore t :which-key "window")
    "wd" 'evil-window-delete
    "wr" 'evil-window-rotate-upwards
@@ -437,6 +461,7 @@ C-h m / SPC h m / minor-modes") ; print a default message in the empty scratch b
    "ww" 'evil-next-window
    "w/" 'split-window-right
    "w-" 'split-window-below
+
    "x"  '(:ignore t :which-key "x-files")
    "xeb" 'eval-buffer
    "xee" 'eval-last-sexp
