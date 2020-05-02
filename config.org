@@ -55,7 +55,7 @@
   (global-set-key [f5] 'theme-looper-enable-next-theme)
 #+END_SRC
 
-* UI -> Treemacs
+* UI -> Tree
 #+BEGIN_SRC emacs-lisp
 (use-package treemacs
   :ensure t
@@ -117,6 +117,8 @@
        (treemacs-git-mode 'deferred))
       (`(t . _)
        (treemacs-git-mode 'simple))))
+
+     (define-key treemacs-mode-map [mouse-1] #'treemacs-single-click-expand-action)
   )
 
 (use-package treemacs-evil
@@ -346,19 +348,8 @@
 (use-package evil-nerd-commenter)
 #+END_SRC
 
-* Keys -> Misc
-#+BEGIN_SRC emacs-lisp
-(global-set-key (kbd "<C-j>") 'previous-buffer)
-(global-set-key (kbd "<C-k>") 'next-buffer)
-;(global-set-key (kbd "<C-tab>") 'bury-buffer)
-#+END_SRC
-
 * Keys -> Windows
 #+BEGIN_SRC emacs-lisp
-(global-set-key (kbd "<C-tab>") 'other-window)
-
-(with-eval-after-load 'org
-  (define-key org-mode-map [(control tab)] nil))
 
 (use-package winum
   :ensure t
@@ -393,7 +384,6 @@
    :prefix "SPC"
    :non-normal-prefix "C-SPC"
    "SPC" '(counsel-M-x :which-key "M-x")
-   "TAB" '(gds/alternate-buffer :which-key "previous buffer")
 
    "b"  '(:ignore t :which-key "buffer")
    "bb" 'ivy-switch-buffer
@@ -540,16 +530,15 @@
   ;  ;"l" '(avy-goto-line)
   ;  "a" 'align-regexp
    )
-
-;  (general-define-key
-;  "C-'" 'avy-goto-word-1
-;  ;"C-s" 'swiper             ; search for string in current buffer
-;  ;"M-x" 'counsel-M-x        ; replace default M-x with ivy backend
-;  )
-
+#+END_SRC
+* Keys -> Global
+#+BEGIN_SRC emacs-lisp
   (with-eval-after-load 'evil-maps
     (define-key evil-normal-state-map (kbd "C-n") nil)
     (define-key evil-normal-state-map (kbd "C-p") nil))
+
+  (with-eval-after-load 'org
+    (define-key org-mode-map [(control tab)] nil)))
 
   (general-define-key
     :keymaps 'flycheck-mode-map
@@ -557,10 +546,15 @@
     "C-p" 'flycheck-previous-error
     "C-j" 'switch-to-prev-buffer
     "C-k" 'switch-to-next-buffer
-  )
+    "C-<tab>" 'gds/alternate-buffer
+    )
 
-  (define-key org-mode-map [(control tab)] nil)
-)
+;  (general-define-key
+;  "C-'" 'avy-goto-word-1
+;  ;"C-s" 'swiper             ; search for string in current buffer
+;  ;"M-x" 'counsel-M-x        ; replace default M-x with ivy backend
+;  )
+
 #+END_SRC
 
 * Keys -> Escape
