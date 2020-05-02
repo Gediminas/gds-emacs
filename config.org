@@ -289,6 +289,28 @@
 (setq global-auto-revert-non-file-buffers t) ;(e.g. dired)
 #+END_SRC
 
+* Buffers
+#+BEGIN_SRC emacs-lisp
+;https://emacs.stackexchange.com/questions/44697/how-to-skip-some-buffers-when-use-prev-buffer-next-buffer
+(defun my-buffer-predicate (buffer)
+  (if (string-match "Messages" (buffer-name buffer)) nil t)
+  (if (string-match "Straight-process" (buffer-name buffer)) nil t))
+(set-frame-parameter nil 'buffer-predicate 'my-buffer-predicate)
+
+(defun gds/alternate-buffer (&optional window)
+  "Switch back and forth between current and last buffer in the
+current window."
+  (interactive)
+  (cl-destructuring-bind (buf start pos)
+    (or (cl-find (window-buffer window) (window-prev-buffers)
+                     :key #'car :test-not #'eq)
+           (list (other-buffer) nil nil))
+    (if (not buf)
+        (message "Last buffer not found.")
+      (set-window-buffer-start-and-point window buf start pos))))
+
+#+END_SRC
+
 * Copy/Paste clipboard emacs-lisp
 (setq select-enable-primary t)
 (setq select-enable-clipboard t)
