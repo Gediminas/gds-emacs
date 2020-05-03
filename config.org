@@ -623,39 +623,15 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   :mode ("\\.json" . json-mode))
 #+END_SRC
 
-* Syntax check
+* Check Errors
 #+BEGIN_SRC emacs-lisp
-  ;; (use-package flycheck
-  ;;   ;:commands
-  ;;   ;flycheck-list-errors flycheck-buffer
-  ;;   :config 
-  ;;   (setq flycheck-display-errors-delay 0.25)
-
-  ;;   ;(global-flycheck-mode t)
-  ;;   (add-hook 'js2-mode-hook
-  ;;     (defun my-js2-mode-setup ()
-  ;;       (flycheck-mode t)
-  ;;       (when (executable-find "eslint")
-  ;;       (flycheck-select-checker 'javascript-eslint))))
-  ;; )
-  (use-package flycheck
-    :ensure t
-    :diminish flycheck-mode
-    :config
-    (global-flycheck-mode)
-    (setq-default flycheck-temp-prefix ".")
-    (setq-default flycheck-disabled-checkers
-		       (append flycheck-disabled-checkers
-		       '(javascript-jshint)))
-  
-    (setq-default flycheck-disabled-checkers
-	      (append flycheck-disabled-checkers
-		      '(json-jsonlist)))
-    (flycheck-add-mode 'javascript-eslint 'web-mode)
-    (setq flycheck-eslintrc "~/.eslintrc"))
-  
-  (provide 'init-flycheck)
-
+   (use-package flycheck
+     :config 
+     (global-flycheck-mode)
+     (setq flycheck-display-errors-delay 0.25)
+     ;(setq-default flycheck-temp-prefix ".")
+     ;(flycheck-add-mode 'javascript-eslint 'web-mode)
+   )
 #+END_SRC
 
 * Links
