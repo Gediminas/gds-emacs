@@ -457,6 +457,7 @@ current window."
 
    "c"  '(:ignore t :which-key "code")
    "cx" '(flycheck-list-errors :which-key "previous buffer")
+   "c;" '(comment-line :which-key "comment")
 
    "f"  '(:ignore t :which-key "file")
    "ff" 'counsel-projectile-find-file
@@ -520,6 +521,7 @@ current window."
 
    "x"  '(:ignore t :which-key "x-files")
    "xeb" 'eval-buffer
+   "xer" 'eval-region
    "xee" 'eval-last-sexp
    "xt" 'ansi-term
 
