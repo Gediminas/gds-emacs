@@ -677,7 +677,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
    (use-package flycheck
      :config 
      (global-flycheck-mode)
-     (setq flycheck-display-errors-delay 0.25)
+     (setq flycheck-check-syntax-automatically '(mode-enabled save))
+     ;(setq flycheck-display-errors-delay 0.25)
      ;(setq-default flycheck-temp-prefix ".")
      ;(flycheck-add-mode 'javascript-eslint 'web-mode)
    )
