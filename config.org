@@ -59,7 +59,11 @@
 (global-display-line-numbers-mode)
 
 ;; Highlight current line
-(global-hl-line-mode t)
+;;(global-hl-line-mode t)
+
+;; Never insert tabs
+(setq-default indent-tabs-mode nil)
+
 #+END_SRC
 
 * UI -> Controls
@@ -448,6 +452,7 @@ current window."
    :prefix "SPC"
    :non-normal-prefix "C-SPC"
    "SPC" '(counsel-M-x :which-key "M-x")
+   ";" '(comment-line :which-key "comment")
 
    "b"  '(:ignore t :which-key "buffer")
    "bb" 'ivy-switch-buffer
@@ -457,7 +462,7 @@ current window."
 
    "c"  '(:ignore t :which-key "code")
    "cx" '(flycheck-list-errors :which-key "previous buffer")
-   "c;" '(comment-line :which-key "comment")
+   "cl" '(comment-line :which-key "comment")
 
    "f"  '(:ignore t :which-key "file")
    "ff" 'counsel-projectile-find-file
