@@ -28,7 +28,7 @@
        (my/monitor-size-px frame))))
 
 (defun gds-adjust-font (&optional frame)
-    (setq calculated-size 100)
+    (setq calculated-size 130)
     (set-face-attribute 'default (selected-frame) :height calculated-size)
 )
 
@@ -612,6 +612,7 @@ current window."
   ;  "a" 'align-regexp
    )
 #+END_SRC
+
 * Keys -> Global
 #+BEGIN_SRC emacs-lisp
   (with-eval-after-load 'evil-maps
@@ -666,6 +667,37 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (define-key minibuffer-local-isearch-map [escape] 'minibuffer-keyboard-quit)
 #+END_SRC
 
+* Syntax -> Check Errors
+#+BEGIN_SRC emacs-lisp
+   (use-package flycheck
+     :config 
+     (global-flycheck-mode)
+     (setq flycheck-check-syntax-automatically '(mode-enabled save))
+     ;(setq flycheck-display-errors-delay 0.25)
+     ;(setq-default flycheck-temp-prefix ".")
+     ;(flycheck-add-mode 'javascript-eslint 'web-mode)
+   )
+#+END_SRC
+
+* Syntax -> Navigation
+#+BEGIN_SRC emacs-lisp
+  ;; TEST test-super-word-a - if-it-is-working+5=x
+  ;; TEST test_super_word_a_ if_it_is_working _ok + 5=x
+  ;; TEST testSubWord ifItIsWorking+5=x
+
+  (superword-mode t)
+  (add-hook 'after-change-major-mode-hook
+            (lambda ()
+              (modify-syntax-entry ?_ "w")))
+
+  ;; For python
+  ;(add-hook 'python-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
+  ;; For ruby
+  ;(add-hook 'ruby-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
+  ;; For Javascript
+  ;(add-hook 'js2-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
+#+END_SRC
+
 * Javasript
   https://justin.abrah.ms/dotfiles/emacs.html
 #+BEGIN_SRC emacs-lisp
@@ -689,23 +721,28 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   :mode ("\\.json" . json-mode))
 #+END_SRC
 
-* Check Errors
-#+BEGIN_SRC emacs-lisp
-   (use-package flycheck
-     :config 
-     (global-flycheck-mode)
-     (setq flycheck-check-syntax-automatically '(mode-enabled save))
-     ;(setq flycheck-display-errors-delay 0.25)
-     ;(setq-default flycheck-temp-prefix ".")
-     ;(flycheck-add-mode 'javascript-eslint 'web-mode)
-   )
-#+END_SRC
-
 * Links
 https://github.com/sho-87/dotfiles/blob/master/emacs/init.el
 
-* Test
+* Mouse
 #+BEGIN_SRC emacs-lisp
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control) . nil)))
 (setq mouse-wheel-progressive-speed t)
 #+END_SRC
+
+* Test
+#+BEGIN_SRC emacs-lisp
+#+END_SRC
+
+* Test
+#+BEGIN_SRC emacs-lisp
+#+END_SRC
+
+* Test
+#+BEGIN_SRC emacs-lisp
+#+END_SRC
+
+* Test
+#+BEGIN_SRC emacs-lisp
+#+END_SRC
+
