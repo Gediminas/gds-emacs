@@ -658,6 +658,8 @@ current window."
 * Keys -> Escape
 #+BEGIN_SRC emacs-lisp
   ;; https://stackoverflow.com/questions/8483182/evil-mode-best-practice
+  ;; Will break macro recording when attempting to switch back to normal mode using ESC.
+  ;; It might make sense to rebind that action to another key
   (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
 
   ;;; esc quits
