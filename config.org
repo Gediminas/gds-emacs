@@ -478,6 +478,11 @@ current window."
    "cx" '(flycheck-list-errors :which-key "previous buffer")
    "cl" '(comment-line :which-key "comment")
 
+   "e"  '(:ignore t :which-key "eval")
+   "eb" 'eval-buffer
+   "er" 'eval-region
+   "ee" 'eval-last-sexp
+
    "f"  '(:ignore t :which-key "file")
    "ff" 'counsel-projectile-find-file
    "fg" '(counsel-git :which-key "find in git dir")
