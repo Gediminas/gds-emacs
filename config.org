@@ -427,7 +427,9 @@ current window."
 
 * Commenting
 #+BEGIN_SRC emacs-lisp
-(use-package evil-nerd-commenter)
+(use-package evil-nerd-commenter
+ :config
+ (setq comment-empty-lines t))
 #+END_SRC
 
 * Keys -> Windows
@@ -466,7 +468,7 @@ current window."
    :prefix "SPC"
    :non-normal-prefix "C-SPC"
    "SPC" '(counsel-M-x :which-key "M-x")
-   ";" '(comment-line :which-key "comment")
+
 
    "b"  '(:ignore t :which-key "buffer")
    "bb" 'ivy-switch-buffer
@@ -475,13 +477,32 @@ current window."
    "bs" 'save-buffer
 
    "c"  '(:ignore t :which-key "code")
-   "cx" '(flycheck-list-errors :which-key "previous buffer")
-   "cl" '(comment-line :which-key "comment")
+   "cc" 'evilnc-comment-operator
+   "cl" 'evilnc-comment-or-uncomment-lines
+   "cx" 'evilnc-comment-and-kill-ring-save
+   "cy" 'evilnc-copy-and-comment-lines
+   "cp" 'evilnc-comment-or-uncomment-paragraphs
+   "cr" 'comment-or-uncomment-region
+
+
+   ;; ";" '(evilnc-comment-or-uncomment-line :which-key "comment")
+
+   ;; ";i" 'evilnc-comment-or-uncomment-lines
+   ;; ";l" 'evilnc-quick-comment-or-uncomment-to-the-line
+   ;; ";l" 'evilnc-quick-comment-or-uncomment-to-the-line
+   ;; ";c" 'evilnc-copy-and-comment-lines
+   ;; ";p" 'evilnc-comment-or-uncomment-paragraphs
+   ;; ";r" 'comment-or-uncomment-region
+   ;; ";v" 'evilnc-toggle-invert-comment-line-by-line
+   ;; "."  'evilnc-copy-and-comment-operator
+   ;; ";" 'evilnc-comment-operator
+
 
    "e"  '(:ignore t :which-key "eval")
    "eb" 'eval-buffer
    "er" 'eval-region
    "ee" 'eval-last-sexp
+   "el" '(flycheck-list-errors :which-key "Error list")
 
    "f"  '(:ignore t :which-key "file")
    "ff" 'counsel-projectile-find-file
@@ -555,16 +576,6 @@ current window."
    "TG" 'treemacs-find-tag
    "TD" 'treemacs-delete-other-windows
 
-   ;; ";i" 'evilnc-comment-or-uncomment-lines
-   ;; ";l" 'evilnc-quick-comment-or-uncomment-to-the-line
-   ;; ";l" 'evilnc-quick-comment-or-uncomment-to-the-line
-   ;; ";c" 'evilnc-copy-and-comment-lines
-   ;; ";p" 'evilnc-comment-or-uncomment-paragraphs
-   ;; ";r" 'comment-or-uncomment-region
-   ;; ";v" 'evilnc-toggle-invert-comment-line-by-line
-   ;; "."  'evilnc-copy-and-comment-operator
-    ";" 'evilnc-comment-operator
-
    "0"  'treemacs-select-window
    "1"  'winum-select-window-1
    "2"  'winum-select-window-2
@@ -632,19 +643,20 @@ current window."
     (define-key org-mode-map [(control tab)] nil)))
 
   (general-define-key
-    "C-j"     'switch-to-prev-buffer
-    "C-k"     'switch-to-next-buffer
-    "C-<tab>" 'gds/alternate-buffer
-    "<f5>"    'theme-looper-enable-next-theme
-    "<f6>"    'gds-adjust-font
-  )
-
-  (general-define-key
     :keymaps 'flycheck-mode-map
     "C-n"     'flycheck-next-error
     "C-p"     'flycheck-previous-error
   )
 
+
+  (general-define-key
+    "C-j"     'switch-to-prev-buffer
+    "C-k"     'switch-to-next-buffer
+    "C-;"     'evilnc-comment-or-uncomment-lines
+    "C-<tab>" 'gds/alternate-buffer
+    "<f5>"    'theme-looper-enable-next-theme
+    "<f6>"    'gds-adjust-font
+  )
 
 
 ;  (general-define-key
