@@ -1,50 +1,40 @@
-* Theme
+* Functions
 #+BEGIN_SRC emacs-lisp
-  ;(defun is-large-monitor-p ()
-    ;(> (display-pixel-width) 2000))
-
-  ;;(if (is-large-monitor-p)
-      ;(setq default-frame-alist '((font . "Hack-10")))
-    ;(setq default-frame-alist '((font . "Hack-11"))))
-  (setq default-frame-alist '((font . "Hack-10")))
-
-(defun my/monitor-size-mm (&optional frame)
+(defun gds/monitor-max-size-mm (&optional frame)
   "Return the max mm dimension for monitor showing FRAME."
   (apply 'max (cdr (assoc 'mm-size (frame-monitor-attributes frame)))))
 
-
-(defun my/monitor-size-px (&optional frame)
+(defun gds/monitor-max-size-px (&optional frame)
   "Return the max px dimension for monitor showing FRAME."
-  (apply 'max (cdddr (assoc 'geometry
-                            (frame-monitor-attributes frame)))))
+  (apply 'max (cdddr (assoc 'geometry (frame-monitor-attributes frame)))))
 
-
-(defun my/pixel-pitch (&optional frame)
+(defun gds/pixel-pitch (&optional frame)
   "Calculate the pixel pitch for FRAME (default current frame)."
   ;; On a rotated monitor, px geom is rotated but size is not, so use
   ;; max dimension of each.
   (let* ((monitor-attrs (frame-monitor-attributes frame)))
-    (/ (float (my/monitor-size-mm frame))
-       (my/monitor-size-px frame))))
+    (/ (float (gds/monitor-max-size-mm frame))
+       (float (gds/monitor-max-size-px frame)))))
 
-(defun gds-adjust-font (&optional frame)
-    (setq calculated-size 130)
-    (set-face-attribute 'default (selected-frame) :height calculated-size)
+(defun gds/adjust-font (&optional frame)
+  (setq gds/pitch (gds/pixel-pitch))
+  ; MacbookPro 13" 2017  0.19888 => 96
+  ; Dell U2415           0.26979 => 
+  (setq gds/calculated-size (round (/ 26.0 gds/pitch)))
+  (set-face-attribute 'default (selected-frame) :height gds/calculated-size)
 )
+#+END_SRC
 
-;(my/pixel-pitch)
-
+* Theme
+#+BEGIN_SRC emacs-lisp
 (use-package zenburn-theme) ; :config (load-theme 'zenburn t))
 (use-package doom-themes)
 (use-package spacemacs-theme
   :defer t
   :config
   (load-theme 'spacemacs-light t)
-  (gds-adjust-font))
-
-
-(add-hook 'window-size-change-functions #'gds-adjust-font)
-
+  (gds/adjust-font))
+(add-hook 'window-size-change-functions #'gds/adjust-font)
 #+END_SRC
 
 * Init
