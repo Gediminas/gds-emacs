@@ -18,8 +18,8 @@
 
 (defun gds/adjust-font (&optional frame)
   (setq gds/pitch (gds/pixel-pitch))
-  ; MacbookPro 13" 2017  0.19888 => 96
-  ; Dell U2415           0.26979 => 
+  ; MacbookPro 13" 2017  0.19888 =>  96
+  ; Dell U2415           0.26979 => 131
   (setq gds/calculated-size (round (/ 26.0 gds/pitch)))
   (set-face-attribute 'default (selected-frame) :height gds/calculated-size)
 )
