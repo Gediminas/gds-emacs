@@ -498,7 +498,7 @@ current window."
    ;; ";" 'evilnc-comment-operator
 
 
-   "e"  '(:ignore t :which-key "eval")
+   "e"  '(:ignore t :which-key "eval/error")
    "eb" 'eval-buffer
    "er" 'eval-region
    "ee" 'eval-last-sexp
