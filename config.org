@@ -54,6 +54,15 @@
 ;; Never insert tabs
 (setq-default indent-tabs-mode nil)
 
+;FIXME
+;; PATH
+;(if (eq system-type 'darwin)
+;  ; windows-nt cygwin
+;  (add-to-list 'exec-path "/usr/local/bin/"))
+(if (eq system-type 'darwin)
+  ; windows-nt cygwin
+  (setq-default counsel-rg-base-command "/usr/local/Cellar/ripgrep/11.0.2/bin/rg -M 120 --with-filename --no-heading --line-number --color never %s"))
+
 #+END_SRC
 
 * UI -> Controls
@@ -536,6 +545,8 @@ current window."
    "ss" 'swiper-isearch
    "sS" 'swiper-isearch-thing-at-point
    "*"  'swiper-isearch-thing-at-point
+   "sf" 'counsel-projectile-rg
+   "sg" 'counsel-projectile-git-grep
 
    "t"  '(:ignore t :which-key "tweak/toggle/theme")
    "tw" 'toggle-truncate-lines
