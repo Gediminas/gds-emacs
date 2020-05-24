@@ -40,6 +40,8 @@
 * Init
 #+BEGIN_SRC emacs-lisp
 
+(setq user-cache-directory "~/.emacs.local/")
+
 ;; Advanced settings
 (desktop-save-mode t)     ;auto save/load session,window-size
 
@@ -765,8 +767,19 @@ https://github.com/sho-87/dotfiles/blob/master/emacs/init.el
 (setq mouse-wheel-progressive-speed t)
 #+END_SRC
 
-* Test
+* Persistent Scratch
 #+BEGIN_SRC emacs-lisp
+(use-package persistent-scratch
+    :init
+    (setq persistent-scratch-backup-directory (concat user-cache-directory "scratch-backups"))
+    (setq persistent-scratch-save-file (concat user-cache-directory "persistent-scratch"))
+    ;; keep backups not older than a month
+    (setq persistent-scratch-autosave-interval 60)
+    (setq persistent-scratch-backup-filter
+      (persistent-scratch-keep-backups-not-older-than
+       (days-to-time 90)))
+    :config
+    (ignore-errors (persistent-scratch-setup-default)))
 #+END_SRC
 
 * Test
