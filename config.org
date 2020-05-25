@@ -786,6 +786,7 @@ https://github.com/sho-87/dotfiles/blob/master/emacs/init.el
 
 * Test
 #+BEGIN_SRC emacs-lisp
+;(global-set-key (kbd "C-s") 'swiper-isearch)
 #+END_SRC
 
 * Test
