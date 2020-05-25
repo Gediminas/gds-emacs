@@ -1,3 +1,11 @@
+;;; init.el --- Entry file of emacs configuration
+;;; Commentary:
+;;; Code:
+
+;; https://www.reddit.com/r/emacs/comments/3kqt6e/2_easy_little_known_steps_to_speed_up_emacs_start/
+(let ((file-name-handler-alist nil))
+
+
 ;;BOOT-TIMER
 
 ;; Use a hook so the message doesn't get clobbered by other messages.
@@ -66,3 +74,6 @@
 ;; Keep 'Customize' stuff separated
 (setq custom-file (concat user-emacs-directory "custom.el"))
 (load custom-file 'noerror)
+
+
+)

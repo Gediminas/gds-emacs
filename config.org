@@ -58,7 +58,7 @@
 
 ;FIXME
 ;; PATH
-https://emacs.stackexchange.com/questions/550/exec-path-and-path
+;; https://emacs.stackexchange.com/questions/550/exec-path-and-path
 ;(if (eq system-type 'darwin)
 ;  ; windows-nt cygwin
 ;  (add-to-list 'exec-path "/usr/local/bin/"))
