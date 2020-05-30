@@ -804,9 +804,22 @@ https://github.com/sho-87/dotfiles/blob/master/emacs/init.el
     (ignore-errors (persistent-scratch-setup-default)))
 #+END_SRC
 
-* Test
+* Code Completion
 #+BEGIN_SRC emacs-lisp
-;(global-set-key (kbd "C-s") 'swiper-isearch)
+(use-package company
+  ;:diminish company-mode
+  :init
+  (add-hook 'after-init-hook 'global-company-mode)
+  :config
+  (use-package company-irony :ensure t :defer t)
+  (setq company-idle-delay              0.5 
+	company-minimum-prefix-length   0
+	company-show-numbers            t
+	company-tooltip-limit           20
+	company-dabbrev-downcase        nil
+	)
+  :bind ("C-." . company-complete-common)
+  )
 #+END_SRC
 
 * Test
