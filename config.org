@@ -428,7 +428,6 @@ current window."
   (setq magit-diff-refine-hunk 'all)
   (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1)
   (setq projectile-switch-project-action 'magit-status) ;;?
-  ;; Use evil keybindings within magit
 
   (use-package evil-magit
     :config
