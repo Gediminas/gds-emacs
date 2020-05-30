@@ -735,6 +735,7 @@ current window."
      ;(setq flycheck-display-errors-delay 0.25)
      ;(setq-default flycheck-temp-prefix ".")
      ;(flycheck-add-mode 'javascript-eslint 'web-mode)
+     (add-hook 'c++-mode-hook (lambda () (setq flycheck-clang-language-standard "c++2a")))
    )
 #+END_SRC
 
