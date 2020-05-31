@@ -521,11 +521,12 @@ current window."
    ;; ";" 'evilnc-comment-operator
 
 
-   "e"  '(:ignore t :which-key "eval/error")
+   "e"  '(:ignore t :which-key "edit/eval/error")
    "eb" 'eval-buffer
    "er" 'eval-region
    "ee" 'eval-last-sexp
    "el" '(flycheck-list-errors :which-key "Error list")
+   "em" '(mc/edit-lines :which-key "Multi-cursor")
 
    "f"  '(:ignore t :which-key "file")
    "ff" 'counsel-projectile-find-file
@@ -677,7 +678,7 @@ current window."
   (general-define-key
     "C-j"     'switch-to-prev-buffer
     "C-k"     'switch-to-next-buffer
-    "C-;"     'evilnc-comment-or-uncomment-lines
+    ;;"C-;"     'evilnc-comment-or-uncomment-lines
     "C-<tab>" 'gds/alternate-buffer
     "<f5>"    'theme-looper-enable-next-theme
     "<f6>"    'gds-adjust-font
