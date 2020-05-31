@@ -883,8 +883,10 @@ https://github.com/sho-87/dotfiles/blob/master/emacs/init.el
    )
 #+END_SRC
 
-* Test
+* Edit
 #+BEGIN_SRC emacs-lisp
+   (use-package iedit)
+   (use-package multiple-cursors)
 #+END_SRC
 
 * Test
