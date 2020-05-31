@@ -807,6 +807,7 @@ https://github.com/sho-87/dotfiles/blob/master/emacs/init.el
 
 * Code Completion
 #+BEGIN_SRC emacs-lisp
+;; https://github.com/gjstein/emacs.d/tree/master/config
 (use-package company
   ;:diminish company-mode
   :init
@@ -870,6 +871,18 @@ https://github.com/sho-87/dotfiles/blob/master/emacs/init.el
 ;;   )
 
 #+END_SRC
+
+* Multi-edit - wgrep
+#+BEGIN_SRC emacs-lisp
+   (use-package wgrep
+     :config 
+     (setq wgrep-auto-save-buffer t     ; Auto save buffer on wgrep-finish-edit
+           wgrep-enable-key "r"         ; Key to switch to wgrep
+           wgrep-change-readonly-file t ; Apply changes regardless of whether or not buffer is read-only.
+     )
+   )
+#+END_SRC
+
 * Test
 #+BEGIN_SRC emacs-lisp
 #+END_SRC
