@@ -823,6 +823,53 @@ https://github.com/sho-87/dotfiles/blob/master/emacs/init.el
   )
 #+END_SRC
 
+* C++
+#+BEGIN_SRC emacs-lisp
+;; https://github.com/gjstein/emacs.d/tree/master/config
+;; (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+;; (defun my-c-company-hook ()
+;;  "Company backends in C/C++."
+;;  (set (make-local-variable 'company-backends)
+;;       '(company-dabbrev-code company-irony company-gtags))
+;;  )
+;; (add-hook 'c-mode-hook 'my-c-company-hook)
+;; (add-hook 'c++-mode-hook 'my-c-company-hook)
+;; 
+;; ;; == irony-mode ==
+;; (use-package irony
+;;   ;;  M-x irony-install-server
+;;  :ensure t
+;;  :defer t
+;;  :diminish irony-mode
+;;  :init
+;;  (add-hook 'c++-mode-hook 'irony-mode)
+;;  (add-hook 'c-mode-hook 'irony-mode)
+;;  (add-hook 'objc-mode-hook 'irony-mode)
+;;  :config
+;;  ;; replace the `completion-at-point' and `complete-symbol' bindings in
+;;  ;; irony-mode's buffers by irony-mode's function
+;;  (defun my-irony-mode-hook ()
+;;    (define-key irony-mode-map [remap completion-at-point]
+;;      'irony-completion-at-point-async)
+;;    (define-key irony-mode-map [remap complete-symbol]
+;;      'irony-completion-at-point-async))
+;;    (add-hook 'irony-mode-hook 'my-irony-mode-hook)
+;;    (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
+;; 
+;; ;; === CMake ===
+;; (use-package cmake-mode
+;;   :ensure t
+;;   :defer t
+;;   :init
+;;   ; Add cmake listfile names to the mode list.
+;;   (setq auto-mode-alist
+;; 	(append
+;; 	 '(("CMakeLists\\.txt\\'" . cmake-mode))
+;; 	 '(("\\.cmake\\'" . cmake-mode))
+;; 	 auto-mode-alist))
+;;   )
+
+#+END_SRC
 * Test
 #+BEGIN_SRC emacs-lisp
 #+END_SRC
