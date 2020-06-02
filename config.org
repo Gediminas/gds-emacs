@@ -27,7 +27,10 @@
 
 * Theme
 #+BEGIN_SRC emacs-lisp
-(use-package zenburn-theme) ; :config (load-theme 'zenburn t))
+
+;; FIXME: Disabled, because it causes incorrect load of spacemacs-light theme
+;(use-package zenburn-theme)
+
 (use-package doom-themes)
 (use-package spacemacs-theme
   :defer t
