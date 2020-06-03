@@ -29,11 +29,9 @@
 #+BEGIN_SRC emacs-lisp
 
 ;; FIXME: Disabled, because it causes incorrect load of spacemacs-light theme
-;(use-package zenburn-theme)
-
-(use-package doom-themes)
-(use-package spacemacs-theme
-  :defer t
+(use-package zenburn-theme :defer t)
+(use-package doom-themes :defer t)
+(use-package spacemacs-theme :defer t
   :config
   (load-theme 'spacemacs-light t)
   (gds/adjust-font))
