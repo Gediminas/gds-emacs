@@ -783,7 +783,7 @@ current window."
   ;(add-hook 'js2-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
 #+END_SRC
 
-* Javasript
+* Language -> Javasript
   https://justin.abrah.ms/dotfiles/emacs.html
 #+BEGIN_SRC emacs-lisp
 (use-package js2-mode
@@ -806,50 +806,7 @@ current window."
   :mode ("\\.json" . json-mode))
 #+END_SRC
 
-* Links
-https://github.com/sho-87/dotfiles/blob/master/emacs/init.el
-
-* Mouse
-#+BEGIN_SRC emacs-lisp
-(setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control) . nil)))
-(setq mouse-wheel-progressive-speed t)
-#+END_SRC
-
-* Persistent Scratch
-#+BEGIN_SRC emacs-lisp
-(use-package persistent-scratch
-    :init
-    (setq persistent-scratch-backup-directory (concat user-cache-directory "scratch-backups"))
-    (setq persistent-scratch-save-file (concat user-cache-directory "persistent-scratch"))
-    ;; keep backups not older than a month
-    (setq persistent-scratch-autosave-interval 60)
-    (setq persistent-scratch-backup-filter
-      (persistent-scratch-keep-backups-not-older-than
-       (days-to-time 90)))
-    :config
-    (ignore-errors (persistent-scratch-setup-default)))
-#+END_SRC
-
-* Code Completion
-#+BEGIN_SRC emacs-lisp
-;; https://github.com/gjstein/emacs.d/tree/master/config
-(use-package company
-  ;:diminish company-mode
-  :init
-  (add-hook 'after-init-hook 'global-company-mode)
-  :config
-  (use-package company-irony :ensure t :defer t)
-  (setq company-idle-delay              0.5 
-	company-minimum-prefix-length   0
-	company-show-numbers            t
-	company-tooltip-limit           20
-	company-dabbrev-downcase        nil
-	)
-  :bind ("C-." . company-complete-common)
-  )
-#+END_SRC
-
-* C++
+* Language -> C++
 #+BEGIN_SRC emacs-lisp
 ;; https://github.com/gjstein/emacs.d/tree/master/config
 ;; (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
@@ -897,6 +854,55 @@ https://github.com/sho-87/dotfiles/blob/master/emacs/init.el
 
 #+END_SRC
 
+* Language -> AHK
+#+BEGIN_SRC emacs-lisp
+(if (eq system-type 'windows-nt)
+   (use-package ahk-mode))
+#+END_SRC
+
+* Links
+https://github.com/sho-87/dotfiles/blob/master/emacs/init.el
+
+* Mouse
+#+BEGIN_SRC emacs-lisp
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control) . nil)))
+(setq mouse-wheel-progressive-speed t)
+#+END_SRC
+
+* Persistent Scratch
+#+BEGIN_SRC emacs-lisp
+(use-package persistent-scratch
+    :init
+    (setq persistent-scratch-backup-directory (concat user-cache-directory "scratch-backups"))
+    (setq persistent-scratch-save-file (concat user-cache-directory "persistent-scratch"))
+    ;; keep backups not older than a month
+    (setq persistent-scratch-autosave-interval 60)
+    (setq persistent-scratch-backup-filter
+      (persistent-scratch-keep-backups-not-older-than
+       (days-to-time 90)))
+    :config
+    (ignore-errors (persistent-scratch-setup-default)))
+#+END_SRC
+
+* Code Completion
+#+BEGIN_SRC emacs-lisp
+;; https://github.com/gjstein/emacs.d/tree/master/config
+(use-package company
+  ;:diminish company-mode
+  :init
+  (add-hook 'after-init-hook 'global-company-mode)
+  :config
+  (use-package company-irony :ensure t :defer t)
+  (setq company-idle-delay              0.5 
+	company-minimum-prefix-length   0
+	company-show-numbers            t
+	company-tooltip-limit           20
+	company-dabbrev-downcase        nil
+	)
+  :bind ("C-." . company-complete-common)
+  )
+#+END_SRC
+
 * Multi-edit - wgrep
 #+BEGIN_SRC emacs-lisp
    (use-package wgrep
@@ -918,3 +924,10 @@ https://github.com/sho-87/dotfiles/blob/master/emacs/init.el
 #+BEGIN_SRC emacs-lisp
 #+END_SRC
 
+* Test
+#+BEGIN_SRC emacs-lisp
+#+END_SRC
+
+* Test
+#+BEGIN_SRC emacs-lisp
+#+END_SRC
