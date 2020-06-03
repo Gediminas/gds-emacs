@@ -1,3 +1,9 @@
+;;; package --- custom.el
+;;; Commentary:
+;;; gds-emacs init - custom-set-variables && custom-set-faces
+;;; Code:
+
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -67,3 +73,6 @@
  ;; If there is more than one, they won't work right.
  '(default ((t (:inherit nil :stipple nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 130 :width normal :foundry "outline" :family "Hack"))))
  )
+
+;(provide 'custom)
+;;; custom.el ends here
