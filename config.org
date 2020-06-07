@@ -989,6 +989,12 @@ https://www.youtube.com/watch?v=zg6JJI-kwhE&t=388s
   ;(setq lsp-clients-clangd-executable "clang")
 #+END_SRC
 
+* Language -> AHK
+#+BEGIN_SRC emacs-lisp
+(if (eq system-type 'windows-nt)
+   (use-package ahk-mode))
+#+END_SRC
+
 * Test
 #+BEGIN_SRC emacs-lisp
 #+END_SRC
