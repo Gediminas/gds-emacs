@@ -66,6 +66,7 @@
 (when (eq system-type 'darwin)
   ; windows-nt cygwin
   (add-to-list 'exec-path "/usr/local/bin/")
+  (add-to-list 'exec-path "/usr/local/opt/llvm/bin/")
   (setq-default counsel-rg-base-command "/usr/local/Cellar/ripgrep/11.0.2/bin/rg -M 120 --with-filename --no-heading --line-number --color never %s"))
 
 #+END_SRC
@@ -432,6 +433,9 @@ current window."
 
   (use-package evil-magit
     :config
+    (setq magit-log-margin '(t "%Y-%m-%d %H:%M " magit-log-margin-width t 18))
+    (setq magit-status-margin '(t "%Y-%m-%d %H:%M " magit-log-margin-width t 18))
+
     ;; Default commit editor opening in insert mode
     (add-hook 'with-editor-mode-hook 'evil-insert-state)
 
@@ -754,7 +758,7 @@ current window."
    (use-package flycheck
      :config 
      (global-flycheck-mode)
-     (setq flycheck-check-syntax-automatically '(mode-enabled save))
+     ;(setq flycheck-check-syntax-automatically '(mode-enabled save))
      ;(setq flycheck-display-errors-delay 0.25)
      ;(setq-default flycheck-temp-prefix ".")
      ;(flycheck-add-mode 'javascript-eslint 'web-mode)
@@ -835,7 +839,7 @@ https://github.com/sho-87/dotfiles/blob/master/emacs/init.el
 (use-package company
   ;:diminish company-mode
   :init
-  (add-hook 'after-init-hook 'global-company-mode)
+  ;;(add-hook 'after-init-hook 'global-company-mode)
   :config
   (use-package company-irony :ensure t :defer t)
   (setq company-idle-delay              0.5 
@@ -844,8 +848,15 @@ https://github.com/sho-87/dotfiles/blob/master/emacs/init.el
 	company-tooltip-limit           20
 	company-dabbrev-downcase        nil
 	)
-  :bind ("C-." . company-complete-common)
-  )
+  ;:bind ("C-." . company-complete-common)
+  (global-company-mode t)
+)
+
+(use-package company-lsp
+  :config
+  (push 'company-lsp company-backends)
+)
+
 #+END_SRC
 
 * C++
@@ -913,7 +924,78 @@ https://github.com/sho-87/dotfiles/blob/master/emacs/init.el
    (use-package multiple-cursors)
 #+END_SRC
 
+* LSP core
+Mike Zamansky - Using Emacs Episode 58 - lsp-mode
+https://www.youtube.com/watch?v=zg6JJI-kwhE&t=388s
+#+BEGIN_SRC emacs-lisp
+(use-package lsp-mode
+  :defer t
+  :commands lsp
+  :custom
+  (lsp-auto-guess-root nil)
+  (lsp-prefer-flymake nil) ; Use flycheck instead of flymake
+  (lsp-file-watch-threshold 2000)
+  (read-process-output-max (* 1024 1024))
+  (lsp-eldoc-hook nil)
+  :bind (:map lsp-mode-map ("C-c C-f" . lsp-format-buffer))
+  :hook ((python-mode
+          js-mode js2-mode web-mode
+          c-mode c++-mode objc-mode) . lsp))
+
+(use-package lsp-ui
+  :after lsp-mode
+  ;; :diminish
+  ;; :commands lsp-ui-mode
+  ;:custom-face
+  ;;(lsp-ui-doc-background ((t (:background nil))))
+  ;;(lsp-ui-doc-header ((t (:inherit (font-lock-string-face italic)))))
+  :bind (:map lsp-ui-mode-map
+              ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
+              ([remap xref-find-references] . lsp-ui-peek-find-references)
+              ("C-c u" . lsp-ui-imenu)
+              ("M-i" . lsp-ui-doc-focus-frame))
+  :custom
+  (lsp-ui-doc-header t)
+  (lsp-ui-doc-include-signature t)
+  ;; (lsp-ui-doc-border (face-foreground 'default))
+  ;; (lsp-ui-sideline-enable nil)
+  ;; (lsp-ui-sideline-ignore-duplicate t)
+  ;; (lsp-ui-sideline-show-code-actions nil)
+  ;:config
+
+  ;;gds
+  ;; ;; Use lsp-ui-doc-webkit only in GUI
+  ;; (if *sys/gui*
+  ;;     (setq lsp-ui-doc-use-webkit t))
+
+  ;; WORKAROUND Hide mode-line of the lsp-ui-imenu buffer
+  ;; https://github.com/emacs-lsp/lsp-ui/issues/243
+  ;(defadvice lsp-ui-imenu (after hide-lsp-ui-imenu-mode-line activate)
+  ;  (setq mode-line-format nil))
+)
+#+END_SRC
+
+* LSP Python3
+#+BEGIN_SRC emacs-lisp
+  (setq lsp-message-project-root-warning nil)
+  (setq python-indent-offset 2)
+  (setq python-indent-guess-indent-offset t)
+  (setq python-indent-guess-indent-offset-verbose nil)
+#+END_SRC
+
+* LSP C++
+#+BEGIN_SRC emacs-lisp
+  ;(setq lsp-clangd-executable "clang")
+  ;(setq lsp-clients-clangd-executable "clang")
+#+END_SRC
+
 * Test
 #+BEGIN_SRC emacs-lisp
 #+END_SRC
 
+* OS install
+https://opensource.com/article/19/5/python-3-default-mac
+pip install 'python-language-server[all]'
+
+https://github.com/theia-ide/typescript-language-server
+npm install -g typescript-language-server
