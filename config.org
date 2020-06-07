@@ -275,7 +275,7 @@
     which-key-separator " "
     which-key-prefix-prefix "+"
     which-key-show-early-on-C-h t ;; C-h before it is done automatically
-    which-key-idle-delay 2
+    which-key-idle-delay 1
     which-key-idle-secondary-delay 0.05)
     (which-key-mode)
 
@@ -501,6 +501,7 @@ current window."
    "b"  '(:ignore t :which-key "buffer")
    "bb" 'ivy-switch-buffer
    "bd" 'kill-current-buffer
+   "bD" 'projectile-kill-buffers
    "br" 'revert-buffer
    "bs" 'save-buffer
 
@@ -759,7 +760,7 @@ current window."
      :config 
      (global-flycheck-mode)
      ;(setq flycheck-check-syntax-automatically '(mode-enabled save))
-     ;(setq flycheck-display-errors-delay 0.25)
+     (setq flycheck-display-errors-delay 0.5)
      ;(setq-default flycheck-temp-prefix ".")
      ;(flycheck-add-mode 'javascript-eslint 'web-mode)
      (add-hook 'web-mode-hook #'configure-web-mode-flycheck-checkers)
