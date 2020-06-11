@@ -532,7 +532,8 @@ current window."
    "ef" 'eval-defun
    "er" 'eval-region
    "ee" 'eval-last-sexp
-   "el" '(flycheck-list-errors :which-key "Error list")
+   ; "el" '(flycheck-list-errors :which-key "Error list")
+   "el" '(flymake-show-diagnostics-buffer :which-key "Error list")
    "em" '(mc/edit-lines :which-key "Multi-cursor")
    "ep" 'eval-print-last-sexp
 
@@ -585,7 +586,8 @@ current window."
    "t"  '(:ignore t :which-key "tweak/toggle/theme")
    "tw" 'toggle-truncate-lines
    "tl" 'display-line-numbers-mode
-   "tf" 'flycheck-mode
+   ; "tf" 'flycheck-mode
+   "tf" 'flymake-mode
    ;; "tt"  '(:ignore t :which-key "tweak")
    ;; "ttt" 'counsel-load-theme
    "tt" '(theme-looper-enable-next-theme :which-key "Theme toggle")
@@ -678,9 +680,11 @@ current window."
     (define-key org-mode-map [(control tab)] nil)))
 
   (general-define-key
-    :keymaps 'flycheck-mode-map
-    "C-n"     'flycheck-next-error
-    "C-p"     'flycheck-previous-error
+    :keymaps 'flymake-mode-map
+    ; "C-n"     'flycheck-next-error
+    ; "C-p"     'flycheck-previous-error
+    "C-n"     'flymake-goto-next-error
+    "C-p"     'flymake-goto-prev-error
   )
 
 
@@ -738,37 +742,37 @@ current window."
 
 * Syntax -> Check Errors
 #+BEGIN_SRC emacs-lisp
-    ;; https://emacs.stackexchange.com/questions/46001/configuring-flycheck-to-use-a-local-eslint/46586
-    (defun configure-web-mode-flycheck-checkers ()
-    ;; in order to have flycheck enabled in web-mode, add an entry to this
-    ;; cond that matches the web-mode engine/content-type/etc and returns the
-    ;; appropriate checker.
-    (-when-let (checker (cond
-                        ((string= web-mode-content-type "jsx")
-                            'javascript-eslint)))
-        (flycheck-mode)
-        ;; use the locally installed eslint
-        (let* ((root (locate-dominating-file
-                    (or (buffer-file-name) default-directory)
-                    "node_modules"))
-            (eslint (and root
-                            (expand-file-name "node_modules/.bin/eslint"
-                                            root))))
-        (when (and eslint (file-executable-p eslint))
-            (setq-local flycheck-javascript-eslint-executable eslint)))
-
-        (flycheck-select-checker checker)))
-
-   (use-package flycheck
-     :config 
-     (global-flycheck-mode)
-     (setq flycheck-check-syntax-automatically '(mode-enabled save))
-     ;(setq flycheck-display-errors-delay 0.5)
-     ;(setq-default flycheck-temp-prefix ".")
-     ;(flycheck-add-mode 'javascript-eslint 'web-mode)
-     (add-hook 'web-mode-hook #'configure-web-mode-flycheck-checkers)
-     (add-hook 'c++-mode-hook (lambda () (setq flycheck-clang-language-standard "c++2a")))
-   )
+   ;;  ;; https://emacs.stackexchange.com/questions/46001/configuring-flycheck-to-use-a-local-eslint/46586
+   ;;  (defun configure-web-mode-flycheck-checkers ()
+   ;;  ;; in order to have flycheck enabled in web-mode, add an entry to this
+   ;;  ;; cond that matches the web-mode engine/content-type/etc and returns the
+   ;;  ;; appropriate checker.
+   ;;  (-when-let (checker (cond
+   ;;                      ((string= web-mode-content-type "jsx")
+   ;;                          'javascript-eslint)))
+   ;;      (flycheck-mode)
+   ;;      ;; use the locally installed eslint
+   ;;      (let* ((root (locate-dominating-file
+   ;;                  (or (buffer-file-name) default-directory)
+   ;;                  "node_modules"))
+   ;;          (eslint (and root
+   ;;                          (expand-file-name "node_modules/.bin/eslint"
+   ;;                                          root))))
+   ;;      (when (and eslint (file-executable-p eslint))
+   ;;          (setq-local flycheck-javascript-eslint-executable eslint)))
+   ;; 
+   ;;      (flycheck-select-checker checker)))
+   ;; 
+   ;; (use-package flycheck
+   ;;   :config 
+   ;;   (global-flycheck-mode)
+   ;;   (setq flycheck-check-syntax-automatically '(mode-enabled save))
+   ;;   ;(setq flycheck-display-errors-delay 0.5)
+   ;;   ;(setq-default flycheck-temp-prefix ".")
+   ;;   ;(flycheck-add-mode 'javascript-eslint 'web-mode)
+   ;;   (add-hook 'web-mode-hook #'configure-web-mode-flycheck-checkers)
+   ;;   (add-hook 'c++-mode-hook (lambda () (setq flycheck-clang-language-standard "c++2a")))
+   ;; )
 #+END_SRC
 
 * Syntax -> Navigation
@@ -997,6 +1001,36 @@ https://www.youtube.com/watch?v=zg6JJI-kwhE&t=388s
 #+BEGIN_SRC emacs-lisp
 (if (eq system-type 'windows-nt)
    (use-package ahk-mode))
+#+END_SRC
+
+* LSP Eglot
+#+BEGIN_SRC emacs-lisp
+
+(use-package flymake-eslint
+:config
+  (add-hook 'web-mode-hook (lambda () (flymake-eslint-enable)))
+  (add-hook 'js2-mode-hook (lambda () (flymake-eslint-enable)))
+  ;(add-hook 'c++-mode-hook (lambda () (setq flycheck-clang-language-standard "c++2a")))
+)
+
+(use-package eglot
+
+)
+
+(use-package markdown-mode
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :init (setq markdown-command "multimarkdown")
+)
+#+END_SRC
+
+* Test
+#+BEGIN_SRC emacs-lisp
+#+END_SRC
+
+* Test
+#+BEGIN_SRC emacs-lisp
 #+END_SRC
 
 * Test
