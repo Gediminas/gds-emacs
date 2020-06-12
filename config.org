@@ -838,7 +838,11 @@ https://github.com/sho-87/dotfiles/blob/master/emacs/init.el
       (persistent-scratch-keep-backups-not-older-than
        (days-to-time 90)))
     :config
-    (ignore-errors (persistent-scratch-setup-default)))
+    (if (eq system-type 'darwin)
+     (with-demoted-errors(persistent-scratch-setup-default))
+     ;windows-nt => issue
+    )
+)
 #+END_SRC
 
 * Code Completion
