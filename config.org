@@ -301,12 +301,14 @@ npm install -g typescript-language-server
   :config
   (ivy-mode t)
   (setq 
-    ivy-use-virtual-buffers nil ; add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’
-    ivy-height 10             ; number of result lines to display
-    ivy-count-format "%d/%d " ; count candidates
+    ;ivy-use-virtual-buffers nil ; add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’
+    ivy-use-virtual-buffers t
+    ivy-height 7                 ; number of result lines to display
+    ivy-count-format "%d/%d "    ; count candidates
     ivy-initial-inputs-alist nil ; no regexp by default
-    ivy-re-builders-alist     ; configure regexp engine.
+    ivy-re-builders-alist        ; configure regexp engine.
         '((t   . ivy--regex-ignore-order));; allow input not in order
+    ivy-display-style 'fancy
    ) 
   :diminish (ivy-mode . ""))
 
