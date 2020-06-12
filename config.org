@@ -1,3 +1,9 @@
+* README - OS install
+https://opensource.com/article/19/5/python-3-default-mac
+pip install 'python-language-server[all]'
+
+https://github.com/theia-ide/typescript-language-server
+npm install -g typescript-language-server
 * Functions
 #+BEGIN_SRC emacs-lisp
 (defun gds/monitor-max-size-mm (&optional frame)
@@ -40,8 +46,7 @@
 
 * Init
 #+BEGIN_SRC emacs-lisp
-
-(setq user-cache-directory "~/.emacs.local/")
+(setq user-cache-directory "~/.emacs.d/.cache/")
 
 ;; Advanced settings
 (desktop-save-mode t)     ;auto save/load session,window-size
@@ -71,6 +76,16 @@
 
 #+END_SRC
 
+* UI -> Title
+#+BEGIN_SRC emacs-lisp
+
+;(setq frame-title-format "Emacs")
+(setq frame-title-format '(:eval
+   (let ((project-name (projectile-project-name)))
+   (if (string= "-" project-name)
+       (format "%s" "%b")
+       (format "%s" project-name)))))
+#+END_SRC
 * UI -> Controls
 #+BEGIN_SRC emacs-lisp
 (scroll-bar-mode -1)
@@ -81,10 +96,9 @@
 
 * UI -> MacOS: Fancy titlebar
 #+BEGIN_SRC emacs-lisp
-(add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
-(add-to-list 'default-frame-alist '(ns-appearance . dark))
-(setq ns-use-proxy-icon  nil)
-(setq frame-title-format nil)
+;(add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+;(add-to-list 'default-frame-alist '(ns-appearance . dark))
+;(setq ns-use-proxy-icon  nil)
 #+END_SRC
 
 * UI -> Modeline
@@ -404,7 +418,6 @@ current window."
 * Projectile
 #+BEGIN_SRC emacs-lisp
 (use-package projectile
- :ensure t
  :init
  (setq projectile-require-project-root nil) ;any folder as prj
  :config
@@ -415,7 +428,6 @@ current window."
  (projectile-mode t))
 
 (use-package counsel-projectile
- :ensure t
  :init
  :config
  (counsel-projectile-mode t))
@@ -429,7 +441,7 @@ current window."
   (setq magit-diff-options (quote ("--word-diff")))
   (setq magit-diff-refine-hunk 'all)
   (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1)
-  (setq projectile-switch-project-action 'magit-status) ;;?
+  ;(setq projectile-switch-project-action 'magit-status) ;;?
 
   (use-package evil-magit
     :config
@@ -828,7 +840,7 @@ https://github.com/sho-87/dotfiles/blob/master/emacs/init.el
 
 * Persistent Scratch
 #+BEGIN_SRC emacs-lisp
-(use-package persistent-scratch
+  (use-package persistent-scratch
     :init
     (setq persistent-scratch-backup-directory (concat user-cache-directory "scratch-backups"))
     (setq persistent-scratch-save-file (concat user-cache-directory "persistent-scratch"))
@@ -838,10 +850,7 @@ https://github.com/sho-87/dotfiles/blob/master/emacs/init.el
       (persistent-scratch-keep-backups-not-older-than
        (days-to-time 90)))
     :config
-    (if (eq system-type 'darwin)
-     (with-demoted-errors(persistent-scratch-setup-default))
-     ;windows-nt => issue
-    )
+    (ignore-errors (persistent-scratch-setup-default))
 )
 #+END_SRC
 
@@ -1040,11 +1049,4 @@ https://www.youtube.com/watch?v=zg6JJI-kwhE&t=388s
 * Test
 #+BEGIN_SRC emacs-lisp
 #+END_SRC
-
-* OS install
-https://opensource.com/article/19/5/python-3-default-mac
-pip install 'python-language-server[all]'
-
-https://github.com/theia-ide/typescript-language-server
-npm install -g typescript-language-server
 
