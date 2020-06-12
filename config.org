@@ -78,14 +78,13 @@ npm install -g typescript-language-server
 
 * UI -> Title
 #+BEGIN_SRC emacs-lisp
-
-;(setq frame-title-format "Emacs")
 (setq frame-title-format '(:eval
    (let ((project-name (projectile-project-name)))
    (if (string= "-" project-name)
        (format "%s" "%b")
        (format "%s" project-name)))))
 #+END_SRC
+
 * UI -> Controls
 #+BEGIN_SRC emacs-lisp
 (scroll-bar-mode -1)
