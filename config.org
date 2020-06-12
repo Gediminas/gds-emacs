@@ -1021,10 +1021,13 @@ https://www.youtube.com/watch?v=zg6JJI-kwhE&t=388s
 
 (use-package flymake-eslint
 :config
+  ;flymake-no-changes-timeout
   (add-hook 'web-mode-hook (lambda () (flymake-eslint-enable)))
   (add-hook 'js2-mode-hook (lambda () (flymake-eslint-enable)))
   ;(add-hook 'c++-mode-hook (lambda () (setq flycheck-clang-language-standard "c++2a")))
+  ;(use-package flymake-stylelint)
 )
+
 
 (use-package eglot
 
