@@ -76,185 +76,7 @@ npm install -g typescript-language-server
 
 #+END_SRC
 
-* UI -> Title
-#+BEGIN_SRC emacs-lisp
-(setq frame-title-format '(:eval
-   (let ((project-name (projectile-project-name)))
-   (if (string= "-" project-name)
-       (format "%s" "%b")
-       (format "%s" project-name)))))
-#+END_SRC
-
-* UI -> Controls
-#+BEGIN_SRC emacs-lisp
-(scroll-bar-mode -1)
-(tool-bar-mode   -1)
-(tooltip-mode    -1)
-(menu-bar-mode   -1)
-#+END_SRC
-
-* UI -> MacOS: Fancy titlebar
-#+BEGIN_SRC emacs-lisp
-;; (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
-;; (add-to-list 'default-frame-alist '(ns-appearance . dark))
-;; (setq ns-use-proxy-icon  nil)
-#+END_SRC
-
-* UI -> Modeline
-#+BEGIN_SRC emacs-lisp
-(use-package doom-modeline
-  :ensure t
-  :init 
-  (doom-modeline-mode 1)
-  :config
-  (setq doom-modeline-height 1)
-  (set-face-attribute 'mode-line nil :family "Arial Narrow" :height 70)
-  (set-face-attribute 'mode-line-inactive nil :family "Arial Narrow" :height 70)
-)
-#+END_SRC
-
-* UI -> Theme toggle
-#+BEGIN_SRC emacs-lisp
-(use-package theme-looper
- :ensure t
- :init
- :config
- (theme-looper-set-favorite-themes '(zenburn spacemacs-light))
- ;(theme-looper t)
-)
-#+END_SRC
-
-* UI -> Tree
-#+BEGIN_SRC emacs-lisp
-(use-package treemacs
-  :ensure t
-  :defer t
-  :config
-  (progn
-    (setq treemacs-collapse-dirs                 (if treemacs-python-executable 3 0)
-          treemacs-deferred-git-apply-delay      0.5
-          treemacs-directory-name-transformer    #'identity
-          treemacs-display-in-side-window        t
-          treemacs-eldoc-display                 t
-          treemacs-file-event-delay              5000
-          treemacs-file-extension-regex          treemacs-last-period-regex-value
-          treemacs-file-follow-delay             0.2
-          treemacs-file-name-transformer         #'identity
-          treemacs-follow-after-init             t
-          treemacs-git-command-pipe              ""
-          treemacs-goto-tag-strategy             'refetch-index
-          treemacs-indentation                   2
-          treemacs-indentation-string            " "
-          treemacs-is-never-other-window         nil
-          treemacs-max-git-entries               5000
-          treemacs-missing-project-action        'ask
-          treemacs-move-forward-on-expand        nil
-          treemacs-no-png-images                 nil
-          treemacs-no-delete-other-windows       t
-          treemacs-project-follow-cleanup        nil
-          treemacs-persist-file                  (expand-file-name ".cache/treemacs-persist" user-emacs-directory)
-          treemacs-position                      'right
-          treemacs-recenter-distance             0.1
-          treemacs-recenter-after-file-follow    nil
-          treemacs-recenter-after-tag-follow     nil
-          treemacs-recenter-after-project-jump   'always
-          treemacs-recenter-after-project-expand 'on-distance
-          treemacs-show-cursor                   nil
-          treemacs-show-hidden-files             t
-          treemacs-silent-filewatch              nil
-          treemacs-silent-refresh                nil
-          treemacs-sorting                       'alphabetic-asc
-          treemacs-space-between-root-nodes      t
-          treemacs-tag-follow-cleanup            t
-          treemacs-tag-follow-delay              1.5
-          treemacs-user-mode-line-format         nil
-          ;treemacs-width                         35
-      )
-
-    ;; The default width and height of the icons is 22 pixels. If you are
-    ;; using a Hi-DPI display, uncomment this to double the icon size.
-    ;;(treemacs-resize-icons 44)
-    (treemacs-resize-icons 11)
-    
-    (treemacs-git-mode 'extended)
-    (treemacs-follow-mode t)
-    (treemacs-filewatch-mode t)
-    (treemacs-fringe-indicator-mode t)
-
-    ;; (pcase (cons (not (null (executable-find "git")))
-    ;;              (not (null treemacs-python-executable)))
-    ;;   (`(t . t)
-    ;;    (treemacs-git-mode 'deferred))
-    ;;   (`(t . _)
-    ;;    (treemacs-git-mode 'simple)))
-  )
-
-  (define-key treemacs-mode-map [mouse-1] #'treemacs-single-click-expand-action)
-)
-
-(use-package treemacs-evil
-  :after treemacs evil
-  :ensure t)
-
-(use-package treemacs-projectile
-  :after treemacs projectile
-  :ensure t)
-
-(use-package treemacs-icons-dired
-  :after treemacs dired
-  :ensure t
-  :config (treemacs-icons-dired-mode))
-
-(use-package treemacs-magit
-  :after treemacs magit
-  :ensure t)
-
-;; (use-package treemacs-persp
-;;   :after treemacs persp-mode
-;;   :ensure t
-;;   :config (treemacs-set-scope-type 'Perspectives))
-
-#+END_SRC
-
-* UI -> Font Auto Zoom
-#+BEGIN_SRC emacs-lisp
-;; https://emacs.stackexchange.com/questions/28390/quickly-adjusting-text-to-dpi-changes
-(defun my-dpi (&optional frame)
-  "Get the DPI of FRAME (or current if nil)."
-  (cl-flet ((pyth (lambda (w h)
-                    (sqrt (+ (* w w)
-                             (* h h)))))
-            (mm2in (lambda (mm)
-                     (/ mm 25.4))))
-    (let* ((atts (frame-monitor-attributes frame))
-           (pix-w (cl-fourth (assoc 'geometry atts)))
-           (pix-h (cl-fifth (assoc 'geometry atts)))
-           (pix-d (pyth pix-w pix-h))
-           (mm-w (cl-second (assoc 'mm-size atts)))
-           (mm-h (cl-third (assoc 'mm-size atts)))
-           (mm-d (pyth mm-w mm-h)))
-      (/ pix-d (mm2in mm-d)))))
-
-(defvar my-zoom-frm-wanted-dpi 70
-  "The DPI I want to achieve when using `my-zoom-frm-by-dpi'.")
-
-(defun my-zoom-frm-by-dpi (&optional frame)
-  "Zoom FRAME so the DPI is closer to `my-zoom-frm-wanted-dpi'."
-  (interactive)
-  (let ((frame (or frame (selected-frame))))
-    (when (frame-parameter frame 'zoomed)
-      (zoom-frm-unzoom frame))
-    (let ((frame-zoom-font-difference (1- (round (/ (my-dpi frame)
-                                                    my-zoom-frm-wanted-dpi)))))
-      (when (called-interactively-p 'interactive)
-        (message "Zooming by %S" frame-zoom-font-difference))
-      (zoom-frm-in frame))))
-
-;; Apply the scaling I want to each newly created frame:
-(add-hook 'after-make-frame-functions #'my-zoom-frm-by-dpi)
-#+END_SRC
-
-* Packages
+* Keys -> Misc
 #+BEGIN_SRC emacs-lisp
 ;; Minimize mode-line
 (use-package diminish
@@ -293,184 +115,6 @@ npm install -g typescript-language-server
     (which-key-mode)
 
   :diminish (which-key-mode . ""))
-
-;; Ivy
-(use-package ivy
-  :ensure t
-  :config
-  (ivy-mode t)
-  (setq 
-    ;ivy-use-virtual-buffers nil ; add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’
-    ivy-use-virtual-buffers t
-    ivy-height 7                 ; number of result lines to display
-    ivy-count-format "%d/%d "    ; count candidates
-    ivy-initial-inputs-alist nil ; no regexp by default
-    ivy-re-builders-alist        ; configure regexp engine.
-        '((t   . ivy--regex-ignore-order));; allow input not in order
-    ivy-display-style 'fancy
-   ) 
-  :diminish (ivy-mode . ""))
-
-(use-package counsel
-  :ensure t
-  :config
-  (counsel-mode t)
-  :diminish (counsel-mode . "")
-)
-
-;; Ranger (test)
-(use-package ranger
-  :ensure t
-  :commands (ranger)
-  :bind (("C-x d" . deer))
-  :config
-  (setq ranger-cleanup-eagerly t) ; kill the buffer just after you move to another entry in the dired buffer.
-  )
-
-;(use-package avy :ensure t
-;  :commands (avy-goto-word-1))
-
-#+END_SRC
-
-* A la sane defaults
-#+BEGIN_SRC emacs-lisp
-(setq version-control t)             ; use version control
-(setq vc-follow-symlinks t)          ; don't ask for confirmation when opening symlinked file
-(setq inhibit-startup-screen t)      ; inhibit useless and old-school startup screen
-(setq ring-bell-function 'ignore)    ; silent bell when you make a mistake
-(setq coding-system-for-read 'utf-8) ; use utf-8 by default
-(setq coding-system-for-write 'utf-8)
-(setq sentence-end-double-space nil) ; sentence SHOULD end with only a point.
-(setq default-fill-column 80)        ; toggle wrapping text at the 80th character
-(setq initial-scratch-message "")    ; print a default message in the empty scratch buffer opened at startup
-#+END_SRC
-
-* Autosave/Backups
-#+BEGIN_SRC emacs-lisp
-;; stop creating those #auto-save# files
-(setq auto-save-default nil)
-;(setq auto-save-file-name-transforms '((".*" "~/.emacs.local/auto-save-list/" t)) ) ;transform backups file name
-
-(setq make-backup-files nil)     ; disable backups
-;(setq backup-directory-alist `(("." . "~/.emacs.local/backups")))
-;(setq backup-by-copying t)             ; can be slow
-;(setq backup-by-copying-when-linked t) ; can be slow?
-;(setq delete-old-versions t
-;  kept-new-versions 6
-;  kept-old-versions 2
-;  version-control t)
-;;(setq delete-old-versions -1 )   ; delete excess backup versions silently
-;;(setq vc-make-backup-files t )   ; make backups file even when in version controlled dir
-#+END_SRC
-
-* Buffer auto-refresh
-#+BEGIN_SRC emacs-lisp
-(global-auto-revert-mode 1)
-(setq global-auto-revert-non-file-buffers t) ;(e.g. dired)
-#+END_SRC
-
-* Buffers
-#+BEGIN_SRC emacs-lisp
-;https://emacs.stackexchange.com/questions/44697/how-to-skip-some-buffers-when-use-prev-buffer-next-buffer
-(defun my-buffer-predicate (buffer)
-  (if (string-match "Messages" (buffer-name buffer)) nil t)
-  (if (string-match "Straight-process" (buffer-name buffer)) nil t))
-(set-frame-parameter nil 'buffer-predicate 'my-buffer-predicate)
-
-(defun gds/alternate-buffer (&optional window)
-  "Switch back and forth between current and last buffer in the
-current window."
-  (interactive)
-  (cl-destructuring-bind (buf start pos)
-    (or (cl-find (window-buffer window) (window-prev-buffers)
-                     :key #'car :test-not #'eq)
-           (list (other-buffer) nil nil))
-    (if (not buf)
-        (message "Last buffer not found.")
-      (set-window-buffer-start-and-point window buf start pos))))
-
-#+END_SRC
-
-* Copy/Paste clipboard emacs-lisp
-(setq select-enable-primary t)
-(setq select-enable-clipboard t)
-(setq save-interprogram-paste-before-kill t)
-(setq kill-do-not-save-duplicates t)
-;; https://www.reddit.com/r/emacs/comments/5n9t3f/copypaste_from_system_clipboard_on_windows/
-#+END_SRC
-
-* Terminal (fails)
-#+BEGIN_SRC emacs-lisp
-  (defalias 'yes-or-no-p 'y-or-n-p)
-  (defvar my-term-shell "/bin/zsh")
-  (defadvice ansi-term (before force-bash)
-    (interactive (list my-term-shell)))
-  (ad-activate 'ansi-term)
-#+END_SRC
-
-* Org bullets
-#+BEGIN_SRC emacs-lisp
-(use-package org-bullets
-  :ensure t
-  :config
-  (add-hook 'org-mode-hook (lambda () (org-bullets-mode))))
-#+END_SRC
-
-* Projectile
-#+BEGIN_SRC emacs-lisp
-(use-package projectile
- :init
- (setq projectile-require-project-root nil) ;any folder as prj
- :config
- (if (eq system-type 'darwin)
-   (setq projectile-project-search-path '("~/dev/repo"))
-   (setq projectile-project-search-path '("d:/dev/repo"))
- )
- (projectile-mode t))
-
-(use-package counsel-projectile
- :init
- :config
- (counsel-projectile-mode t))
-#+END_SRC
-
-* Git
-#+BEGIN_SRC emacs-lisp
-(use-package magit
-  :bind ("C-x g" . magit-status)
-  :init
-  (setq magit-diff-options (quote ("--word-diff")))
-  (setq magit-diff-refine-hunk 'all)
-  (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1)
-  ;(setq projectile-switch-project-action 'magit-status) ;;?
-
-  (use-package evil-magit
-    :config
-    (setq magit-log-margin '(t "%Y-%m-%d %H:%M " magit-log-margin-width t 18))
-    (setq magit-status-margin '(t "%Y-%m-%d %H:%M " magit-log-margin-width t 18))
-
-    ;; Default commit editor opening in insert mode
-    (add-hook 'with-editor-mode-hook 'evil-insert-state)
-
-    (evil-define-key 'normal with-editor-mode-map
-      (kbd "RET") 'with-editor-finish
-      [escape] 'with-editor-cancel
-      )
-    (evil-define-key 'normal git-rebase-mode-map
-      "l" 'git-rebase-show-commit
-      )
-    )
-  )
-
-(use-package git-timemachine)
-
-#+END_SRC
-
-* Commenting
-#+BEGIN_SRC emacs-lisp
-(use-package evil-nerd-commenter
- :config
- (setq comment-empty-lines t))
 #+END_SRC
 
 * Keys -> Windows
@@ -751,6 +395,365 @@ current window."
               (general-key-dispatch 'self-insert-command
                 :timeout 0.20
                 "k" 'evil-normal-state))
+#+END_SRC
+
+* UI -> Title
+#+BEGIN_SRC emacs-lisp
+(setq frame-title-format '(:eval
+   (let ((project-name (projectile-project-name)))
+   (if (string= "-" project-name)
+       (format "%s" "%b")
+       (format "%s" project-name)))))
+#+END_SRC
+
+* UI -> Controls
+#+BEGIN_SRC emacs-lisp
+(scroll-bar-mode -1)
+(tool-bar-mode   -1)
+(tooltip-mode    -1)
+(menu-bar-mode   -1)
+#+END_SRC
+
+* UI -> MacOS: Fancy titlebar
+#+BEGIN_SRC emacs-lisp
+;; (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+;; (add-to-list 'default-frame-alist '(ns-appearance . dark))
+;; (setq ns-use-proxy-icon  nil)
+#+END_SRC
+
+* UI -> Modeline
+#+BEGIN_SRC emacs-lisp
+(use-package doom-modeline
+  :ensure t
+  :init 
+  (doom-modeline-mode 1)
+  :config
+  (setq doom-modeline-height 1)
+  (set-face-attribute 'mode-line nil :family "Arial Narrow" :height 70)
+  (set-face-attribute 'mode-line-inactive nil :family "Arial Narrow" :height 70)
+)
+#+END_SRC
+
+* UI -> Theme toggle
+#+BEGIN_SRC emacs-lisp
+(use-package theme-looper
+ :ensure t
+ :init
+ :config
+ (theme-looper-set-favorite-themes '(zenburn spacemacs-light))
+ ;(theme-looper t)
+)
+#+END_SRC
+
+* UI -> Tree
+#+BEGIN_SRC emacs-lisp
+(use-package treemacs
+  :ensure t
+  :defer t
+  :config
+  (progn
+    (setq treemacs-collapse-dirs                 (if treemacs-python-executable 3 0)
+          treemacs-deferred-git-apply-delay      0.5
+          treemacs-directory-name-transformer    #'identity
+          treemacs-display-in-side-window        t
+          treemacs-eldoc-display                 t
+          treemacs-file-event-delay              5000
+          treemacs-file-extension-regex          treemacs-last-period-regex-value
+          treemacs-file-follow-delay             0.2
+          treemacs-file-name-transformer         #'identity
+          treemacs-follow-after-init             t
+          treemacs-git-command-pipe              ""
+          treemacs-goto-tag-strategy             'refetch-index
+          treemacs-indentation                   2
+          treemacs-indentation-string            " "
+          treemacs-is-never-other-window         nil
+          treemacs-max-git-entries               5000
+          treemacs-missing-project-action        'ask
+          treemacs-move-forward-on-expand        nil
+          treemacs-no-png-images                 nil
+          treemacs-no-delete-other-windows       t
+          treemacs-project-follow-cleanup        nil
+          treemacs-persist-file                  (expand-file-name ".cache/treemacs-persist" user-emacs-directory)
+          treemacs-position                      'right
+          treemacs-recenter-distance             0.1
+          treemacs-recenter-after-file-follow    nil
+          treemacs-recenter-after-tag-follow     nil
+          treemacs-recenter-after-project-jump   'always
+          treemacs-recenter-after-project-expand 'on-distance
+          treemacs-show-cursor                   nil
+          treemacs-show-hidden-files             t
+          treemacs-silent-filewatch              nil
+          treemacs-silent-refresh                nil
+          treemacs-sorting                       'alphabetic-asc
+          treemacs-space-between-root-nodes      t
+          treemacs-tag-follow-cleanup            t
+          treemacs-tag-follow-delay              1.5
+          treemacs-user-mode-line-format         nil
+          ;treemacs-width                         35
+      )
+
+    ;; The default width and height of the icons is 22 pixels. If you are
+    ;; using a Hi-DPI display, uncomment this to double the icon size.
+    ;;(treemacs-resize-icons 44)
+    (treemacs-resize-icons 11)
+    
+    (treemacs-git-mode 'extended)
+    (treemacs-follow-mode t)
+    (treemacs-filewatch-mode t)
+    (treemacs-fringe-indicator-mode t)
+
+    ;; (pcase (cons (not (null (executable-find "git")))
+    ;;              (not (null treemacs-python-executable)))
+    ;;   (`(t . t)
+    ;;    (treemacs-git-mode 'deferred))
+    ;;   (`(t . _)
+    ;;    (treemacs-git-mode 'simple)))
+  )
+
+  (define-key treemacs-mode-map [mouse-1] #'treemacs-single-click-expand-action)
+)
+
+(use-package treemacs-evil
+  :after treemacs evil
+  :ensure t)
+
+(use-package treemacs-projectile
+  :after treemacs projectile
+  :ensure t)
+
+(use-package treemacs-icons-dired
+  :after treemacs dired
+  :ensure t
+  :config (treemacs-icons-dired-mode))
+
+(use-package treemacs-magit
+  :after treemacs magit
+  :ensure t)
+
+;; (use-package treemacs-persp
+;;   :after treemacs persp-mode
+;;   :ensure t
+;;   :config (treemacs-set-scope-type 'Perspectives))
+
+#+END_SRC
+
+* UI -> Font Auto Zoom
+#+BEGIN_SRC emacs-lisp
+;; https://emacs.stackexchange.com/questions/28390/quickly-adjusting-text-to-dpi-changes
+(defun my-dpi (&optional frame)
+  "Get the DPI of FRAME (or current if nil)."
+  (cl-flet ((pyth (lambda (w h)
+                    (sqrt (+ (* w w)
+                             (* h h)))))
+            (mm2in (lambda (mm)
+                     (/ mm 25.4))))
+    (let* ((atts (frame-monitor-attributes frame))
+           (pix-w (cl-fourth (assoc 'geometry atts)))
+           (pix-h (cl-fifth (assoc 'geometry atts)))
+           (pix-d (pyth pix-w pix-h))
+           (mm-w (cl-second (assoc 'mm-size atts)))
+           (mm-h (cl-third (assoc 'mm-size atts)))
+           (mm-d (pyth mm-w mm-h)))
+      (/ pix-d (mm2in mm-d)))))
+
+(defvar my-zoom-frm-wanted-dpi 70
+  "The DPI I want to achieve when using `my-zoom-frm-by-dpi'.")
+
+(defun my-zoom-frm-by-dpi (&optional frame)
+  "Zoom FRAME so the DPI is closer to `my-zoom-frm-wanted-dpi'."
+  (interactive)
+  (let ((frame (or frame (selected-frame))))
+    (when (frame-parameter frame 'zoomed)
+      (zoom-frm-unzoom frame))
+    (let ((frame-zoom-font-difference (1- (round (/ (my-dpi frame)
+                                                    my-zoom-frm-wanted-dpi)))))
+      (when (called-interactively-p 'interactive)
+        (message "Zooming by %S" frame-zoom-font-difference))
+      (zoom-frm-in frame))))
+
+;; Apply the scaling I want to each newly created frame:
+(add-hook 'after-make-frame-functions #'my-zoom-frm-by-dpi)
+#+END_SRC
+
+* Packages
+#+BEGIN_SRC emacs-lisp
+;; Ivy
+(use-package ivy
+  :ensure t
+  :config
+  (ivy-mode t)
+  (setq 
+    ;ivy-use-virtual-buffers nil ; add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’
+    ivy-use-virtual-buffers t
+    ivy-height 7                 ; number of result lines to display
+    ivy-count-format "%d/%d "    ; count candidates
+    ivy-initial-inputs-alist nil ; no regexp by default
+    ivy-re-builders-alist        ; configure regexp engine.
+        '((t   . ivy--regex-ignore-order));; allow input not in order
+    ivy-display-style 'fancy
+   ) 
+  :diminish (ivy-mode . ""))
+
+(use-package counsel
+  :ensure t
+  :config
+  (counsel-mode t)
+  :diminish (counsel-mode . "")
+)
+
+;; Ranger (test)
+(use-package ranger
+  :ensure t
+  :commands (ranger)
+  :bind (("C-x d" . deer))
+  :config
+  (setq ranger-cleanup-eagerly t) ; kill the buffer just after you move to another entry in the dired buffer.
+  )
+
+;(use-package avy :ensure t
+;  :commands (avy-goto-word-1))
+
+#+END_SRC
+
+* A la sane defaults
+#+BEGIN_SRC emacs-lisp
+(setq version-control t)             ; use version control
+(setq vc-follow-symlinks t)          ; don't ask for confirmation when opening symlinked file
+(setq inhibit-startup-screen t)      ; inhibit useless and old-school startup screen
+(setq ring-bell-function 'ignore)    ; silent bell when you make a mistake
+(setq coding-system-for-read 'utf-8) ; use utf-8 by default
+(setq coding-system-for-write 'utf-8)
+(setq sentence-end-double-space nil) ; sentence SHOULD end with only a point.
+(setq default-fill-column 80)        ; toggle wrapping text at the 80th character
+(setq initial-scratch-message "")    ; print a default message in the empty scratch buffer opened at startup
+#+END_SRC
+
+* Autosave/Backups
+#+BEGIN_SRC emacs-lisp
+;; stop creating those #auto-save# files
+(setq auto-save-default nil)
+;(setq auto-save-file-name-transforms '((".*" "~/.emacs.local/auto-save-list/" t)) ) ;transform backups file name
+
+(setq make-backup-files nil)     ; disable backups
+;(setq backup-directory-alist `(("." . "~/.emacs.local/backups")))
+;(setq backup-by-copying t)             ; can be slow
+;(setq backup-by-copying-when-linked t) ; can be slow?
+;(setq delete-old-versions t
+;  kept-new-versions 6
+;  kept-old-versions 2
+;  version-control t)
+;;(setq delete-old-versions -1 )   ; delete excess backup versions silently
+;;(setq vc-make-backup-files t )   ; make backups file even when in version controlled dir
+#+END_SRC
+
+* Buffer auto-refresh
+#+BEGIN_SRC emacs-lisp
+(global-auto-revert-mode 1)
+(setq global-auto-revert-non-file-buffers t) ;(e.g. dired)
+#+END_SRC
+
+* Buffers
+#+BEGIN_SRC emacs-lisp
+;https://emacs.stackexchange.com/questions/44697/how-to-skip-some-buffers-when-use-prev-buffer-next-buffer
+(defun my-buffer-predicate (buffer)
+  (if (string-match "Messages" (buffer-name buffer)) nil t)
+  (if (string-match "Straight-process" (buffer-name buffer)) nil t))
+(set-frame-parameter nil 'buffer-predicate 'my-buffer-predicate)
+
+(defun gds/alternate-buffer (&optional window)
+  "Switch back and forth between current and last buffer in the
+current window."
+  (interactive)
+  (cl-destructuring-bind (buf start pos)
+    (or (cl-find (window-buffer window) (window-prev-buffers)
+                     :key #'car :test-not #'eq)
+           (list (other-buffer) nil nil))
+    (if (not buf)
+        (message "Last buffer not found.")
+      (set-window-buffer-start-and-point window buf start pos))))
+
+#+END_SRC
+
+* Copy/Paste clipboard emacs-lisp
+(setq select-enable-primary t)
+(setq select-enable-clipboard t)
+(setq save-interprogram-paste-before-kill t)
+(setq kill-do-not-save-duplicates t)
+;; https://www.reddit.com/r/emacs/comments/5n9t3f/copypaste_from_system_clipboard_on_windows/
+#+END_SRC
+
+* Terminal (fails)
+#+BEGIN_SRC emacs-lisp
+  (defalias 'yes-or-no-p 'y-or-n-p)
+  (defvar my-term-shell "/bin/zsh")
+  (defadvice ansi-term (before force-bash)
+    (interactive (list my-term-shell)))
+  (ad-activate 'ansi-term)
+#+END_SRC
+
+* Org bullets
+#+BEGIN_SRC emacs-lisp
+(use-package org-bullets
+  :ensure t
+  :config
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode))))
+#+END_SRC
+
+* Projectile
+#+BEGIN_SRC emacs-lisp
+(use-package projectile
+ :init
+ (setq projectile-require-project-root nil) ;any folder as prj
+ :config
+ (if (eq system-type 'darwin)
+   (setq projectile-project-search-path '("~/dev/repo"))
+   (setq projectile-project-search-path '("d:/dev/repo"))
+ )
+ (projectile-mode t))
+
+(use-package counsel-projectile
+ :init
+ :config
+ (counsel-projectile-mode t))
+#+END_SRC
+
+* Git
+#+BEGIN_SRC emacs-lisp
+(use-package magit
+  :bind ("C-x g" . magit-status)
+  :init
+  (setq magit-diff-options (quote ("--word-diff")))
+  (setq magit-diff-refine-hunk 'all)
+  (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1)
+  ;(setq projectile-switch-project-action 'magit-status) ;;?
+
+  (use-package evil-magit
+    :config
+    (setq magit-log-margin '(t "%Y-%m-%d %H:%M " magit-log-margin-width t 18))
+    (setq magit-status-margin '(t "%Y-%m-%d %H:%M " magit-log-margin-width t 18))
+
+    ;; Default commit editor opening in insert mode
+    (add-hook 'with-editor-mode-hook 'evil-insert-state)
+
+    (evil-define-key 'normal with-editor-mode-map
+      (kbd "RET") 'with-editor-finish
+      [escape] 'with-editor-cancel
+      )
+    (evil-define-key 'normal git-rebase-mode-map
+      "l" 'git-rebase-show-commit
+      )
+    )
+  )
+
+(use-package git-timemachine)
+
+#+END_SRC
+
+* Commenting
+#+BEGIN_SRC emacs-lisp
+(use-package evil-nerd-commenter
+ :config
+ (setq comment-empty-lines t))
 #+END_SRC
 
 * Syntax -> Check Errors
