@@ -96,9 +96,9 @@ npm install -g typescript-language-server
 
 * UI -> MacOS: Fancy titlebar
 #+BEGIN_SRC emacs-lisp
-;(add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
-;(add-to-list 'default-frame-alist '(ns-appearance . dark))
-;(setq ns-use-proxy-icon  nil)
+;; (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+;; (add-to-list 'default-frame-alist '(ns-appearance . dark))
+;; (setq ns-use-proxy-icon  nil)
 #+END_SRC
 
 * UI -> Modeline
