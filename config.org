@@ -1042,7 +1042,6 @@ https://www.youtube.com/watch?v=zg6JJI-kwhE&t=388s
   (setq python-indent-guess-indent-offset t)
   (setq python-indent-guess-indent-offset-verbose nil)
 
-;(use-package dap-python)
 #+END_SRC
 
 * LSP C++
@@ -1084,8 +1083,14 @@ https://www.youtube.com/watch?v=zg6JJI-kwhE&t=388s
 )
 #+END_SRC
 
-* Test
+* Test1
 #+BEGIN_SRC emacs-lisp
+;; (use-package dap-python)
+;; (use-package dap-lldb)
+;; (use-package dap-firefox)
+;; (use-package dap-chrome)
+;; (use-package dap-node)
+(dap-node 1)
 #+END_SRC
 
 * Test
