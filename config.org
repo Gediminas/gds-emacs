@@ -158,6 +158,7 @@ npm install -g typescript-language-server
 
    "b"  '(:ignore t :which-key "buffer")
    "bb" 'ivy-switch-buffer
+   "bf" 'lsp-format-buffer
    "bd" 'kill-current-buffer
    "bD" 'projectile-kill-buffers
    "br" 'revert-buffer
@@ -210,6 +211,7 @@ npm install -g typescript-language-server
 
    "h"  '(:ignore t :which-key "help")
    "he" 'view-echo-area-messages
+   "hh" 'lsp-describe-thing-at-point
    "hl" 'view-lossage
    "hc" 'describe-coding-system
    "hI" 'describe-input-method
@@ -224,6 +226,10 @@ npm install -g typescript-language-server
    "ha" 'apropos-command
    "hd" 'apropos-documentation
    "hs" 'info-lookup-symbol
+
+   ;; temp
+   "ll" 'lsp-describe-thing-at-point
+   "lf" 'lsp-format-buffer
 
    "p"  '(:ignore t :which-key "project")
    "pd" 'counsel-projectile-find-dir
@@ -948,83 +954,89 @@ https://github.com/sho-87/dotfiles/blob/master/emacs/init.el
 Mike Zamansky - Using Emacs Episode 58 - lsp-mode
 https://www.youtube.com/watch?v=zg6JJI-kwhE&t=388s
 #+BEGIN_SRC emacs-lisp
-(use-package lsp-mode
-  :defer t
-  :commands lsp
-  ;:custom
-  ;(lsp-auto-guess-root nil)
-  ;(lsp-prefer-flymake nil) ; Use flycheck instead of flymake
-  ;(lsp-file-watch-threshold 2000)
-  ;(read-process-output-max (* 1024 1024))
-  ;(lsp-eldoc-hook nil)
-  :bind (:map lsp-mode-map ("C-c C-f" . lsp-format-buffer))
-  :hook ((python-mode
-          js-mode js2-mode web-mode
-          c-mode c++-mode objc-mode) . lsp)
-  ;:config
-  ;(setq lsp-enable-symbol-highlight nil)
-)
+  (use-package lsp-mode
+    :defer t
+    :commands lsp
+    ;:custom
+    ;(lsp-auto-guess-root nil)
+    ;(lsp-prefer-flymake nil) ; Use flycheck instead of flymake
+    ;(lsp-file-watch-threshold 2000)
+    ;(read-process-output-max (* 1024 1024))
+    ;(lsp-eldoc-hook nil)
+    :hook ((python-mode
+            js-mode js2-mode web-mode
+            c-mode c++-mode objc-mode) . lsp)
+    ;:config
+    (setq lsp-enable-symbol-highlight t)
+    (setq lsp-keymap-prefix "C-c C-l")
+  )
 
-(use-package lsp-ui
-  :after lsp-mode
-  ;; :diminish
-  ;; :commands lsp-ui-mode
-  ;:custom-face
-  ;;(lsp-ui-doc-background ((t (:background nil))))
-  ;;(lsp-ui-doc-header ((t (:inherit (font-lock-string-face italic)))))
-  :bind (:map lsp-ui-mode-map
-              ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
-              ([remap xref-find-references] . lsp-ui-peek-find-references)
-              ("C-c u" . lsp-ui-imenu)
-              ("M-i" . lsp-ui-doc-focus-frame))
-  :custom
-  (lsp-ui-doc-header t)
-  (lsp-ui-doc-include-signature t)
-  ;; (lsp-ui-doc-border (face-foreground 'default))
-  ;; (lsp-ui-sideline-enable nil)
-  ;; (lsp-ui-sideline-ignore-duplicate t)
-  ;; (lsp-ui-sideline-show-code-actions nil)
-  ;:config
+  ;; (use-package lsp-ui
+  ;;   :after lsp-mode
+  ;;   ;; :diminish
+  ;;   ;; :commands lsp-ui-mode
+  ;;   ;:custom-face
+  ;;   ;;(lsp-ui-doc-background ((t (:background nil))))
+  ;;   ;;(lsp-ui-doc-header ((t (:inherit (font-lock-string-face italic)))))
+  ;;   :bind (:map lsp-ui-mode-map
+  ;;               ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
+  ;;               ([remap xref-find-references] . lsp-ui-peek-find-references)
+  ;;               ("C-c u" . lsp-ui-imenu)
+  ;;               ("M-i" . lsp-ui-doc-focus-frame))
+  ;;   :custom
+  ;;   (lsp-ui-doc-header t)
+  ;;   (lsp-ui-doc-include-signature t)
+  ;;   ;; (lsp-ui-doc-border (face-foreground 'default))
+  ;;   ;; (lsp-ui-sideline-enable nil)
+  ;;   ;; (lsp-ui-sideline-ignore-duplicate t)
+  ;;   ;; (lsp-ui-sideline-show-code-actions nil)
+  ;;   ;:config
+  ;; 
+  ;;   ;;gds
+  ;;   ;; ;; Use lsp-ui-doc-webkit only in GUI
+  ;;   ;; (if *sys/gui*
+  ;;   ;;     (setq lsp-ui-doc-use-webkit t))
+  ;; 
+  ;;   ;; WORKAROUND Hide mode-line of the lsp-ui-imenu buffer
+  ;;   ;; https://github.com/emacs-lsp/lsp-ui/issues/243
+  ;;   ;(defadvice lsp-ui-imenu (after hide-lsp-ui-imenu-mode-line activate)
+  ;;   ;  (setq mode-line-format nil))
+  ;; 
+  ;;   (lsp-ui-doc-enable nil)
+  ;;   (lsp-ui-peek-enable nil)
+  ;;   (lsp-ui-sideline-enable nil)
+  ;;   (lsp-ui-imenu-enable nil)
+  ;;   (lsp-ui-flycheck-enable t)
+  ;; )
 
-  ;;gds
-  ;; ;; Use lsp-ui-doc-webkit only in GUI
-  ;; (if *sys/gui*
-  ;;     (setq lsp-ui-doc-use-webkit t))
+  (use-package company-lsp
+    :config
+    (push 'company-lsp company-backends)
+  )
 
-  ;; WORKAROUND Hide mode-line of the lsp-ui-imenu buffer
-  ;; https://github.com/emacs-lsp/lsp-ui/issues/243
-  ;(defadvice lsp-ui-imenu (after hide-lsp-ui-imenu-mode-line activate)
-  ;  (setq mode-line-format nil))
-)
+  (use-package lsp-treemacs 
+    :config
+    (lsp-treemacs-sync-mode 1)
+  )
 
-(use-package company-lsp
+  (use-package posframe 
+  )
+
+  (use-package dap-mode 
   :config
-  (push 'company-lsp company-backends)
-)
+    (dap-mode 1)
 
-(use-package lsp-treemacs 
-  :config
-  (lsp-treemacs-sync-mode 1)
-)
-
-(use-package posframe 
-)
-
-(use-package dap-mode 
-:config
-  (dap-mode 1)
-
-  ;; The modes above are optional
-  (dap-ui-mode 1)
-  ;; enables mouse hover support
-  (dap-tooltip-mode 1)
-  ;; use tooltips for mouse hover
-  ;; if it is not enabled `dap-mode' will use the minibuffer.
-  (tooltip-mode 1)
-  ;; displays floating panel with debug buttons
-  ;; requies emacs 26+
-  (dap-ui-controls-mode 1)
-)
+    ;; The modes above are optional
+    (dap-ui-mode 1)
+    ;; enables mouse hover support
+    (dap-tooltip-mode 1)
+    ;; use tooltips for mouse hover
+    ;; if it is not enabled `dap-mode' will use the minibuffer.
+    (tooltip-mode 1)
+    ;; displays floating panel with debug buttons
+    ;; requies emacs 26+
+    (dap-ui-controls-mode 1)
+  )
 
 #+END_SRC
 
@@ -1090,11 +1102,17 @@ https://www.youtube.com/watch?v=zg6JJI-kwhE&t=388s
 ;; (use-package dap-firefox)
 ;; (use-package dap-chrome)
 ;; (use-package dap-node)
-(dap-node 1)
+;(dap-node 1)
 #+END_SRC
 
-* Test
+* AI
 #+BEGIN_SRC emacs-lisp
+(use-package company-tabnine
+  :config
+  (add-to-list 'company-backends #'company-tabnine)
+  (setq company-idle-delay 0)   ;; Trigger completion immediately.
+  (setq company-show-numbers t) ;; Number the candidates (use M-1, M-2 etc to select completions).
+)
 #+END_SRC
 
 * Test
