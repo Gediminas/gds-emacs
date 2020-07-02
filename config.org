@@ -47,6 +47,10 @@ npm install -g typescript-language-server
 
 * Init
 #+BEGIN_SRC emacs-lisp
+
+(set-language-environment "UTF-8")
+(set-default-coding-systems 'utf-8)
+
 (setq user-cache-directory "~/.emacs.d/.cache/")
 
 ;; Advanced settings
@@ -962,7 +966,7 @@ https://www.youtube.com/watch?v=zg6JJI-kwhE&t=388s
     ;(lsp-prefer-flymake nil) ; Use flycheck instead of flymake
     ;(lsp-file-watch-threshold 2000)
     ;(read-process-output-max (* 1024 1024))
-    ;(lsp-eldoc-hook nil)
+    (lsp-eldoc-hook nil)
     :hook ((python-mode
             js-mode js2-mode web-mode
             c-mode c++-mode objc-mode) . lsp)
@@ -1095,16 +1099,6 @@ https://www.youtube.com/watch?v=zg6JJI-kwhE&t=388s
 )
 #+END_SRC
 
-* Test1
-#+BEGIN_SRC emacs-lisp
-;; (use-package dap-python)
-;; (use-package dap-lldb)
-;; (use-package dap-firefox)
-;; (use-package dap-chrome)
-;; (use-package dap-node)
-;(dap-node 1)
-#+END_SRC
-
 * AI
 #+BEGIN_SRC emacs-lisp
 (use-package company-tabnine
@@ -1113,6 +1107,10 @@ https://www.youtube.com/watch?v=zg6JJI-kwhE&t=388s
   (setq company-idle-delay 0)   ;; Trigger completion immediately.
   (setq company-show-numbers t) ;; Number the candidates (use M-1, M-2 etc to select completions).
 )
+#+END_SRC
+
+* Test
+#+BEGIN_SRC emacs-lisp
 #+END_SRC
 
 * Test
