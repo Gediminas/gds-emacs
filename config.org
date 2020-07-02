@@ -874,7 +874,7 @@ https://github.com/sho-87/dotfiles/blob/master/emacs/init.el
   ;;(add-hook 'after-init-hook 'global-company-mode)
   :config
   (use-package company-irony :ensure t :defer t)
-  (setq company-idle-delay              0.5 
+  (setq company-idle-delay              0 
 	company-minimum-prefix-length   0
 	company-show-numbers            t
 	company-tooltip-limit           20
@@ -1083,8 +1083,6 @@ https://www.youtube.com/watch?v=zg6JJI-kwhE&t=388s
 (use-package company-tabnine
   :config
   (add-to-list 'company-backends #'company-tabnine)
-  (setq company-idle-delay 0)   ;; Trigger completion immediately.
-  (setq company-show-numbers t) ;; Number the candidates (use M-1, M-2 etc to select completions).
 )
 #+END_SRC
 
