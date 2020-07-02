@@ -1068,15 +1068,8 @@ https://www.youtube.com/watch?v=zg6JJI-kwhE&t=388s
    (use-package ahk-mode))
 #+END_SRC
 
-* LSP Eglot
+* Markdown
 #+BEGIN_SRC emacs-lisp
-
-;(use-package eglot
-;:config
-;  (define-key eglot-mode-map (kbd "C-c h") 'eglot-help-at-point)
-;  (define-key eglot-mode-map (kbd "<f12>") 'xref-find-definitions)
-;)
-
 (use-package markdown-mode
   :mode (("README\\.md\\'" . gfm-mode)
          ("\\.md\\'" . markdown-mode)
