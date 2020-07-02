@@ -162,7 +162,7 @@ npm install -g typescript-language-server
 
    "b"  '(:ignore t :which-key "buffer")
    "bb" 'ivy-switch-buffer
-   "bf" 'lsp-format-buffer
+   ;; "bf" 'lsp-format-buffer
    "bd" 'kill-current-buffer
    "bD" 'projectile-kill-buffers
    "br" 'revert-buffer
@@ -214,7 +214,7 @@ npm install -g typescript-language-server
 
    "h"  '(:ignore t :which-key "help")
    "he" 'view-echo-area-messages
-   "hh" 'lsp-describe-thing-at-point
+   ;; "hh" 'lsp-describe-thing-at-point
    "hl" 'view-lossage
    "hc" 'describe-coding-system
    "hI" 'describe-input-method
@@ -231,8 +231,8 @@ npm install -g typescript-language-server
    "hs" 'info-lookup-symbol
 
    ;; temp
-   "ll" 'lsp-describe-thing-at-point
-   "lf" 'lsp-format-buffer
+   ;; "ll" 'lsp-describe-thing-at-point
+   ;; "lf" 'lsp-format-buffer
 
    "p"  '(:ignore t :which-key "project")
    "pd" 'counsel-projectile-find-dir
@@ -765,26 +765,26 @@ current window."
 
 * Syntax -> Check Errors
 #+BEGIN_SRC emacs-lisp
-    ;; https://emacs.stackexchange.com/questions/46001/configuring-flycheck-to-use-a-local-eslint/46586
-    (defun configure-web-mode-flycheck-checkers ()
-    ;; in order to have flycheck enabled in web-mode, add an entry to this
-    ;; cond that matches the web-mode engine/content-type/etc and returns the
-    ;; appropriate checker.
-    (-when-let (checker (cond
-                        ((string= web-mode-content-type "jsx")
-                            'javascript-eslint)))
-        (flycheck-mode)
-        ;; use the locally installed eslint
-        (let* ((root (locate-dominating-file
-                    (or (buffer-file-name) default-directory)
-                    "node_modules"))
-            (eslint (and root
-                            (expand-file-name "node_modules/.bin/eslint"
-                                            root))))
-        (when (and eslint (file-executable-p eslint))
-            (setq-local flycheck-javascript-eslint-executable eslint)))
-   
-        (flycheck-select-checker checker)))
+    ;; ;; https://emacs.stackexchange.com/questions/46001/configuring-flycheck-to-use-a-local-eslint/46586
+    ;; (defun configure-web-mode-flycheck-checkers ()
+    ;; ;; in order to have flycheck enabled in web-mode, add an entry to this
+    ;; ;; cond that matches the web-mode engine/content-type/etc and returns the
+    ;; ;; appropriate checker.
+    ;; (-when-let (checker (cond
+    ;;                     ((string= web-mode-content-type "jsx")
+    ;;                         'javascript-eslint)))
+    ;;     (flycheck-mode)
+    ;;     ;; use the locally installed eslint
+    ;;     (let* ((root (locate-dominating-file
+    ;;                 (or (buffer-file-name) default-directory)
+    ;;                 "node_modules"))
+    ;;         (eslint (and root
+    ;;                         (expand-file-name "node_modules/.bin/eslint"
+    ;;                                         root))))
+    ;;     (when (and eslint (file-executable-p eslint))
+    ;;         (setq-local flycheck-javascript-eslint-executable eslint)))
+    ;; 
+    ;;     (flycheck-select-checker checker)))
    
    (use-package flycheck
      :config 
@@ -792,8 +792,8 @@ current window."
      (setq flycheck-check-syntax-automatically '(mode-enabled save))
      ;(setq flycheck-display-errors-delay 0.5)
      ;(setq-default flycheck-temp-prefix ".")
-     (flycheck-add-mode 'javascript-eslint 'web-mode)
-     (add-hook 'web-mode-hook #'configure-web-mode-flycheck-checkers)
+     ;; (flycheck-add-mode 'javascript-eslint 'web-mode)
+     ;; (add-hook 'web-mode-hook #'configure-web-mode-flycheck-checkers)
      (add-hook 'c++-mode-hook (lambda () (setq flycheck-clang-language-standard "c++2a")))
    )
 #+END_SRC
@@ -820,22 +820,22 @@ current window."
 * Javasript
   https://justin.abrah.ms/dotfiles/emacs.html
 #+BEGIN_SRC emacs-lisp
-(use-package js2-mode
-  :mode ("\\.js" . js2-mode)
-  ;:init
-  ;(setq js2-global-externs '("it" "afterEach" "beforeEach" "before" "after" "describe" "require" "module"))
-
-  ;; Turn off js2 mode errors & warnings (we lean on eslint/standard)
-  :config
-  (setq js2-mode-show-parse-errors nil)
-  (setq js2-mode-show-strict-warnings nil)
-  ;(setq-default js2-basic-offset 2)
-  ;(setq js-indent-level 2)
-  ;(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-  ;(add-to-list 'auto-mode-alist '("\\.jsx?\\'" . js2-jsx-mode))
-  ;(add-to-list 'interpreter-mode-alist '("node" . js2-jsx-mode))
-  )
-
+;; (use-package js2-mode
+;;   :mode ("\\.js" . js2-mode)
+;;   ;:init
+;;   ;(setq js2-global-externs '("it" "afterEach" "beforeEach" "before" "after" "describe" "require" "module"))
+;; 
+;;   ;; Turn off js2 mode errors & warnings (we lean on eslint/standard)
+;;   :config
+;;   (setq js2-mode-show-parse-errors nil)
+;;   (setq js2-mode-show-strict-warnings nil)
+;;   ;(setq-default js2-basic-offset 2)
+;;   ;(setq js-indent-level 2)
+;;   ;(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+;;   ;(add-to-list 'auto-mode-alist '("\\.jsx?\\'" . js2-jsx-mode))
+;;   ;(add-to-list 'interpreter-mode-alist '("node" . js2-jsx-mode))
+;;   )
+ 
 (use-package json-mode
   :mode ("\\.json" . json-mode))
 #+END_SRC
@@ -874,7 +874,7 @@ https://github.com/sho-87/dotfiles/blob/master/emacs/init.el
   ;;(add-hook 'after-init-hook 'global-company-mode)
   :config
   (use-package company-irony :ensure t :defer t)
-  (setq company-idle-delay              0 
+  (setq company-idle-delay              0.5 
 	company-minimum-prefix-length   0
 	company-show-numbers            t
 	company-tooltip-limit           20
@@ -954,105 +954,110 @@ https://github.com/sho-87/dotfiles/blob/master/emacs/init.el
 Mike Zamansky - Using Emacs Episode 58 - lsp-mode
 https://www.youtube.com/watch?v=zg6JJI-kwhE&t=388s
 #+BEGIN_SRC emacs-lisp
-  (use-package lsp-mode
-    :defer t
-    :commands lsp
-    :custom
-    ;(lsp-auto-guess-root nil)
-    (lsp-prefer-flymake nil) ; Use flycheck instead of flymake
-    ;(lsp-file-watch-threshold 2000)
-    ;(read-process-output-max (* 1024 1024))
-    (lsp-eldoc-hook nil)
-    :hook ((python-mode
-            js-mode js2-mode web-mode
-            c-mode c++-mode objc-mode) . lsp)
-    :config
-    (setq lsp-enable-symbol-highlight t)
-    (setq lsp-keymap-prefix "C-c C-l")
-  )
-
-  ;; (use-package lsp-ui
-  ;;   :after lsp-mode
-  ;;   ;; :diminish
-  ;;   ;; :commands lsp-ui-mode
-  ;;   ;:custom-face
-  ;;   ;;(lsp-ui-doc-background ((t (:background nil))))
-  ;;   ;;(lsp-ui-doc-header ((t (:inherit (font-lock-string-face italic)))))
-  ;;   :bind (:map lsp-ui-mode-map
-  ;;               ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
-  ;;               ([remap xref-find-references] . lsp-ui-peek-find-references)
-  ;;               ("C-c u" . lsp-ui-imenu)
-  ;;               ("M-i" . lsp-ui-doc-focus-frame))
+  ;; (use-package lsp-mode
+  ;;   :defer t
+  ;;   :commands lsp
   ;;   :custom
-  ;;   (lsp-ui-doc-header t)
-  ;;   (lsp-ui-doc-include-signature t)
-  ;;   ;; (lsp-ui-doc-border (face-foreground 'default))
-  ;;   ;; (lsp-ui-sideline-enable nil)
-  ;;   ;; (lsp-ui-sideline-ignore-duplicate t)
-  ;;   ;; (lsp-ui-sideline-show-code-actions nil)
-  ;;   ;:config
-  ;; 
-  ;;   ;;gds
-  ;;   ;; ;; Use lsp-ui-doc-webkit only in GUI
-  ;;   ;; (if *sys/gui*
-  ;;   ;;     (setq lsp-ui-doc-use-webkit t))
-  ;; 
-  ;;   ;; WORKAROUND Hide mode-line of the lsp-ui-imenu buffer
-  ;;   ;; https://github.com/emacs-lsp/lsp-ui/issues/243
-  ;;   ;(defadvice lsp-ui-imenu (after hide-lsp-ui-imenu-mode-line activate)
-  ;;   ;  (setq mode-line-format nil))
-  ;; 
-  ;;   (lsp-ui-doc-enable nil)
-  ;;   (lsp-ui-peek-enable nil)
-  ;;   (lsp-ui-sideline-enable nil)
-  ;;   (lsp-ui-imenu-enable nil)
-  ;;   (lsp-ui-flycheck-enable t)
+  ;;   ;(lsp-auto-guess-root nil)
+  ;;   (lsp-prefer-flymake nil) ; Use flycheck instead of flymake
+  ;;   ;(lsp-file-watch-threshold 2000)
+  ;;   ;(read-process-output-max (* 1024 1024))
+  ;;   (lsp-eldoc-hook nil)
+  ;;   :hook ((python-mode
+  ;;           js-mode
+  ;;           ;; js2-mode web-mode
+  ;;           c-mode c++-mode objc-mode) . lsp)
+  ;;   :config
+  ;;   (setq lsp-enable-symbol-highlight t)
+  ;;   (setq lsp-keymap-prefix "C-c C-l")
+  ;;   ;; (setq lsp-eslint-server-command 
+  ;;   ;;    '("node" 
+  ;;   ;;      "C:/Users/gds/.vscode/extensions/dbaeumer.vscode-eslint-2.1.5/server/out/eslintServer.js" 
+  ;;   ;;      "--stdio"))
   ;; )
-
-  (use-package company-lsp
-    :config
-    (push 'company-lsp company-backends)
-  )
-
-  (use-package lsp-treemacs 
-    :config
-    (lsp-treemacs-sync-mode 1)
-  )
-
-  (use-package posframe 
-  )
-
-  (use-package dap-mode 
-  :config
-    (dap-mode 1)
-
-    ;; The modes above are optional
-    (dap-ui-mode 1)
-    ;; enables mouse hover support
-    (dap-tooltip-mode 1)
-    ;; use tooltips for mouse hover
-    ;; if it is not enabled `dap-mode' will use the minibuffer.
-    (tooltip-mode 1)
-    ;; displays floating panel with debug buttons
-    ;; requies emacs 26+
-    (dap-ui-controls-mode 1)
-  )
+  ;; 
+  ;; ;; (use-package lsp-ui
+  ;; ;;   :after lsp-mode
+  ;; ;;   ;; :diminish
+  ;; ;;   ;; :commands lsp-ui-mode
+  ;; ;;   ;:custom-face
+  ;; ;;   ;;(lsp-ui-doc-background ((t (:background nil))))
+  ;; ;;   ;;(lsp-ui-doc-header ((t (:inherit (font-lock-string-face italic)))))
+  ;; ;;   :bind (:map lsp-ui-mode-map
+  ;; ;;               ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
+  ;; ;;               ([remap xref-find-references] . lsp-ui-peek-find-references)
+  ;; ;;               ("C-c u" . lsp-ui-imenu)
+  ;; ;;               ("M-i" . lsp-ui-doc-focus-frame))
+  ;; ;;   :custom
+  ;; ;;   (lsp-ui-doc-header t)
+  ;; ;;   (lsp-ui-doc-include-signature t)
+  ;; ;;   ;; (lsp-ui-doc-border (face-foreground 'default))
+  ;; ;;   ;; (lsp-ui-sideline-enable nil)
+  ;; ;;   ;; (lsp-ui-sideline-ignore-duplicate t)
+  ;; ;;   ;; (lsp-ui-sideline-show-code-actions nil)
+  ;; ;;   ;:config
+  ;; ;; 
+  ;; ;;   ;;gds
+  ;; ;;   ;; ;; Use lsp-ui-doc-webkit only in GUI
+  ;; ;;   ;; (if *sys/gui*
+  ;; ;;   ;;     (setq lsp-ui-doc-use-webkit t))
+  ;; ;; 
+  ;; ;;   ;; WORKAROUND Hide mode-line of the lsp-ui-imenu buffer
+  ;; ;;   ;; https://github.com/emacs-lsp/lsp-ui/issues/243
+  ;; ;;   ;(defadvice lsp-ui-imenu (after hide-lsp-ui-imenu-mode-line activate)
+  ;; ;;   ;  (setq mode-line-format nil))
+  ;; ;; 
+  ;; ;;   (lsp-ui-doc-enable nil)
+  ;; ;;   (lsp-ui-peek-enable nil)
+  ;; ;;   (lsp-ui-sideline-enable nil)
+  ;; ;;   (lsp-ui-imenu-enable nil)
+  ;; ;;   (lsp-ui-flycheck-enable t)
+  ;; ;; )
+  ;; 
+  ;; (use-package company-lsp
+  ;;   :config
+  ;;   (push 'company-lsp company-backends)
+  ;; )
+  ;; 
+  ;; (use-package lsp-treemacs 
+  ;;   :config
+  ;;   (lsp-treemacs-sync-mode 1)
+  ;; )
+  ;; 
+  ;; (use-package posframe 
+  ;; )
+  ;; 
+  ;; (use-package dap-mode 
+  ;; :config
+  ;;   (dap-mode 1)
+  ;; 
+  ;;   ;; The modes above are optional
+  ;;   (dap-ui-mode 1)
+  ;;   ;; enables mouse hover support
+  ;;   (dap-tooltip-mode 1)
+  ;;   ;; use tooltips for mouse hover
+  ;;   ;; if it is not enabled `dap-mode' will use the minibuffer.
+  ;;   (tooltip-mode 1)
+  ;;   ;; displays floating panel with debug buttons
+  ;;   ;; requies emacs 26+
+  ;;   (dap-ui-controls-mode 1)
+  ;; )
 
 #+END_SRC
 
 * LSP Python3
 #+BEGIN_SRC emacs-lisp
-(use-package lsp-python-ms
-  :ensure t
-  :init (setq lsp-python-ms-auto-install-server t)
-  :hook (python-mode . (lambda ()
-                          (require 'lsp-python-ms)
-                          (lsp))))  ; or lsp-deferred
-
-  (setq lsp-message-project-root-warning nil)
-  (setq python-indent-offset 2)
-  (setq python-indent-guess-indent-offset t)
-  (setq python-indent-guess-indent-offset-verbose nil)
+  ;; (use-package lsp-python-ms
+  ;;   :ensure t
+  ;;   :init (setq lsp-python-ms-auto-install-server t)
+  ;;   :hook (python-mode . (lambda ()
+  ;;                           (require 'lsp-python-ms)
+  ;;                           (lsp))))  ; or lsp-deferred
+  ;; 
+  ;;   (setq lsp-message-project-root-warning nil)
+  ;;   (setq python-indent-offset 2)
+  ;;   (setq python-indent-guess-indent-offset t)
+  ;;   (setq python-indent-guess-indent-offset-verbose nil)
 
 #+END_SRC
 
