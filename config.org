@@ -347,8 +347,10 @@ npm install -g typescript-language-server
 
   (general-define-key
     :keymaps 'flycheck-mode-map
-    "C-n"     'flycheck-next-error
-    "C-p"     'flycheck-previous-error
+    ;"C-n"     'flycheck-next-error
+    ;"C-p"     'flycheck-previous-error
+    "C-n"     'flycheck-tip-cycle
+    "C-p"     'flycheck-tip-cycle-reverse
   )
 
 
@@ -765,37 +767,47 @@ current window."
 
 * Syntax -> Check Errors
 #+BEGIN_SRC emacs-lisp
-    ;; ;; https://emacs.stackexchange.com/questions/46001/configuring-flycheck-to-use-a-local-eslint/46586
-    ;; (defun configure-web-mode-flycheck-checkers ()
-    ;; ;; in order to have flycheck enabled in web-mode, add an entry to this
-    ;; ;; cond that matches the web-mode engine/content-type/etc and returns the
-    ;; ;; appropriate checker.
-    ;; (-when-let (checker (cond
-    ;;                     ((string= web-mode-content-type "jsx")
-    ;;                         'javascript-eslint)))
-    ;;     (flycheck-mode)
-    ;;     ;; use the locally installed eslint
-    ;;     (let* ((root (locate-dominating-file
-    ;;                 (or (buffer-file-name) default-directory)
-    ;;                 "node_modules"))
-    ;;         (eslint (and root
-    ;;                         (expand-file-name "node_modules/.bin/eslint"
-    ;;                                         root))))
-    ;;     (when (and eslint (file-executable-p eslint))
-    ;;         (setq-local flycheck-javascript-eslint-executable eslint)))
-    ;; 
-    ;;     (flycheck-select-checker checker)))
-   
-   (use-package flycheck
-     :config 
-     (global-flycheck-mode)
-     (setq flycheck-check-syntax-automatically '(mode-enabled save))
-     ;(setq flycheck-display-errors-delay 0.5)
-     ;(setq-default flycheck-temp-prefix ".")
-     ;; (flycheck-add-mode 'javascript-eslint 'web-mode)
-     ;; (add-hook 'web-mode-hook #'configure-web-mode-flycheck-checkers)
-     (add-hook 'c++-mode-hook (lambda () (setq flycheck-clang-language-standard "c++2a")))
-   )
+   ;; ;; https://emacs.stackexchange.com/questions/46001/configuring-flycheck-to-use-a-local-eslint/46586
+   ;; (defun configure-web-mode-flycheck-checkers ()
+   ;; ;; in order to have flycheck enabled in web-mode, add an entry to this
+   ;; ;; cond that matches the web-mode engine/content-type/etc and returns the
+   ;; ;; appropriate checker.
+   ;; (-when-let (checker (cond
+   ;;                     ((string= web-mode-content-type "jsx")
+   ;;                         'javascript-eslint)))
+   ;;     (flycheck-mode)
+   ;;     ;; use the locally installed eslint
+   ;;     (let* ((root (locate-dominating-file
+   ;;                 (or (buffer-file-name) default-directory)
+   ;;                 "node_modules"))
+   ;;         (eslint (and root
+   ;;                         (expand-file-name "node_modules/.bin/eslint"
+   ;;                                         root))))
+   ;;     (when (and eslint (file-executable-p eslint))
+   ;;         (setq-local flycheck-javascript-eslint-executable eslint)))
+   ;; 
+   ;;     (flycheck-select-checker checker)))
+
+  (use-package flycheck
+    :config 
+    (global-flycheck-mode)
+    (setq flycheck-check-syntax-automatically '(mode-enabled save))
+    ;(setq flycheck-display-errors-delay 0.5)
+    ;(setq-default flycheck-temp-prefix ".")
+    ;; (flycheck-add-mode 'javascript-eslint 'web-mode)
+    ;; (add-hook 'web-mode-hook #'configure-web-mode-flycheck-checkers)
+
+    ;; To avoid echoing error message on minibuffer (optional)
+    ;; (setq flycheck-display-errors-function 'ignore)
+
+    (add-hook 'c++-mode-hook (lambda () (setq flycheck-clang-language-standard "c++2a")))
+  )
+  (use-package flycheck-tip)
+  ; (use-package flycheck-inline
+  ;; :config
+  ;;   (global-flycheck-inline-mode)
+  ;; )
+
 #+END_SRC
 
 * Syntax -> Navigation
