@@ -355,13 +355,15 @@ npm install -g typescript-language-server
 
 
   (general-define-key
+    "C-s"     'save-buffer
+    "C-S-s"   'save-some-buffers
     "C-j"     'switch-to-prev-buffer
     "C-k"     'switch-to-next-buffer
     ;;"C-;"     'evilnc-comment-or-uncomment-lines
     "C-<tab>" 'gds/alternate-buffer
     "<f5>"    'theme-looper-enable-next-theme
     "<f6>"    'gds-adjust-font
-  )
+ )
 
 
 ;  (general-define-key
