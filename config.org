@@ -161,7 +161,9 @@ npm install -g typescript-language-server
 
 
    "b"  '(:ignore t :which-key "buffer")
-   "bb" 'ivy-switch-buffer
+   "bb" 'counsel-projectile-switch-to-buffer
+   "bB" 'counsel-switch-buffer
+   "bi" 'ivy-switch-buffer
    ;; "bf" 'lsp-format-buffer
    "bd" 'kill-current-buffer
    "bD" 'projectile-kill-buffers
