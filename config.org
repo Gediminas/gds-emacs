@@ -110,14 +110,19 @@ npm install -g typescript-language-server
   :config
   (which-key-setup-side-window-bottom)
   (setq
-    which-key-sort-order 'which-key-key-order-alpha
+    which-key-sort-order 'which-key-key-order
+    ;which-key-sort-order 'which-key-key-order-alpha
     which-key-side-window-max-width 0.33
     which-key-separator " "
     which-key-prefix-prefix "+"
     which-key-show-early-on-C-h t ;; C-h before it is done automatically
     which-key-idle-delay 1
     which-key-idle-secondary-delay 0.05)
-    (which-key-mode)
+    ;; (add-to-list 'which-key-replacement-alist '(("TAB" . nil) . ("↹" . nil))
+    ;; (add-to-list 'which-key-replacement-alist '(("RET" . nil) . ("⏎" . nil))
+    ;; (add-to-list 'which-key-replacement-alist '(("DEL" . nil) . ("⇤" . nil))
+    ;; (add-to-list 'which-key-replacement-alist '(("SPC" . nil) . ("␣" . nil))
+   (which-key-mode)
 
   :diminish (which-key-mode . ""))
 #+END_SRC
@@ -148,194 +153,216 @@ npm install -g typescript-language-server
 
 * Keys -> SPC leader
 #+BEGIN_SRC emacs-lisp
-(use-package general
-  :ensure t
-  :config
-  (general-evil-setup t)
+  (use-package general
+    :ensure t
+    :config
+    (general-evil-setup t)
 
-  (general-define-key
-   :keymaps '(normal visual)
-   :prefix "SPC"
-   :non-normal-prefix "C-SPC"
-   "SPC" '(counsel-M-x :which-key "M-x")
+    (general-define-key
+     :keymaps '(normal visual)
+     :prefix "SPC"
+     :non-normal-prefix "C-SPC"
+     "SPC" '(counsel-M-x :which-key "M-x")
 
+     "TAB" 'eyebrowse-last-window-config
+     "lc" '(eyebrowse-create-window-config    :which-key "Create Layout ")
+     "ld" '(eyebrowse-close-window-config     :which-key "Delete Layout ")
+     "ll" '(eyebrowse-last-window-config      :which-key "Last Layout ")
+     "ln" '(eyebrowse-next-window-config      :which-key "Next Layout ")
+     "lp" '(eyebrowse-prev-window-config      :which-key "Prev Layout ")
+     "l." '(eyebrowse-switch-to-window-config :which-key "Select Layout...")
 
-   "b"  '(:ignore t :which-key "buffer")
-   "bb" 'counsel-projectile-switch-to-buffer
-   "bB" 'counsel-switch-buffer
-   "bi" 'ivy-switch-buffer
-   ;; "bf" 'lsp-format-buffer
-   "bd" 'kill-current-buffer
-   "bD" 'projectile-kill-buffers
-   "br" 'revert-buffer
-   "bs" 'save-buffer
+     "l0" 'eyebrowse-switch-to-window-config-0
+     "l1" 'eyebrowse-switch-to-window-config-1
+     "l2" 'eyebrowse-switch-to-window-config-2
+     "l3" 'eyebrowse-switch-to-window-config-3
+     "l4" 'eyebrowse-switch-to-window-config-4
+     "l5" 'eyebrowse-switch-to-window-config-5
+     "l6" 'eyebrowse-switch-to-window-config-6
+     "l7" 'eyebrowse-switch-to-window-config-7
+     "l8" 'eyebrowse-switch-to-window-config-8
+     "l9" 'eyebrowse-switch-to-window-config-9
 
-   "c"  '(:ignore t :which-key "code")
-   "cc" 'evilnc-comment-operator
-   "cl" 'evilnc-comment-or-uncomment-lines
-   "cx" 'evilnc-comment-and-kill-ring-save
-   "cy" 'evilnc-copy-and-comment-lines
-   "cp" 'evilnc-comment-or-uncomment-paragraphs
-   "cr" 'comment-or-uncomment-region
+     "b"  '(:ignore t :which-key "buffer")
+     "bb" 'counsel-projectile-switch-to-buffer
+     "bB" 'counsel-switch-buffer
+     "bi" 'ivy-switch-buffer
+     ;; "bf" 'lsp-format-buffer
+     "bd" 'kill-current-buffer
+     "bD" 'projectile-kill-buffers
+     "br" 'revert-buffer
+     "bs" 'save-buffer
 
-
-   ;; ";" '(evilnc-comment-or-uncomment-line :which-key "comment")
-
-   ;; ";i" 'evilnc-comment-or-uncomment-lines
-   ;; ";l" 'evilnc-quick-comment-or-uncomment-to-the-line
-   ;; ";l" 'evilnc-quick-comment-or-uncomment-to-the-line
-   ;; ";c" 'evilnc-copy-and-comment-lines
-   ;; ";p" 'evilnc-comment-or-uncomment-paragraphs
-   ;; ";r" 'comment-or-uncomment-region
-   ;; ";v" 'evilnc-toggle-invert-comment-line-by-line
-   ;; "."  'evilnc-copy-and-comment-operator
-   ;; ";" 'evilnc-comment-operator
-
-
-   "e"  '(:ignore t :which-key "edit/eval/error")
-   "eb" 'eval-buffer
-   "ef" 'eval-defun
-   "er" 'eval-region
-   "ee" 'eval-last-sexp
-   "el" '(flycheck-list-errors :which-key "Error list")
-   "em" '(mc/edit-lines :which-key "Multi-cursor")
-   "ep" 'eval-print-last-sexp
+     "c"  '(:ignore t :which-key "code")
+     "cc" 'evilnc-comment-operator
+     "cl" 'evilnc-comment-or-uncomment-lines
+     "cx" 'evilnc-comment-and-kill-ring-save
+     "cy" 'evilnc-copy-and-comment-lines
+     "cp" 'evilnc-comment-or-uncomment-paragraphs
+     "cr" 'comment-or-uncomment-region
 
 
-   "f"  '(:ignore t :which-key "file")
-   "ff" 'counsel-projectile-find-file
-   "fg" '(counsel-git :which-key "find in git dir")
-   ;"fF" 'find-file-under-here
-   "fd" 'deer
-   "fr" 'counsel-recentf
+     ;; ";" '(evilnc-comment-or-uncomment-line :which-key "comment")
 
-   "g"  '(:ignore t :which-key "git")
-   "gg" '(magit-status      :which-key "Git status")
-   "gl" '(magit-file-log    :which-key "Git log")
-   "gt" '(git-timemachine   :which-key "Git time-machine")
+     ;; ";i" 'evilnc-comment-or-uncomment-lines
+     ;; ";l" 'evilnc-quick-comment-or-uncomment-to-the-line
+     ;; ";l" 'evilnc-quick-comment-or-uncomment-to-the-line
+     ;; ";c" 'evilnc-copy-and-comment-lines
+     ;; ";p" 'evilnc-comment-or-uncomment-paragraphs
+     ;; ";r" 'comment-or-uncomment-region
+     ;; ";v" 'evilnc-toggle-invert-comment-line-by-line
+     ;; "."  'evilnc-copy-and-comment-operator
+     ;; ";" 'evilnc-comment-operator
 
-   "h"  '(:ignore t :which-key "help")
-   "he" 'view-echo-area-messages
-   ;; "hh" 'lsp-describe-thing-at-point
-   "hl" 'view-lossage
-   "hc" 'describe-coding-system
-   "hI" 'describe-input-method
-   "hb" 'describe-bindings
-   "hk" 'describe-key
-   "hw" 'where-is
-   "hf" 'counsel-describe-function
-   "hp" 'describe-package
-   "hm" 'describe-mode
-   "hv" 'counsel-describe-variable
-   "hy" 'describe-syntax
-   "ha" 'apropos-command
-   "hd" 'apropos-documentation
-   "hs" 'info-lookup-symbol
 
-   ;; temp
-   ;; "ll" 'lsp-describe-thing-at-point
-   ;; "lf" 'lsp-format-buffer
+     "e"  '(:ignore t :which-key "edit/eval/error")
+     "eb" 'eval-buffer
+     "ef" 'eval-defun
+     "er" 'eval-region
+     "ee" 'eval-last-sexp
+     "el" '(flycheck-list-errors :which-key "Error list")
+     "em" '(mc/edit-lines :which-key "Multi-cursor")
+     "ep" 'eval-print-last-sexp
 
-   "p"  '(:ignore t :which-key "project")
-   "pd" 'counsel-projectile-find-dir
-   "pp" 'counsel-projectile-switch-project
-   "pf" 'counsel-projectile-find-file
-   "pg" 'counsel-projectile-grep
 
-   "q"  '(:ignore t :which-key "quit")
-   "qq" 'save-buffers-kill-terminal
+     "f"  '(:ignore t :which-key "file")
+     "ff" 'counsel-projectile-find-file
+     "fg" '(counsel-git :which-key "find in git dir")
+     ;"fF" 'find-file-under-here
+     "fd" 'deer
+     "fr" 'counsel-recentf
 
-   "s"  '(:ignore t :which-key "search")
-   "ss" 'swiper-isearch
-   "sS" 'swiper-isearch-thing-at-point
-   "*"  'swiper-isearch-thing-at-point
-   "sf" 'counsel-projectile-rg
-   "sg" 'counsel-projectile-git-grep
+     "g"  '(:ignore t :which-key "git")
+     "gg" '(magit-status      :which-key "Git status")
+     "gl" '(magit-file-log    :which-key "Git log")
+     "gt" '(git-timemachine   :which-key "Git time-machine")
 
-   "t"  '(:ignore t :which-key "tweak/toggle/theme")
-   "tw" 'toggle-truncate-lines
-   "tl" 'display-line-numbers-mode
-   "tf" 'flycheck-mode
-   ;; "tt"  '(:ignore t :which-key "tweak")
-   ;; "ttt" 'counsel-load-theme
-   "tt" '(theme-looper-enable-next-theme :which-key "Theme toggle")
-   "tl" '(counsel-load-theme             :which-key "Theme list")
+     "h"  '(:ignore t :which-key "help")
+     "he" 'view-echo-area-messages
+     ;; "hh" 'lsp-describe-thing-at-point
+     "hl" 'view-lossage
+     "hc" 'describe-coding-system
+     "hI" 'describe-input-method
+     "hb" 'describe-bindings
+     "hk" 'describe-key
+     "hw" 'where-is
+     "hf" 'counsel-describe-function
+     "hp" 'describe-package
+     "hm" 'describe-mode
+     "hv" 'counsel-describe-variable
+     "hy" 'describe-syntax
+     "ha" 'apropos-command
+     "hd" 'apropos-documentation
+     "hs" 'info-lookup-symbol
 
-   "w"  '(:ignore t :which-key "window")
-   "wd" 'evil-window-delete
-   "wr" 'evil-window-rotate-upwards
-   "wR" 'evil-window-rotate-downwards
-   "ww" 'evil-next-window
-   "w/" 'split-window-right
-   "w-" 'split-window-below
+     ;; temp
+     ;; "ll" 'lsp-describe-thing-at-point
+     ;; "lf" 'lsp-format-buffer
 
-   "x"  '(:ignore t :which-key "x-files")
-   "xeb" 'eval-buffer
-   "xer" 'eval-region
-   "xee" 'eval-last-sexp
-   "xt" 'ansi-term
+     "p"  '(:ignore t :which-key "project")
+     "pd" 'counsel-projectile-find-dir
+     "pp" 'counsel-projectile-switch-project
+     "pf" 'counsel-projectile-find-file
+     "pg" 'counsel-projectile-grep
 
-   "TT" 'treemacs
-   "TB" 'treemacs-bookmark
-   "TF" 'treemacs-find-file
-   "TG" 'treemacs-find-tag
-   "TD" 'treemacs-delete-other-windows
+     "q"  '(:ignore t :which-key "quit")
+     "qq" 'save-buffers-kill-terminal
 
-   "0"  'treemacs-select-window
-   "1"  'winum-select-window-1
-   "2"  'winum-select-window-2
-   "3"  'winum-select-window-3
-   "4"  'winum-select-window-4
-   "5"  'winum-select-window-5
-   "6"  'winum-select-window-6
-   "7"  'winum-select-window-7
-   "8"  'winum-select-window-8
-   "9"  'winum-select-window-9
+     "s"  '(:ignore t :which-key "search")
+     "ss" 'swiper-isearch
+     "sS" 'swiper-isearch-thing-at-point
+     "*"  'swiper-isearch-thing-at-point
+     "sf" 'counsel-projectile-rg
+     "sg" 'counsel-projectile-git-grep
 
-   "t1" 'evil-snipe-s 
+     "t"  '(:ignore t :which-key "tweak/toggle/theme")
+     "tw" 'toggle-truncate-lines
+     "tl" 'display-line-numbers-mode
+     "tf" 'flycheck-mode
+     ;; "tt"  '(:ignore t :which-key "tweak")
+     ;; "ttt" 'counsel-load-theme
+     "tt" '(theme-looper-enable-next-theme :which-key "Theme toggle")
+     "tl" '(counsel-load-theme             :which-key "Theme list")
 
-  ;  ;"a" 'align-regexp
-  ;  ;"ar" '(ranger :which-key "call ranger")
-  ;  ;"g"  '(:ignore t :which-key "Git")
-  ;  ;"gs" '(magit-status :which-key "git status")
-; ;; bind to simple key press
-;  "b"	'ivy-switch-buffer  ; change buffer, chose using ivy
-;  "/"   'counsel-git-grep   ; find string in git project
-;  ;; bind to double key press
-;  "f"   '(:ignore t :which-key "files")
-;  "p"   '(:ignore t :which-key "project")
-;  "pf"  '(counsel-git :which-key "find file in git dir")
-;   ;; "/"   '(counsel-rg :which-key "ripgrep") ; You'll need counsel package for this
-;   "TAB" '(switch-to-prev-buffer :which-key "previous buffer")
-;   "SPC" '(helm-M-x :which-key "M-x")
-;   "pf"  '(helm-find-file :which-key "find files")
-;   ;; Buffers
-;   "bb"  '(helm-buffers-list :which-key "buffers list")
-;   ;; Window
-;   "wl"  '(windmove-right :which-key "move right")
-;   "wh"  '(windmove-left :which-key "move left")
-;   "wk"  '(windmove-up :which-key "move up")
-;   "wj"  '(windmove-down :which-key "move bottom")
-;   "w/"  '(split-window-right :which-key "split right")
-;   "w-"  '(split-window-below :which-key "split bottom")
-;   "wx"  '(delete-window :which-key "delete window")
-;   ;; Others
-;   "at"  '(ansi-term :which-key "open terminal")
-   )
+     "w"  '(:ignore t :which-key "window")
+     "wd" 'evil-window-delete
+     "wr" 'evil-window-rotate-upwards
+     "wR" 'evil-window-rotate-downwards
+     "ww" 'evil-next-window
+     "w/" 'split-window-right
+     "w-" 'split-window-below
 
-   ;; https://emacs.stackexchange.com/questions/36658/how-to-group-key-bindings-in-which-key
-   (push '(("\\(.*\\) 1" . "winum-select-window-1") . ("\\1 1..9" . "window 1..9"))
-      which-key-replacement-alist)
-   (push '((nil . "winum-select-window-[2-9]") . t) which-key-replacement-alist)
+     "x"  '(:ignore t :which-key "x-files")
+     "xeb" 'eval-buffer
+     "xer" 'eval-region
+     "xee" 'eval-last-sexp
+     "xt" 'ansi-term
 
-  (general-define-key
-   :keymaps '(normal insert emacs)
-   :prefix "SPC"
-   :non-normal-prefix "C-SPC"
-   "/" 'swiper
-  ;  ;"l" '(avy-goto-line)
-  ;  "a" 'align-regexp
-   )
+     "TT" 'treemacs
+     "TB" 'treemacs-bookmark
+     "TF" 'treemacs-find-file
+     "TG" 'treemacs-find-tag
+     "TD" 'treemacs-delete-other-windows
+
+     "0"  'treemacs-select-window
+     "1"  'winum-select-window-1
+     "2"  'winum-select-window-2
+     "3"  'winum-select-window-3
+     "4"  'winum-select-window-4
+     "5"  'winum-select-window-5
+     "6"  'winum-select-window-6
+     "7"  'winum-select-window-7
+     "8"  'winum-select-window-8
+     "9"  'winum-select-window-9
+
+     "t1" 'evil-snipe-s 
+
+    ;  ;"a" 'align-regexp
+    ;  ;"ar" '(ranger :which-key "call ranger")
+    ;  ;"g"  '(:ignore t :which-key "Git")
+    ;  ;"gs" '(magit-status :which-key "git status")
+  ; ;; bind to simple key press
+  ;  "b"	'ivy-switch-buffer  ; change buffer, chose using ivy
+  ;  "/"   'counsel-git-grep   ; find string in git project
+  ;  ;; bind to double key press
+  ;  "f"   '(:ignore t :which-key "files")
+  ;  "p"   '(:ignore t :which-key "project")
+  ;  "pf"  '(counsel-git :which-key "find file in git dir")
+  ;   ;; "/"   '(counsel-rg :which-key "ripgrep") ; You'll need counsel package for this
+  ;   "TAB" '(switch-to-prev-buffer :which-key "previous buffer")
+  ;   "SPC" '(helm-M-x :which-key "M-x")
+  ;   "pf"  '(helm-find-file :which-key "find files")
+  ;   ;; Buffers
+  ;   "bb"  '(helm-buffers-list :which-key "buffers list")
+  ;   ;; Window
+  ;   "wl"  '(windmove-right :which-key "move right")
+  ;   "wh"  '(windmove-left :which-key "move left")
+  ;   "wk"  '(windmove-up :which-key "move up")
+  ;   "wj"  '(windmove-down :which-key "move bottom")
+  ;   "w/"  '(split-window-right :which-key "split right")
+  ;   "w-"  '(split-window-below :which-key "split bottom")
+  ;   "wx"  '(delete-window :which-key "delete window")
+  ;   ;; Others
+  ;   "at"  '(ansi-term :which-key "open terminal")
+     )
+
+     ;; https://emacs.stackexchange.com/questions/36658/how-to-group-key-bindings-in-which-key
+     (push '(("\\(.*\\) 1" . "winum-select-window-1") . ("\\1 1..9" . "window 1..9"))
+        which-key-replacement-alist)
+     (push '((nil . "winum-select-window-[2-9]") . t) which-key-replacement-alist)
+
+     (push '(("\\(.*\\) 0" . "eyebrowse-switch-to-window-config-0") . ("\\1 0..9" . "layout 0..9"))
+        which-key-replacement-alist)
+     (push '((nil . "eyebrowse-switch-to-window-config-[1-9]") . t) which-key-replacement-alist)
+
+     (general-define-key
+     :keymaps '(normal insert emacs)
+     :prefix "SPC"
+     :non-normal-prefix "C-SPC"
+     "/" 'swiper
+      ; "l" '(avy-goto-line)
+      ; "a" 'align-regexp
+     )
 #+END_SRC
 
 * Keys -> Global
@@ -1107,8 +1134,21 @@ https://www.youtube.com/watch?v=zg6JJI-kwhE&t=388s
 )
 #+END_SRC
 
-* Test
+* Workspaces
 #+BEGIN_SRC emacs-lisp
+(use-package eyebrowse
+  :diminish eyebrowse-mode
+  :config (progn
+            ;; (define-key eyebrowse-mode-map (kbd "M-1") 'eyebrowse-switch-to-window-config-1)
+            ;; (define-key eyebrowse-mode-map (kbd "M-2") 'eyebrowse-switch-to-window-config-2)
+            ;; (define-key eyebrowse-mode-map (kbd "M-3") 'eyebrowse-switch-to-window-config-3)
+            ;; (define-key eyebrowse-mode-map (kbd "M-4") 'eyebrowse-switch-to-window-config-4)
+            (eyebrowse-mode t)
+            ;; (setq eyebrowse-new-workspace t)
+            (eyebrowse-setup-opinionated-keys)))
+
+; https://github.com/mclear-tools/dotemacs/blob/master/setup-config/setup-projects.el
+
 #+END_SRC
 
 * Test
