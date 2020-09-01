@@ -33,49 +33,22 @@ npm install -g typescript-language-server
 
   ;; Font size adjustment
   (defun gds/adjust-font (&optional frame)
-    "Inspired by https://emacs.stackexchange.com/a/44930/17066. FRAME is ignored.
-  If I let Windows handle DPI everything looks blurry."
-    ;; Using display names is unreliable...switched to checking the resolution
-
-    (setq gds/font-size 12)
+    "See also https://emacs.stackexchange.com/a/44930/17066. FRAME is ignored."
+    (setq gds/font-size 120)
     (setq gds/monitor 'None)
     (setq gds/monitor-attr          (frame-monitor-attributes))
     (setq gds/monitor-size-mm  (cdr (assoc 'mm-size gds/monitor-attr)))
     (setq gds/monitor-width-mm (nth 1 gds/monitor-size-mm))
-
-    (when (eq gds/monitor-width-mm '334) ;; MacbookPro -> external Dell
-      (setq gds/monitor 'Dell)
+    (when (eq gds/monitor-width-mm '334) ;; MacbookPro -> Dell-SE2719H
+      (setq gds/monitor 'MacbookPro->Dell-SE2719H)
       (setq gds/font-size 95))
-
     (when (eq gds/monitor-width-mm '179) ;; MacbookPro -> Retina
-      (setq gds/monitor 'Dell)
+      (setq gds/monitor 'MacbookPro->Retina)
       (setq gds/font-size 120))
-
-
+    (when (eq gds/monitor-width-mm '286) ;; MacbookPro -> Dell-SE2719H -> RDC
+      (setq gds/monitor 'MacbookPro->Dell-SE2719H->via-RDC)
+      (setq gds/font-size 90))
     (set-face-attribute 'default (selected-frame) :height gds/font-size)
-
-
-
-    ;; (let* ((attrs (frame-monitor-attributes)) ;; gets attribs for current frame
-    ;;        (monitor-name (cdr (fourth attrs)))
-    ;;        (width-mm (second (third attrs)))
-    ;;        (width-px (fourth (first attrs)))
-    ;;        (gds/monitor 'Default)
-    ;;        (gds/font-size 13)) ;; default for first screen at work
-    ;;   (when (eq gds/monitor-attr-mm-size (594 334)) ;; MacbookPro -> external Dell
-    ;;     (setq gds/monitor 'Dell)
-    ;;     (setq gds/font-size 16))
-      ;; (when (eq width-mm 285) ;; MacbookPro -> Retina
-      ;;   (setq gds/monitor 'Retina)
-      ;;   (setq gds/font-size 16))
-      ;; (when (eq width-mm 508) ;; MacbookPro -> external Dell -> RDC -> Windows -> emacs
-      ;;   (setq gds/monitor 'RDC)
-      ;;   (setq gds/font-size 16))
-      ;(when (eq (length (display-monitor-attributes-list)) 1) ;; override everything if no external monitors!
-        ;(setq size 12))
-      ;;(set-frame-font (format "Hack %s" size))
-      ;;)
-      )
 #+END_SRC
 
 * Theme
