@@ -37,22 +37,45 @@ npm install -g typescript-language-server
   If I let Windows handle DPI everything looks blurry."
     ;; Using display names is unreliable...switched to checking the resolution
 
-    (let* ((attrs (frame-monitor-attributes)) ;; gets attribs for current frame
-           (monitor-name (cdr (fourth attrs)))
-           (width-mm (second (third attrs)))
-           (width-px (fourth (first attrs)))
-           (size 13)) ;; default for first screen at work
-      (when (eq width-mm 594) ;; MacbookPro -> external Dell
-        (setq size 11))
-      (when (eq width-mm 285) ;; MacbookPro -> Retina
-        (setq size 13))
-      (when (eq width-mm 508) ;; MacbookPro -> external Dell -> RDC -> Windows -> emacs
-        (setq size 13))
+    (setq gds/font-size 12)
+    (setq gds/monitor 'None)
+    (setq gds/monitor-attr          (frame-monitor-attributes))
+    (setq gds/monitor-size-mm  (cdr (assoc 'mm-size gds/monitor-attr)))
+    (setq gds/monitor-width-mm (nth 1 gds/monitor-size-mm))
+
+    (when (eq gds/monitor-width-mm '334) ;; MacbookPro -> external Dell
+      (setq gds/monitor 'Dell)
+      (setq gds/font-size 95))
+
+    (when (eq gds/monitor-width-mm '179) ;; MacbookPro -> Retina
+      (setq gds/monitor 'Dell)
+      (setq gds/font-size 120))
+
+
+    (set-face-attribute 'default (selected-frame) :height gds/font-size)
+
+
+
+    ;; (let* ((attrs (frame-monitor-attributes)) ;; gets attribs for current frame
+    ;;        (monitor-name (cdr (fourth attrs)))
+    ;;        (width-mm (second (third attrs)))
+    ;;        (width-px (fourth (first attrs)))
+    ;;        (gds/monitor 'Default)
+    ;;        (gds/font-size 13)) ;; default for first screen at work
+    ;;   (when (eq gds/monitor-attr-mm-size (594 334)) ;; MacbookPro -> external Dell
+    ;;     (setq gds/monitor 'Dell)
+    ;;     (setq gds/font-size 16))
+      ;; (when (eq width-mm 285) ;; MacbookPro -> Retina
+      ;;   (setq gds/monitor 'Retina)
+      ;;   (setq gds/font-size 16))
+      ;; (when (eq width-mm 508) ;; MacbookPro -> external Dell -> RDC -> Windows -> emacs
+      ;;   (setq gds/monitor 'RDC)
+      ;;   (setq gds/font-size 16))
       ;(when (eq (length (display-monitor-attributes-list)) 1) ;; override everything if no external monitors!
         ;(setq size 12))
-      ;(set-frame-font (format "Consolas %s" size))
-      ))
-  (add-hook 'window-size-change-functions #'hoagie-adjust-font-size)
+      ;;(set-frame-font (format "Hack %s" size))
+      ;;)
+      )
 #+END_SRC
 
 * Theme
@@ -65,7 +88,7 @@ npm install -g typescript-language-server
   :config
   (load-theme 'spacemacs-light t)
   (gds/adjust-font))
-(add-hook 'window-size-change-functions #'gds/adjust-font)
+  (add-hook 'window-size-change-functions #'gds/adjust-font)
 #+END_SRC
 
 * Init
