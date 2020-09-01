@@ -7,29 +7,52 @@ https://github.com/theia-ide/typescript-language-server
 npm install -g typescript-language-server
 * Functions
 #+BEGIN_SRC emacs-lisp
-(defun gds/monitor-max-size-mm (&optional frame)
-  "Return the max mm dimension for monitor showing FRAME."
-  (apply 'min (cdr (assoc 'mm-size (frame-monitor-attributes frame)))))
+  ;; (defun gds/monitor-max-size-mm (&optional frame)
+  ;;   "Return the max mm dimension for monitor showing FRAME."
+  ;;   (apply 'min (cdr (assoc 'mm-size (frame-monitor-attributes frame)))))
+  ;; 
+  ;; (defun gds/monitor-max-size-px (&optional frame)
+  ;;   "Return the max px dimension for monitor showing FRAME."
+  ;;   (apply 'min (cdddr (assoc 'geometry (frame-monitor-attributes frame)))))
+  ;; 
+  ;; (defun gds/pixel-pitch (&optional frame)
+  ;;   "Calculate the pixel pitch for FRAME (default current frame)."
+  ;;   ;; On a rotated monitor, px geom is rotated but size is not, so use
+  ;;   ;; max dimension of each.
+  ;;   (let* ((monitor-attrs (frame-monitor-attributes frame)))
+  ;;     (/ (float (gds/monitor-max-size-mm frame))
+  ;;        (float (gds/monitor-max-size-px frame)))))
+  ;; 
+  ;; (defun gds/adjust-font (&optional frame)
+  ;;   (setq gds/pitch (gds/pixel-pitch))
+  ;;   ; MacbookPro 13" 2017  0.19888 =>  96
+  ;;   ; Dell U2415           0.26979 => 131
+  ;;   (setq gds/calculated-size (+ 70 (round (/ 15.0 gds/pitch))))
+  ;;   (set-face-attribute 'default (selected-frame) :height gds/calculated-size)
+  ;; )
 
-(defun gds/monitor-max-size-px (&optional frame)
-  "Return the max px dimension for monitor showing FRAME."
-  (apply 'min (cdddr (assoc 'geometry (frame-monitor-attributes frame)))))
+  ;; Font size adjustment
+  (defun gds/adjust-font (&optional frame)
+    "Inspired by https://emacs.stackexchange.com/a/44930/17066. FRAME is ignored.
+  If I let Windows handle DPI everything looks blurry."
+    ;; Using display names is unreliable...switched to checking the resolution
 
-(defun gds/pixel-pitch (&optional frame)
-  "Calculate the pixel pitch for FRAME (default current frame)."
-  ;; On a rotated monitor, px geom is rotated but size is not, so use
-  ;; max dimension of each.
-  (let* ((monitor-attrs (frame-monitor-attributes frame)))
-    (/ (float (gds/monitor-max-size-mm frame))
-       (float (gds/monitor-max-size-px frame)))))
-
-(defun gds/adjust-font (&optional frame)
-  (setq gds/pitch (gds/pixel-pitch))
-  ; MacbookPro 13" 2017  0.19888 =>  96
-  ; Dell U2415           0.26979 => 131
-  (setq gds/calculated-size (+ 70 (round (/ 15.0 gds/pitch))))
-  (set-face-attribute 'default (selected-frame) :height gds/calculated-size)
-)
+    (let* ((attrs (frame-monitor-attributes)) ;; gets attribs for current frame
+           (monitor-name (cdr (fourth attrs)))
+           (width-mm (second (third attrs)))
+           (width-px (fourth (first attrs)))
+           (size 13)) ;; default for first screen at work
+      (when (eq width-mm 594) ;; MacbookPro -> external Dell
+        (setq size 11))
+      (when (eq width-mm 285) ;; MacbookPro -> Retina
+        (setq size 13))
+      (when (eq width-mm 508) ;; MacbookPro -> external Dell -> RDC -> Windows -> emacs
+        (setq size 13))
+      ;(when (eq (length (display-monitor-attributes-list)) 1) ;; override everything if no external monitors!
+        ;(setq size 12))
+      ;(set-frame-font (format "Consolas %s" size))
+      ))
+  (add-hook 'window-size-change-functions #'hoagie-adjust-font-size)
 #+END_SRC
 
 * Theme
