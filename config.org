@@ -41,7 +41,7 @@ npm install -g typescript-language-server
     (setq gds/monitor-width-mm (nth 1 gds/monitor-size-mm))
     (when (eq gds/monitor-width-mm '334) ;; MacbookPro -> Dell-SE2719H
       (setq gds/monitor 'MacbookPro->Dell-SE2719H)
-      (setq gds/font-size 110))
+      (setq gds/font-size 120))
     (when (eq gds/monitor-width-mm '179) ;; MacbookPro -> Retina
       (setq gds/monitor 'MacbookPro->Retina)
       (setq gds/font-size 120))
