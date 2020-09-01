@@ -9,11 +9,11 @@ npm install -g typescript-language-server
 #+BEGIN_SRC emacs-lisp
 (defun gds/monitor-max-size-mm (&optional frame)
   "Return the max mm dimension for monitor showing FRAME."
-  (apply 'max (cdr (assoc 'mm-size (frame-monitor-attributes frame)))))
+  (apply 'min (cdr (assoc 'mm-size (frame-monitor-attributes frame)))))
 
 (defun gds/monitor-max-size-px (&optional frame)
   "Return the max px dimension for monitor showing FRAME."
-  (apply 'max (cdddr (assoc 'geometry (frame-monitor-attributes frame)))))
+  (apply 'min (cdddr (assoc 'geometry (frame-monitor-attributes frame)))))
 
 (defun gds/pixel-pitch (&optional frame)
   "Calculate the pixel pitch for FRAME (default current frame)."
@@ -27,7 +27,7 @@ npm install -g typescript-language-server
   (setq gds/pitch (gds/pixel-pitch))
   ; MacbookPro 13" 2017  0.19888 =>  96
   ; Dell U2415           0.26979 => 131
-  (setq gds/calculated-size (round (/ 26.0 gds/pitch)))
+  (setq gds/calculated-size (+ 70 (round (/ 15.0 gds/pitch))))
   (set-face-attribute 'default (selected-frame) :height gds/calculated-size)
 )
 #+END_SRC
@@ -388,10 +388,12 @@ npm install -g typescript-language-server
     "C-S-s"   'save-some-buffers
     "C-j"     'switch-to-prev-buffer
     "C-k"     'switch-to-next-buffer
+    "C--"     'text-scale-decrease
+    "C-="     'text-scale-increase
     ;;"C-;"     'evilnc-comment-or-uncomment-lines
     "C-<tab>" 'gds/alternate-buffer
     "<f5>"    'theme-looper-enable-next-theme
-    "<f6>"    'gds-adjust-font
+    "<f6>"    'gds/adjust-font
  )
 
 
