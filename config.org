@@ -32,6 +32,7 @@ npm install -g typescript-language-server
   ;; )
 
   ;; Font size adjustment
+  ;; For decent rendering point size should be a multiple of 3 (?)
   (defun gds/adjust-font (&optional frame)
     "See also https://emacs.stackexchange.com/a/44930/17066. FRAME is ignored."
     (setq gds/font-size 120)
@@ -44,7 +45,7 @@ npm install -g typescript-language-server
       (setq gds/font-size 120))
     (when (eq gds/monitor-width-mm '179) ;; MacbookPro -> Retina
       (setq gds/monitor 'MacbookPro->Retina)
-      (setq gds/font-size 130))
+      (setq gds/font-size 129))
     (when (eq gds/monitor-width-mm '286) ;; MacbookPro -> Dell-SE2719H -> RDC
       (setq gds/monitor 'MacbookPro->Dell-SE2719H->via-RDC)
       (setq gds/font-size 90))
