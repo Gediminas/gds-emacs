@@ -1174,6 +1174,37 @@ https://www.youtube.com/watch?v=zg6JJI-kwhE&t=388s
 
 #+END_SRC
 
+* EGLOT
+#+BEGIN_SRC emacs-lisp
+
+(use-package flymake-eslint
+:config
+  (add-hook 'web-mode-hook (lambda () (flymake-eslint-enable)))
+  (add-hook 'js2-mode-hook (lambda () (flymake-eslint-enable)))
+  ;(add-hook 'c++-mode-hook (lambda () (setq flycheck-clang-language-standard "c++2a")))
+)
+
+(use-package eglot)
+
+(add-to-list 'eglot-server-programs '((c++-mode c-mode "clangd-10")))
+(add-hook 'c-mode-hook 'eglot-ensure)
+(add-hook 'c++-mode-hook 'eglot-ensure)
+(add-hook 'python-mode-hook 'eglot-ensure)
+
+
+(add-hook 'typescript-mode-hook 'eglot-ensure)
+(add-to-list 'eglot-server-programs
+             '(typescript-mode . ("javascript-typescript-stdio")))
+
+
+(use-package markdown-mode
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :init (setq markdown-command "multimarkdown")
+)
+#+END_SRC
+
 * Test
 #+BEGIN_SRC emacs-lisp
 #+END_SRC
