@@ -41,13 +41,16 @@ npm install -g typescript-language-server
     (setq gds/monitor-size-mm  (cdr (assoc 'mm-size gds/monitor-attr)))
     (setq gds/monitor-width-mm (nth 1 gds/monitor-size-mm))
     (when (eq gds/monitor-width-mm '334) ;; MacbookPro -> Dell-SE2719H
-      (setq gds/monitor 'MacbookPro->Dell-SE2719H)
-      (setq gds/font-size 120))
     (when (eq gds/monitor-width-mm '179) ;; MacbookPro -> Retina
       (setq gds/monitor 'MacbookPro->Retina)
       (setq gds/font-size 129))
+      (setq gds/monitor 'MacbookPro->Dell-SE2719H)
+      (setq gds/font-size 120))
     (when (eq gds/monitor-width-mm '286) ;; MacbookPro -> Dell-SE2719H -> RDC
       (setq gds/monitor 'MacbookPro->Dell-SE2719H->via-RDC)
+      (setq gds/font-size 90))
+    (when (eq gds/monitor-width-mm '324) ;; PC -> Dell-U2415
+      (setq gds/monitor 'PC->Dell-U2415)
       (setq gds/font-size 90))
     (set-face-attribute 'default (selected-frame) :height gds/font-size)
     )
@@ -1187,19 +1190,19 @@ https://www.youtube.com/watch?v=zg6JJI-kwhE&t=388s
 
   (use-package eglot)
 
-  (add-to-list 'eglot-server-programs '((c++-mode c-mode "clangd-10")))
-  (add-hook 'c-mode-hook 'eglot-ensure)
-  (add-hook 'c++-mode-hook 'eglot-ensure)
-  (add-hook 'python-mode-hook 'eglot-ensure)
-  (add-hook 'web-mode-hook 'eglot-ensure)
-  (add-hook 'js-mode-hook 'eglot-ensure)
-  (add-hook 'js2-mode-hook 'eglot-ensure)
+  ;(add-to-list 'eglot-server-programs '((c++-mode c-mode "clangd-10")))
+  ;(add-hook 'c-mode-hook 'eglot-ensure)
+  ;(add-hook 'c++-mode-hook 'eglot-ensure)
+  ;(add-hook 'python-mode-hook 'eglot-ensure)
+  ;(add-hook 'web-mode-hook 'eglot-ensure)
+  ;(add-hook 'js-mode-hook 'eglot-ensure)
+  ;(add-hook 'js2-mode-hook 'eglot-ensure)
   (add-hook 'javascript-mode-hook 'eglot-ensure)
 
 
-  (add-hook 'typescript-mode-hook 'eglot-ensure)
-  (add-to-list 'eglot-server-programs
-               '(typescript-mode . ("javascript-typescript-stdio")))
+  ;(add-hook 'typescript-mode-hook 'eglot-ensure)
+  ;(add-to-list 'eglot-server-programs
+  ;             '(typescript-mode . ("javascript-typescript-stdio")))
 
 
   (use-package markdown-mode
