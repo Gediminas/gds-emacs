@@ -1184,37 +1184,39 @@ https://www.youtube.com/watch?v=zg6JJI-kwhE&t=388s
 * EGLOT
 #+BEGIN_SRC emacs-lisp
 
-  ;; (use-package flymake-eslint
-  ;; :config
-  ;;   (add-hook 'web-mode-hook (lambda () (flymake-eslint-enable)))
-  ;;   (add-hook 'js2-mode-hook (lambda () (flymake-eslint-enable)))
-  ;;   ;(add-hook 'c++-mode-hook (lambda () (setq flycheck-clang-language-standard "c++2a")))
+  ;; ;; (use-package flymake-eslint
+  ;; ;; :config
+  ;; ;;   (add-hook 'web-mode-hook (lambda () (flymake-eslint-enable)))
+  ;; ;;   (add-hook 'js2-mode-hook (lambda () (flymake-eslint-enable)))
+  ;; ;;   ;(add-hook 'c++-mode-hook (lambda () (setq flycheck-clang-language-standard "c++2a")))
+  ;; ;; )
+  ;; 
+  ;; (use-package eglot)
+  ;; 
+  ;; (add-to-list 'eglot-server-programs
+  ;;               '((c++-mode c-mode "clangd")))
+  ;; ;; (add-to-list 'eglot-server-programs
+  ;; ;;               '(typescript-mode . ("javascript-typescript-stdio")))
+  ;; 
+  ;;  (add-hook 'c-mode-hook 'eglot-ensure)
+  ;;  (add-hook 'c++-mode-hook 'eglot-ensure)
+  ;;  (add-hook 'python-mode-hook 'eglot-ensure)
+  ;;  (add-hook 'web-mode-hook 'eglot-ensure)
+  ;;  (add-hook 'js-mode-hook 'eglot-ensure)
+  ;;  (add-hook 'js2-mode-hook 'eglot-ensure)
+  ;;  (add-hook 'js3-mode-hook 'eglot-ensure)
+  ;;  (add-hook 'json-mode-hook 'eglot-ensure)
+  ;;  (add-hook 'typescript-mode-hook 'eglot-ensure)
+  ;;  (add-hook 'javascript-mode-hook 'eglot-ensure)
+  ;; 
+  ;;  
+  ;; 
+  ;; (use-package markdown-mode
+  ;;   :mode (("README\\.md\\'" . gfm-mode)
+  ;;          ("\\.md\\'" . markdown-mode)
+  ;;          ("\\.markdown\\'" . markdown-mode))
+  ;;   :init (setq markdown-command "multimarkdown")
   ;; )
-
-  (use-package eglot)
-
-  (add-to-list 'eglot-server-programs '((c++-mode c-mode "clangd-10")))
-  (add-hook 'c-mode-hook 'eglot-ensure)
-  (add-hook 'c++-mode-hook 'eglot-ensure)
-  (add-hook 'python-mode-hook 'eglot-ensure)
-  ;(add-hook 'web-mode-hook 'eglot-ensure)
-  ;(add-hook 'js-mode-hook 'eglot-ensure)
-  ;(add-hook 'js2-mode-hook 'eglot-ensure)
-
-
-  (add-to-list 'eglot-server-programs
-                '(typescript-mode . ("javascript-typescript-stdio")))
-  (add-hook 'typescript-mode-hook 'eglot-ensure)
-  (add-hook 'javascript-mode-hook 'eglot-ensure)
-
-   
-
-  (use-package markdown-mode
-    :mode (("README\\.md\\'" . gfm-mode)
-           ("\\.md\\'" . markdown-mode)
-           ("\\.markdown\\'" . markdown-mode))
-    :init (setq markdown-command "multimarkdown")
-  )
 #+END_SRC
 
 * Test
