@@ -938,23 +938,22 @@ https://github.com/sho-87/dotfiles/blob/master/emacs/init.el
 
 * Code Completion
 #+BEGIN_SRC emacs-lisp
-;;tmp
-;; ;; https://github.com/gjstein/emacs.d/tree/master/config
-;; (use-package company
-;;   ;:diminish company-mode
-;;   :init
-;;   ;;(add-hook 'after-init-hook 'global-company-mode)
-;;   :config
-;;   (use-package company-irony :ensure t :defer t)
-;;   (setq company-idle-delay              0.1 
-;; 	company-minimum-prefix-length   1
-;; 	company-show-numbers            t
-;; 	company-tooltip-limit           20
-;; 	company-dabbrev-downcase        nil
-;; 	)
-;;   ;:bind ("C-." . company-complete-common)
-;;   (global-company-mode t)
-;; )
+;; https://github.com/gjstein/emacs.d/tree/master/config
+(use-package company
+  ;:diminish company-mode
+  :init
+  ;;(add-hook 'after-init-hook 'global-company-mode)
+  :config
+  (use-package company-irony :ensure t :defer t)
+  (setq company-idle-delay              0.1 
+	company-minimum-prefix-length   1
+	company-show-numbers            t
+	company-tooltip-limit           20
+	company-dabbrev-downcase        nil
+	)
+  ;:bind ("C-." . company-complete-common)
+  (global-company-mode t)
+)
 #+END_SRC
 
 * C++
@@ -1026,28 +1025,28 @@ https://github.com/sho-87/dotfiles/blob/master/emacs/init.el
 Mike Zamansky - Using Emacs Episode 58 - lsp-mode
 https://www.youtube.com/watch?v=zg6JJI-kwhE&t=388s
 #+BEGIN_SRC emacs-lisp
-  ;; (use-package lsp-mode
-  ;;   :defer t
-  ;;   :commands lsp
-  ;;   :custom
-  ;;   ;(lsp-auto-guess-root nil)
-  ;;   (lsp-prefer-flymake nil) ; Use flycheck instead of flymake
-  ;;   ;(lsp-file-watch-threshold 2000)
-  ;;   ;(read-process-output-max (* 1024 1024))
-  ;;   (lsp-eldoc-hook nil)
-  ;;   :hook ((python-mode
-  ;;           js-mode
-  ;;           ;; js2-mode web-mode
-  ;;           c-mode c++-mode objc-mode) . lsp)
-  ;;   :config
-  ;;   (setq lsp-enable-symbol-highlight t)
-  ;;   (setq lsp-keymap-prefix "C-c C-l")
-  ;;   ;; (setq lsp-eslint-server-command 
-  ;;   ;;    '("node" 
-  ;;   ;;      "C:/Users/gds/.vscode/extensions/dbaeumer.vscode-eslint-2.1.5/server/out/eslintServer.js" 
-  ;;   ;;      "--stdio"))
-  ;; )
-  ;; 
+  (use-package lsp-mode
+    :defer t
+    :commands lsp
+    :custom
+    ;(lsp-auto-guess-root nil)
+    (lsp-prefer-flymake nil) ; Use flycheck instead of flymake
+    ;(lsp-file-watch-threshold 2000)
+    ;(read-process-output-max (* 1024 1024))
+    (lsp-eldoc-hook nil)
+    :hook ((python-mode
+            js-mode
+            ;; js2-mode web-mode
+            c-mode c++-mode objc-mode) . lsp)
+     :config
+     (setq lsp-enable-symbol-highlight t)
+    (setq lsp-keymap-prefix "C-c C-l")
+    ;; (setq lsp-eslint-server-command 
+    ;;    '("node" 
+    ;;      "C:/Users/gds/.vscode/extensions/dbaeumer.vscode-eslint-2.1.5/server/out/eslintServer.js" 
+    ;;      "--stdio"))
+  )
+
   ;; ;; (use-package lsp-ui
   ;; ;;   :after lsp-mode
   ;; ;;   ;; :diminish
@@ -1085,17 +1084,17 @@ https://www.youtube.com/watch?v=zg6JJI-kwhE&t=388s
   ;; ;;   (lsp-ui-imenu-enable nil)
   ;; ;;   (lsp-ui-flycheck-enable t)
   ;; ;; )
-  ;; 
+
   ;; (use-package company-lsp
   ;;   :config
   ;;   (push 'company-lsp company-backends)
   ;; )
-  ;; 
-  ;; (use-package lsp-treemacs 
-  ;;   :config
-  ;;   (lsp-treemacs-sync-mode 1)
-  ;; )
-  ;; 
+   
+  (use-package lsp-treemacs 
+    :config
+    (lsp-treemacs-sync-mode 1)
+  )
+
   ;; (use-package posframe 
   ;; )
   ;; 
