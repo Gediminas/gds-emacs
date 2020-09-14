@@ -49,6 +49,12 @@ npm install -g typescript-language-server
     (when (eq gds/monitor-width-mm '286) ;; MacbookPro -> Dell-SE2719H -> RDC
       (setq gds/monitor 'MacbookPro->Dell-SE2719H->via-RDC)
       (setq gds/font-size 90))
+    (when (eq gds/monitor-width-mm '324) ;; PC -> Dell-U2415
+      (setq gds/monitor 'PC->Dell-U2415)
+      (setq gds/font-size 90))
+    (when (eq gds/monitor-width-mm '318) ;; PC -> WLS -> Dell-U2415
+      (setq gds/monitor 'PC->WLS->Dell-SE2719H->via-RDC)
+      (setq gds/font-size 90))
     (set-face-attribute 'default (selected-frame) :height gds/font-size)
     )
 #+END_SRC
