@@ -768,9 +768,10 @@ current window."
  :init
  (setq projectile-require-project-root nil) ;any folder as prj
  :config
- (if (eq system-type 'darwin)
+ (if (eq system-type 'windows-nt)
+   (setq projectile-project-search-path '("d:/dev/repo")
    (setq projectile-project-search-path '("~/dev/repo"))
-   (setq projectile-project-search-path '("d:/dev/repo"))
+)
  )
  (projectile-mode t))
 
