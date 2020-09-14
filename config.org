@@ -55,6 +55,9 @@ npm install -g typescript-language-server
     (when (eq gds/monitor-width-mm '324) ;; PC -> Dell-U2415
       (setq gds/monitor 'PC->Dell-U2415)
       (setq gds/font-size 90))
+    (when (eq gds/monitor-width-mm '318) ;; PC -> WLS -> Dell-U2415
+      (setq gds/monitor 'PC->WLS->Dell-SE2719H->via-RDC)
+      (setq gds/font-size 90))
     (set-face-attribute 'default (selected-frame) :height gds/font-size)
     )
 #+END_SRC
@@ -773,9 +776,10 @@ current window."
  :init
  (setq projectile-require-project-root nil) ;any folder as prj
  :config
- (if (eq system-type 'darwin)
+ (if (eq system-type 'windows-nt)
+   (setq projectile-project-search-path '("d:/dev/repo")
    (setq projectile-project-search-path '("~/dev/repo"))
-   (setq projectile-project-search-path '("d:/dev/repo"))
+)
  )
  (projectile-mode t))
 
