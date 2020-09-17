@@ -304,6 +304,8 @@ npm install -g typescript-language-server
      "*"  'swiper-isearch-thing-at-point
      "sf" 'counsel-projectile-rg
      "sg" 'counsel-projectile-git-grep
+     "sd" 'lsp-find-type-definition
+     "sr" 'lsp-find-reference
 
      "t"  '(:ignore t :which-key "tweak/toggle/theme")
      "tw" 'toggle-truncate-lines
@@ -913,6 +915,17 @@ current window."
  
 (use-package json-mode
   :mode ("\\.json" . json-mode))
+
+(defun js-mode-use-eslint-indent ()
+  (let ((json-object-type 'hash-table)
+    (json-config (shell-command-to-string (format  "eslint --print-config %s"
+                               (shell-quote-argument
+                            (buffer-file-name))))))
+    (ignore-errors
+      (setq js-indent-level
+        (aref (gethash "indent" (gethash  "rules" (json-read-from-string json-config))) 1)))))
+
+(add-hook 'js-mode-hook #'js-mode-use-eslint-indent)
 #+END_SRC
 
 * Links
@@ -1050,6 +1063,8 @@ https://www.youtube.com/watch?v=zg6JJI-kwhE&t=388s
     ;;      "C:/Users/gds/.vscode/extensions/dbaeumer.vscode-eslint-2.1.5/server/out/eslintServer.js" 
     ;;      "--stdio"))
   )
+ (use-package lsp-ui
+   :ensure t)
 
   ;; ;; (use-package lsp-ui
   ;; ;;   :after lsp-mode
