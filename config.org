@@ -667,6 +667,9 @@ npm install -g typescript-language-server
    ) 
   :diminish (ivy-mode . ""))
 
+(use-package smex
+)
+
 (use-package counsel
   :ensure t
   :config
