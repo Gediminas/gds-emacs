@@ -660,7 +660,7 @@ npm install -g typescript-language-server
     ivy-use-virtual-buffers t
     ivy-height 7                 ; number of result lines to display
     ivy-count-format "%d/%d "    ; count candidates
-    ivy-initial-inputs-alist nil ; no regexp by default
+    ;ivy-initial-inputs-alist nil ; no regexp by default
     ivy-re-builders-alist        ; configure regexp engine.
         '((t   . ivy--regex-ignore-order));; allow input not in order
     ivy-display-style 'fancy
