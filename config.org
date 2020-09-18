@@ -416,6 +416,7 @@ npm install -g typescript-language-server
 
 
   (general-define-key
+    "S-s"     'save-buffer
     "C-s"     'save-buffer
     "C-S-s"   'save-some-buffers
     "C-j"     'switch-to-prev-buffer
@@ -1238,6 +1239,11 @@ https://www.youtube.com/watch?v=zg6JJI-kwhE&t=388s
   ;;          ("\\.markdown\\'" . markdown-mode))
   ;;   :init (setq markdown-command "multimarkdown")
   ;; )
+#+END_SRC
+
+* Language -> Clojure (karabiner;edn)
+#+BEGIN_SRC emacs-lisp
+  (use-package clojure-mode)
 #+END_SRC
 
 * Test
