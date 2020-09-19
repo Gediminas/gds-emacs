@@ -670,6 +670,8 @@ npm install -g typescript-language-server
   :diminish (counsel-mode . "")
 )
 
+(use-package smex)
+
 ;; Ranger (test)
 (use-package ranger
   :ensure t
