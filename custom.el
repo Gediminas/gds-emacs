@@ -67,8 +67,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:inherit nil :stipple nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 130 :width normal :foundry "outline" :family "Hack"))))
- '(hl-line ((t (:extend t :background "gray80"))))
- '(region ((t (:extend t :background "light steel blue")))))
+ ;;'(hl-line ((t (:extend t :background "gray80"))))
+ ;;'(region ((t (:extend t :background "light steel blue"))))
+ )
 
 ;(provide 'custom)
 ;;; custom.el ends here

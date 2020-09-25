@@ -56,7 +56,19 @@ npm install -g typescript-language-server
       (setq gds/monitor 'PC->WLS->Dell-SE2719H->via-RDC)
       (setq gds/font-size 90))
     (set-face-attribute 'default (selected-frame) :height gds/font-size)
-    )
+
+   (setq gds/theme (car custom-enabled-themes))
+
+   (when (eq gds/theme 'spacemacs-light)
+     (set-face-attribute 'hl-line nil :background "gray78")
+     (set-face-attribute 'region nil :background "light steel blue")
+   )
+   
+   (when (eq gds/theme 'zenburn)
+     (set-face-attribute 'hl-line nil :background "gray30")
+     (set-face-attribute 'region nil :background "blue")
+   )
+  )
 #+END_SRC
 
 * Theme
