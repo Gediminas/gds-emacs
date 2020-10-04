@@ -66,7 +66,7 @@ npm install -g typescript-language-server
    
    (when (eq gds/theme 'zenburn)
      (set-face-attribute 'hl-line nil :background "gray30")
-     (set-face-attribute 'region nil :background "dark blue")
+     (set-face-attribute 'region nil :background "DeepSkyBlue4")
    )
   )
 #+END_SRC
@@ -75,7 +75,13 @@ npm install -g typescript-language-server
 #+BEGIN_SRC emacs-lisp
 
 ;; FIXME: Disabled, because it causes incorrect load of spacemacs-light theme
-(use-package zenburn-theme :defer t)
+(use-package zenburn-theme :defer t
+  :config
+  (setq zenburn-use-variable-pitch t)      ; use variable-pitch fonts for some headings and titles
+  (setq zenburn-scale-org-headlines t)     ; scale headings in org-mode
+  (setq zenburn-scale-outline-headlines t) ; scale headings in outline-mode
+)
+
 (use-package doom-themes :defer t)
 (use-package spacemacs-theme :defer t
   :config
@@ -94,6 +100,8 @@ npm install -g typescript-language-server
 
 ;; Advanced settings
 (desktop-save-mode t)     ;auto save/load session,window-size
+;(setq desktop-restore-forces-onscreen nil)
+;(setq desktop-restore-eager 5)
 
 (setq-default truncate-lines t) ;do not wrap lines
 
