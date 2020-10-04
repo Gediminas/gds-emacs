@@ -83,6 +83,7 @@ npm install -g typescript-language-server
 )
 
 (use-package doom-themes :defer t)
+
 (use-package spacemacs-theme :defer t
   :config
   (load-theme 'spacemacs-light t)
@@ -913,24 +914,24 @@ current window."
 * Javasript
   https://justin.abrah.ms/dotfiles/emacs.html
 #+BEGIN_SRC emacs-lisp
-;; (use-package js2-mode
-;;   :mode ("\\.js" . js2-mode)
-;;   ;:init
-;;   ;(setq js2-global-externs '("it" "afterEach" "beforeEach" "before" "after" "describe" "require" "module"))
-;; 
-;;   ;; Turn off js2 mode errors & warnings (we lean on eslint/standard)
-;;   :config
-;;   (setq js2-mode-show-parse-errors nil)
-;;   (setq js2-mode-show-strict-warnings nil)
-;;   ;(setq-default js2-basic-offset 2)
-;;   ;(setq js-indent-level 2)
-;;   ;(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-;;   ;(add-to-list 'auto-mode-alist '("\\.jsx?\\'" . js2-jsx-mode))
-;;   ;(add-to-list 'interpreter-mode-alist '("node" . js2-jsx-mode))
-;;   )
+  (use-package js2-mode
+    :mode ("\\.js" . js2-mode)
+    ;:init
+    ;(setq js2-global-externs '("it" "afterEach" "beforeEach" "before" "after" "describe" "require" "module"))
+
+    ;; Turn off js2 mode errors & warnings (we lean on eslint/standard)
+    :config
+    (setq js2-mode-show-parse-errors nil)
+    (setq js2-mode-show-strict-warnings nil)
+    ;(setq-default js2-basic-offset 2)
+    ;(setq js-indent-level 2)
+    (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+    (add-to-list 'auto-mode-alist '("\\.jsx?\\'" . js2-jsx-mode))
+    (add-to-list 'interpreter-mode-alist '("node" . js2-jsx-mode))
+    )
  
-(use-package json-mode
-  :mode ("\\.json" . json-mode))
+  (use-package json-mode
+    :mode ("\\.json" . json-mode))
 #+END_SRC
 
 * Links
@@ -1057,8 +1058,7 @@ https://www.youtube.com/watch?v=zg6JJI-kwhE&t=388s
   ;;   ;(read-process-output-max (* 1024 1024))
   ;;   (lsp-eldoc-hook nil)
   ;;   :hook ((python-mode
-  ;;           js-mode
-  ;;           ;; js2-mode web-mode
+  ;;           js-mode js2-mode web-mode
   ;;           c-mode c++-mode objc-mode) . lsp)
   ;;   :config
   ;;   (setq lsp-enable-symbol-highlight t)
