@@ -76,8 +76,8 @@ npm install -g typescript-language-server
 
 ;; FIXME: Disabled, because it causes incorrect load of spacemacs-light theme
 (use-package zenburn-theme :defer t
-  :config
-  (setq zenburn-use-variable-pitch t)      ; use variable-pitch fonts for some headings and titles
+  :init
+  ;; (setq zenburn-use-variable-pitch t)      ; use variable-pitch fonts for some headings and titles
   (setq zenburn-scale-org-headlines t)     ; scale headings in org-mode
   (setq zenburn-scale-outline-headlines t) ; scale headings in outline-mode
 )
@@ -926,8 +926,8 @@ current window."
     ;(setq-default js2-basic-offset 2)
     ;(setq js-indent-level 2)
     (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-    (add-to-list 'auto-mode-alist '("\\.jsx?\\'" . js2-jsx-mode))
-    (add-to-list 'interpreter-mode-alist '("node" . js2-jsx-mode))
+    ;(add-to-list 'auto-mode-alist '("\\.jsx?\\'" . js2-jsx-mode))
+    ;(add-to-list 'interpreter-mode-alist '("node" . js2-jsx-mode))
     )
  
   (use-package json-mode
