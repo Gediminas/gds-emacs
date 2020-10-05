@@ -74,20 +74,21 @@ npm install -g typescript-language-server
 * Theme
 #+BEGIN_SRC emacs-lisp
 
-;; FIXME: Disabled, because it causes incorrect load of spacemacs-light theme
-(use-package zenburn-theme :defer t
-  :init
-  ;; (setq zenburn-use-variable-pitch t)      ; use variable-pitch fonts for some headings and titles
-  (setq zenburn-scale-org-headlines t)     ; scale headings in org-mode
-  (setq zenburn-scale-outline-headlines t) ; scale headings in outline-mode
-)
+  ;; FIXME: Disabled, because it causes incorrect load of spacemacs-light theme
+  (use-package zenburn-theme :defer t
+    :init
+    ;; (setq zenburn-use-variable-pitch t)      ; use variable-pitch fonts for some headings and titles
+    (setq zenburn-scale-org-headlines t)     ; scale headings in org-mode
+    (setq zenburn-scale-outline-headlines t) ; scale headings in outline-mode
+  )
 
-(use-package doom-themes :defer t)
+  (use-package doom-themes :defer t)
 
-(use-package spacemacs-theme :defer t
-  :config
-  (load-theme 'spacemacs-light t)
-  (gds/adjust-font))
+  (use-package spacemacs-theme :defer t
+    :config
+    (load-theme 'spacemacs-light t)
+    (gds/adjust-font))
+
   (add-hook 'window-size-change-functions #'gds/adjust-font)
 #+END_SRC
 
@@ -101,8 +102,8 @@ npm install -g typescript-language-server
 
 ;; Advanced settings
 (desktop-save-mode t)     ;auto save/load session,window-size
-;(setq desktop-restore-forces-onscreen nil)
-;(setq desktop-restore-eager 5)
+(setq desktop-restore-forces-onscreen nil)
+(setq desktop-restore-eager nil)
 
 (setq-default truncate-lines t) ;do not wrap lines
 
@@ -235,7 +236,7 @@ npm install -g typescript-language-server
      "bb" 'counsel-projectile-switch-to-buffer
      "bB" 'counsel-switch-buffer
      "bi" 'ivy-switch-buffer
-     ;; "bf" 'lsp-format-buffer
+     "bf" 'lsp-format-buffer
      "bd" 'kill-current-buffer
      "bD" 'projectile-kill-buffers
      "br" 'revert-buffer
@@ -287,7 +288,7 @@ npm install -g typescript-language-server
 
      "h"  '(:ignore t :which-key "help")
      "he" 'view-echo-area-messages
-     ;; "hh" 'lsp-describe-thing-at-point
+     "hh" 'lsp-describe-thing-at-point
      "hl" 'view-lossage
      "hc" 'describe-coding-system
      "hI" 'describe-input-method
@@ -303,10 +304,6 @@ npm install -g typescript-language-server
      "hd" 'apropos-documentation
      "hs" 'info-lookup-symbol
 
-     ;; temp
-     ;; "ll" 'lsp-describe-thing-at-point
-     ;; "lf" 'lsp-format-buffer
-
      "p"  '(:ignore t :which-key "project")
      "pd" 'counsel-projectile-find-dir
      "pp" 'counsel-projectile-switch-project
@@ -317,6 +314,8 @@ npm install -g typescript-language-server
      "qq" 'save-buffers-kill-terminal
 
      "s"  '(:ignore t :which-key "search")
+     "sd" 'lsp-find-definition
+     "st" 'lsp-find-type-definition
      "ss" 'swiper-isearch
      "sS" 'swiper-isearch-thing-at-point
      "*"  'swiper-isearch-thing-at-point
@@ -442,6 +441,8 @@ npm install -g typescript-language-server
     "C-<tab>" 'gds/alternate-buffer
     "<f5>"    'theme-looper-enable-next-theme
     "<f6>"    'gds/adjust-font
+    "<f11>"   'lsp-find-definition
+    "<f12>"   'lsp-find-type-definition
  )
 
 
@@ -1048,27 +1049,36 @@ https://github.com/sho-87/dotfiles/blob/master/emacs/init.el
 Mike Zamansky - Using Emacs Episode 58 - lsp-mode
 https://www.youtube.com/watch?v=zg6JJI-kwhE&t=388s
 #+BEGIN_SRC emacs-lisp
-  ;; (use-package lsp-mode
-  ;;   :defer t
-  ;;   :commands lsp
-  ;;   :custom
-  ;;   ;(lsp-auto-guess-root nil)
-  ;;   (lsp-prefer-flymake nil) ; Use flycheck instead of flymake
-  ;;   ;(lsp-file-watch-threshold 2000)
-  ;;   ;(read-process-output-max (* 1024 1024))
-  ;;   (lsp-eldoc-hook nil)
-  ;;   :hook ((python-mode
-  ;;           js-mode js2-mode web-mode
-  ;;           c-mode c++-mode objc-mode) . lsp)
-  ;;   :config
-  ;;   (setq lsp-enable-symbol-highlight t)
+  (use-package lsp-mode
+    :defer t
+    :commands lsp
+    :custom
+    ;(lsp-auto-guess-root nil)
+    ;(lsp-prefer-flymake nil) ; Use flycheck instead of flymake
+    (lsp-file-watch-threshold 2000)
+    (read-process-output-max (* 1024 1024))
+    ;(lsp-eldoc-hook nil)
+    :general
+    ('normal "K" 'lsp-describe-thing-at-point)
+    ('normal "g d" 'lsp-find-definition)
+    ('normal "g D" 'lsp-find-type-definition)
+    ('normal "g r" 'lsp-find-references)
+    :hook ((python-mode
+            js-mode js2-mode web-mode
+            c-mode c++-mode objc-mode) . lsp)
+     :config
+     (setq lsp-enable-symbol-highlight t)
   ;;   (setq lsp-keymap-prefix "C-c C-l")
   ;;   ;; (setq lsp-eslint-server-command 
   ;;   ;;    '("node" 
   ;;   ;;      "C:/Users/gds/.vscode/extensions/dbaeumer.vscode-eslint-2.1.5/server/out/eslintServer.js" 
   ;;   ;;      "--stdio"))
-  ;; )
-  ;; 
+    ;; (setq lsp-eslint-server-command 
+    ;;   '("node" 
+    ;;     "~/.vscode/extensions/dbaeumer.vscode-eslint-2.1.8/server/out/eslintServer.js" 
+    ;;     "--stdio"))
+  )
+  
   ;; ;; (use-package lsp-ui
   ;; ;;   :after lsp-mode
   ;; ;;   ;; :diminish
@@ -1106,17 +1116,17 @@ https://www.youtube.com/watch?v=zg6JJI-kwhE&t=388s
   ;; ;;   (lsp-ui-imenu-enable nil)
   ;; ;;   (lsp-ui-flycheck-enable t)
   ;; ;; )
-  ;; 
-  ;; (use-package company-lsp
-  ;;   :config
-  ;;   (push 'company-lsp company-backends)
-  ;; )
-  ;; 
-  ;; (use-package lsp-treemacs 
-  ;;   :config
-  ;;   (lsp-treemacs-sync-mode 1)
-  ;; )
-  ;; 
+  
+  (use-package company-lsp
+    :config
+    (push 'company-lsp company-backends)
+  )
+  
+  (use-package lsp-treemacs 
+    :config
+    (lsp-treemacs-sync-mode 1)
+  )
+  
   ;; (use-package posframe 
   ;; )
   ;; 
