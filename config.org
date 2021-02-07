@@ -1054,7 +1054,7 @@ https://www.youtube.com/watch?v=zg6JJI-kwhE&t=388s
     :commands lsp
     :custom
     ;(lsp-auto-guess-root nil)
-    ;(lsp-prefer-flymake nil) ; Use flycheck instead of flymake
+    (lsp-prefer-flymake nil) ; Use flycheck instead of flymake
     (lsp-file-watch-threshold 2000)
     (read-process-output-max (* 1024 1024))
     ;(lsp-eldoc-hook nil)
