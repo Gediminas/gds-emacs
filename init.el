@@ -26,30 +26,15 @@
 
 
 ;;------------------------------------------------------------
-;; Theme & Appearance
-
-(set-frame-font "Hack:size=15:weight=regular:antialias=true:hinting=true:hintstyle=hintfull" nil t)
-
-(use-package doom-themes
-  :config
-  (setq doom-themes-enable-bold t    ;???
-        doom-themes-enable-italic t) ;???
-  (load-theme 'doom-dracula t)
-  (doom-themes-org-config)           ; Better org-mode faces???
-  (doom-themes-visual-bell-config))
-
-(use-package doom-modeline
-  :config
-  (doom-modeline-mode 1))
-
-
-;;------------------------------------------------------------
 ;; Modules
  
 (add-to-list 'load-path (expand-file-name "mods" user-emacs-directory))
 
 (require 'init-utils)
+(require 'init-theme)
 (require 'init-org)
+(require 'init-rust)
+(require 'init-training)
 (require 'init-experiments)
 
 

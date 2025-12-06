@@ -13,6 +13,13 @@
 (setq read-process-output-max (* 1024 1024)) ; 64KB-->1MB
 ;(setq debug-on-error t)                     ; Annoying; Use when debugging to show stack trace on errors`
 
+
+; https://arne.me/blog/emacs-from-scratch-part-one-foundations
+; If you start Emacs now, you’ll see the GUI elements for a few milliseconds. Fix:
+(push '(menu-bar-lines . 0) default-frame-alist)
+(push '(tool-bar-lines . 0) default-frame-alist)
+(push '(vertical-scroll-bars) default-frame-alist)
+
 ;; UI elements
 (scroll-bar-mode -1)              ; Hide scrollbars (must be before tool-bar-mode)
 (tool-bar-mode -1)                ; Hide toolbar
