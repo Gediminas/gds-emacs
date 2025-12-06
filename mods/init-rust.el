@@ -1,9 +1,50 @@
+;; (use-package company-mode
+;;   :init
+;;   (global-company-mode))
+
+(add-to-list 'exec-path (expand-file-name "~/.cargo/bin"))
+
+;; ; https://arne.me/blog/emacs-config-from-scratch-part-three#fnref-1
+;; (use-package exec-path-from-shell
+;;   :init
+;;   (exec-path-from-shell-initialize))
+
+
+(use-package emacs
+  ;; :hook (zig-mode . eglot-ensure)
+  :hook (rust-mode . eglot-ensure)
+  ;; :hook (go-mode . eglot-ensure)
+  ;; :hook (typescript-mode . eglot-ensure)
+  ;; :general
+  ;; (leader-keys
+  ;;   "l" '(:ignore t :which-key "lsp")
+  ;;   "l <escape>" '(keyboard-escape-quit :which-key t)
+  ;;   "l r" '(eglot-rename :which-key "rename")
+  ;;   "l a" '(eglot-code-actions :which-key "code actions"))
+  )
+;;--  (add-hook 'rust-mode-hook 'eglot-ensure)
+
+(setq lsp-rust-analyzer-server-display-inlay-hints t)
+
+(setq treesit-language-source-alist
+      '((rust "https://github.com/tree-sitter/tree-sitter-rust")))
+
+(use-package treesit-auto
+  :custom
+  (treesit-auto-install 'prompt)
+  :config
+  (treesit-auto-add-to-auto-mode-alist 'all)
+  (global-treesit-auto-mode))
+
+
+
+
 ;;  (use-package tree-sitter)
 
 ;; (use-package tree-sitter-langs
 ;;   :after tree-sitter)
 
-;; (use-package yasnippet)
+(use-package yasnippet)
 
 ;; (use-package ron-mode)
 
@@ -66,8 +107,6 @@
 ;; (setq eglot-autoreconnect t)
 ;; (setq eglot-autoshutdown-timeout 10)
 
-(setq treesit-language-source-alist
-      '((rust "https://github.com/tree-sitter/tree-sitter-rust")))
 
 (provide 'init-rust)
 

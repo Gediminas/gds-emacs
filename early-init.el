@@ -38,16 +38,18 @@
   "Save current buffer & Reload init.el"
   (interactive)
   (save-buffer)
+  (package-refresh-contents)
   ;; Unload all init-* features
   (mapc (lambda (feature)
       (when (string-match-p "^init-" (symbol-name feature))
         (unload-feature feature t))) features)
   (load-file user-init-file))
 
-(global-set-key (kbd "C-c C-g") #'reload-init-file)
+(global-set-key (kbd "C-c r") #'reload-init-file)
 
 ;; Package system setup
 (setq package-archives '(
   ("melpa" . "https://melpa.org/packages/")
   ("org"   . "https://orgmode.org/elpa/")
   ("elpa"  . "https://elpa.gnu.org/packages/")))
+;; (push '("melpa" . "https://melpa.org/packages/") package-archives)
