@@ -42,6 +42,7 @@
   :init
   (marginalia-mode))
 
+;; FIXME
 ;; Enhanced commands with preview
 (use-package consult
   :bind (;; C-x bindings (ctl-x-map)
@@ -59,7 +60,8 @@
          ;; M-s bindings (search-map)
          ("M-s l"   . consult-line)                  ;; Alternative: rebind C-s to consult-line
          ("M-s g"   . consult-grep)
-         ("M-s r"   . consult-ripgrep)))
+         ("M-s r"   . consult-ripgrep))
+)
 
 
 ;;------------------------------------------------------------
@@ -86,11 +88,6 @@
   (keyfreq-autosave-mode 1)         ;
   )
 
-
-;;------------------------------------------------------------
-;; 
-
-(global-set-key (kbd "C-'") 'tabspaces-switch-or-create-workspace)  ; Toggle last buffer
 
 
 ;;------------------------------------------------------------
@@ -170,87 +167,9 @@ M-x rename-buffer Lossage RET"
 (use-package edit-server)
 
 
-;;------------------------------------------------------------
-;; 
-;; (setq tab-bar-show 1)                      ;; hide bar if <= 1 tabs open
-;; (setq tab-bar-close-button-show nil)       ;; hide tab close / X button
-;; (setq tab-bar-new-tab-choice "*dashboard*");; buffer to show in new tabs
-;; (setq tab-bar-tab-hints t)                 ;; show tab numbers
-;; (setq tab-bar-format '(tab-bar-format-tabs tab-bar-separator))
-
 
 ;;------------------------------------------------------------
 ;; 
-
-;; (use-package tabspaces
-;;   :hook (after-init . tabspaces-mode)
-;;   :custom
-;;   (tabspaces-use-filtered-buffers-as-default t)  ; Isolate buffers in switch-to-buffer
-;;   (tab-bar-show t)  ; Show tab bar
-;;   :config
-;;   (tabspaces-use-filtered-buffers-as-default t)
-;;   (tabspaces-remove-to-default t)
-;;   ;; (consult-customize consult--source-buffer :hidden t :default nil)  ; Consult integration
-;;   ;; (add-to-list 'consult-buffer-sources 'consult--source-project-buffer)
-;;   ;; (add-to-list 'consult-buffer-sources 'consult--source-hidden-buffer :append t)
-;;   )
-
-(use-package tabspaces
-  ;; use this next line only if you also use straight, otherwise ignore it.
-  ;; :straight (:type git :host github :repo "mclear-tools/tabspaces")
-  :hook (after-init . tabspaces-mode) ;; use this only if you want the minor-mode loaded at startup.
-  :commands (tabspaces-switch-or-create-workspace
-             tabspaces-open-or-create-project-and-workspace)
-  :custom
-  (tabspaces-use-filtered-buffers-as-default t)
-  (tabspaces-default-tab "Default")
-  (tabspaces-remove-to-default t)
-  (tabspaces-include-buffers '("*scratch*"))
-  (tabspaces-initialize-project-with-todo t)
-  (tabspaces-todo-file-name "project-todo.org")
-  ;; sessions
-  (tabspaces-session t)
-  (tabspaces-session-auto-restore t)
-  ;; additional options
-  (tabspaces-fully-resolve-paths t)  ; Resolve relative project paths to absolute
-  (tabspaces-exclude-buffers '("*Messages*" "*Compile-Log*"))  ; Additional buffers to exclude
-  (tab-bar-new-tab-choice "*scratch*"))
-
-
-;; Filter Buffers for Consult-Buffer
-
-(with-eval-after-load 'consult
-  ;; hide full buffer list (still available with "b" prefix)
-  (consult-customize consult--source-buffer :hidden t :default nil)
-  ;; set consult-workspace buffer list
-  (defvar consult--source-workspace
-    (list :name     "Workspace Buffers"
-          :narrow   ?w
-          :history  'buffer-name-history
-          :category 'buffer
-          :state    #'consult--buffer-state
-          :default  t
-          :items    (lambda () (consult--buffer-query
-				:predicate #'tabspaces--local-buffer-p
-				:sort 'visibility
-				:as #'buffer-name)))
-  "Set workspace buffer list for consult-buffer.")
-(add-to-list 'consult-buffer-sources 'consult--source-workspace))
-
-
-(defun my-tabspaces-ibuffer-group ()
-  "Group ibuffer entries by tabspace."
-  (setq ibuffer-filter-groups
-        (mapcar (lambda (tab)
-                  (let ((tab-index (tab-bar--tab-index-by-name tab)))
-                    (cons tab
-                          `((predicate . (member (buffer-name)
-                                                 (mapcar #'buffer-name
-                                                         (tabspaces--buffer-list nil ,tab-index))))))))
-                (tabspaces--list-tabspaces))))
-
-(add-hook 'ibuffer-hook #'my-tabspaces-ibuffer-group)
-
 
  (use-package all-the-icons-completion
  :config
@@ -350,14 +269,300 @@ M-x rename-buffer Lossage RET"
 
 
 
+;; (use-package easysession
+;;   :ensure t
+
+;;   :custom
+;;   (easysession-save-interval (* 10 60))  ; Save every 10 minutes
+
+;;   ;; Display the active session name in the mode-line lighter.
+;;   (easysession-save-mode-lighter-show-session-name t)
+
+;;   ;; Optionally, the session name can be shown in the modeline info area:
+;;   (easysession-mode-line-misc-info t)
+
+  
+;;   ;; Automatically load the session at startup and restore frame size and
+;;   ;; position (geometry)
+;;   (add-hook 'emacs-startup-hook #'easysession-load-including-geometry 102)
+;;   ; (add-hook 'emacs-startup-hook #'easysession-load 102)
+
+;;   ;; Automatically save the current session every `easysession-save-interval'
+;;   ;; seconds (default: 10 minutes)
+;;   (add-hook 'emacs-startup-hook #'easysession-save-mode 103)
+;;   )
+
+
+
+(use-package activities
+  :config
+  (activities-mode)
+  (activities-tabs-mode)
+  ; (setq edebug-inhibit-emacs-lisp-mode-bindings t) ;; Prevent `edebug' default bindings from interfering.
+
+  ; :custom-face
+  ; (activities-tabs ((t nil)))
+  
+  ; '(activities-tabs ((t (:inherit font-lock-function-name-face))))
+  ;  '(font-lock-function-name-face ((t (:background "dim gray"))))  
+
+  :bind
+  (("C-x C-a C-n" . activities-new)
+   ("C-x C-a C-d" . activities-define)
+   ("C-x C-a C-a" . activities-resume)
+   ("C-x C-a C-s" . activities-suspend)
+   ("C-x C-a C-k" . activities-kill)
+   ("C-x C-a RET" . activities-switch)
+   ("C-x C-a b" . activities-switch-buffer)
+   ("C-x C-a g" . activities-revert)
+   ("C-x C-a l" . activities-list))
+   ;("C-c C-a" . activities-resume)
+   ;("C-c C-s" . activities-suspend)
+)
+
+
+;; (use-package bufler
+;;   :config
+;;   (bufler-mode 1)
+;;   ;(bufler-tabs-mode 1)  ; tabs as workspaces
+;;   :bind ("C-x C-b" . bufler))  ; list/switch
+
+;; ;; Group by project
+;; (setq bufler-groups (bufler-defgroups
+;;   (group (auto-project))))
+
+
+
+;------------------------------------------------------------
+ ; (use-package vim-tab-bar
+ ;   :ensure t
+ ;   :commands vim-tab-bar-mode
+ ;   ; :config (setq vim-tab-bar-show-groups t)
+ ;   :hook (after-init . vim-tab-bar-mode))
+
+;; https://www.rahuljuliato.com/posts/emacs-tab-bar-groups
+; (use-package tab-bar
+;   ; :defer t
+;   :custom
+;   (tab-bar-close-button-show nil)
+;   (tab-bar-new-button-show nil)
+;   (tab-bar-tab-hints nil)
+;   (tab-bar-auto-width nil)
+;   (tab-bar-separator " ")
+;   ; (tab-bar-format '(
+;   ;         tab-bar-format-history
+;   ;         ; tab-bar-format-tabs-groups 
+; 		; tab-bar-format-tabs
+;   ;         tab-bar-separator
+; 		; 			;tab-bar-format-add-tab
+;   ;         ))
+  
+;   :init
+;   ;;; --- OPTIONAL INTERNAL FN OVERRIDES TO DECORATE NAMES
+;   ; (defun tab-bar-tab-name-format-hints (name _tab i)
+; 	 ;  (if tab-bar-tab-hints (concat (format "»%s" name) "") name))
+
+;  ;  (defun tab-bar-tab-group-format-default (tab _i &optional current-p)
+; 	; (propertize
+; 	;  (concat (funcall tab-bar-tab-group-function tab))
+; 	;  'face (if current-p 'tab-bar-tab-group-current 'tab-bar-tab-group-inactive)))
+
+
+;   ;;; --- UTILITIES FUNCTIONS
+;   (defun emacs-solo/tab-group-from-project ()
+; 	"Call `tab-group` with the current project name as the group."
+; 	(interactive)
+; 	(when-let* ((proj (project-current))
+; 				(name (file-name-nondirectory
+; 					   (directory-file-name (project-root proj)))))
+; 	  (tab-group (format "[%s]" name))))
+
+;   (defun emacs-solo/tab-switch-to-group ()
+;   "Prompt for a tab group and switch to its first tab.
+; Uses position instead of index field."
+;   (interactive)
+;   (let* ((tabs (funcall tab-bar-tabs-function)))
+; 	(let* ((groups (delete-dups (mapcar (lambda (tab)
+; 										  (funcall tab-bar-tab-group-function tab))
+; 										tabs)))
+; 		   (group (completing-read "Switch to group: " groups nil t)))
+; 	  (let ((i 1) (found nil))
+; 		(dolist (tab tabs)
+; 		  (let ((tab-group (funcall tab-bar-tab-group-function tab)))
+; 			(when (and (not found)
+; 					   (string= tab-group group))
+; 			  (setq found t)
+; 			  (tab-bar-select-tab i)))
+; 		  (setq i (1+ i)))))))
+
+;   ;;; --- EXTRA KEYBINDINGS
+;   (global-set-key (kbd "C-x t P") #'emacs-solo/tab-group-from-project)
+;   (global-set-key (kbd "C-x t g") #'emacs-solo/tab-switch-to-group)
+
+;   ;;; --- TURNS ON BY DEFAULT
+;   (tab-bar-mode 1))
+
+; (custom-set-faces
+;   '(tab-bar
+; 	((t (:background "#232635" :foreground "#A6Accd"))))
+;   '(tab-bar-tab
+; 	((t (:background "#232635" :underline t))))
+;   '(tab-bar-tab-inactive
+; 	((t ( ;; :background "#232635" ;; uncomment to use this
+; 		  ;; :box (:line-width 1 :color "#676E95")
+; 		  ))))
+;   '(tab-bar-tab-group-current
+; 	((t (:background "#232635" :foreground "#A6Accd" :underline t))))
+;   '(tab-bar-tab-group-inactive
+; 	((t (:background "#232635" :foreground "#777")))))
+
+; ; (setq tab-bar-show 1)                 ; Hide bar if <= 1 tabs open
+; ; (tab-bar-mode 1)                      ; Enable tab bar
+; ; (tab-bar-mode 1)                      ; Enable tab bar
+; ; 
+; ; (tab-new)
+; ; (tab-new)
+; ; (tab-new)
+; ; (tab-new)
+; ; (tab-new)
+
+
+
+;;------------------------------------------------------------
+;;------------------------------------------------------------
+;;------------------------------------------------------------
+
+
+
+;; (use-package persp-mode
+;;   :ensure t
+;;   :config
+;;   (setq persp-autokill-buffer-on-remove 'kill-weak
+;;         ;; persp-save-dir (expand-file-name "persp-confs/" user-emacs-directory)
+;;         ;; persp-auto-save-fname "persp-auto-save"
+;;         ;; persp-auto-save-opt 2  ; save on deactivate/shutdown
+;;         ;; persp-auto-resume-time 1.0  ; resume after 1s
+;;         ;; persp-auto-save-num-of-backups 3
+;;         ;; persp-set-last-persp-for-new-frames t  ; new frames inherit last persp
+;;         )
+;;   (persp-mode 1))
+
+
+;;------------------------------------------------------------
+
+;; (use-package perspective
+;;   :ensure t
+;;   :config
+;;   (persp-mode)
+;;   (setq persp-state-default-file "~/.emacs.d/persp-state"))  ; auto-save/load
+
+;; (use-package perspective
+;;   :bind
+;;   ("C-x C-b" . persp-list-buffers)         ; or use a nicer switcher, see below
+;;   :custom
+;;   (persp-mode-prefix-key (kbd "C-x x"))  ; pick your own prefix key here
+;;   :init
+;;   (persp-mode))
 
 
 
 
+;;------------------------------------------------------------
+;;------------------------------------------------------------
+;;------------------------------------------------------------
 
 
+;; ;; ;; (use-package tabspaces
+;; ;; ;;   :hook (after-init . tabspaces-mode)
+;; ;; ;;   :custom
+;; ;; ;;   (tabspaces-use-filtered-buffers-as-default t)  ; Isolate buffers in switch-to-buffer
+;; ;; ;;   (tab-bar-show t)  ; Show tab bar
+;; ;; ;;   :config
+;; ;; ;;   (tabspaces-use-filtered-buffers-as-default t)
+;; ;; ;;   (tabspaces-remove-to-default t)
+;; ;; ;;   ;; (consult-customize consult--source-buffer :hidden t :default nil)  ; Consult integration
+;; ;; ;;   ;; (add-to-list 'consult-buffer-sources 'consult--source-project-buffer)
+;; ;; ;;   ;; (add-to-list 'consult-buffer-sources 'consult--source-hidden-buffer :append t)
+;; ;; ;;   )
+
+(use-package tabspaces
+  :hook
+  (after-init . tabspaces-mode)
+  :custom
+  (tabspaces-default-tab "Home")
+  (tabspaces-remove-to-default t) ; Kill buffer when removed???
+  (tabspaces-use-filtered-buffers-as-default t) ; remaps switch-to-buffer to tabspaces-switch-to-buffer.
+  ; (tabspaces-session-project-session-store "~/.config/emacs/persist") ;; Store all project sessions in a specific directory
+  ; (tabspaces-session-file "~/.config/emacs/persist/tabsession.el") ;; Store all project sessions in a specific directory
+  (tabspaces-include-buffers '("*scratch*"))
+  (tabspaces-exclude-buffers '("*Messages*" "*Compile-Log*"))  ; Additional buffers to exclude
+  (tabspaces-keymap-prefix "C-x C-z")  ; Default: C-c TAB
+  (tabspaces-initialize-project-with-todo t)
+  (tabspaces-todo-file-name "todo.org")
+   
+  ; (tabspaces-fully-resolve-paths nil)
+
+  (tabspaces-session t) ; Save sessions automatically
+  (tabspaces-session-auto-restore t)    ; Auto-restore sessions on startup and when opening projects
+
+  (tab-bar-new-tab-choice "*scratch*")
+  ; (tab-bar-new-tab-choice "*Messages*")
+  )
+
+ ;; Filter Buffers for Consult-Buffer
+
+(with-eval-after-load 'consult
+  ;; hide full buffer list (still available with "b" prefix)
+  (consult-customize consult--source-buffer :hidden t :default nil)
+  ;; set consult-workspace buffer list
+  (defvar consult--source-workspace
+    (list :name     "Workspace Buffers"
+          :narrow   ?w
+          :history  'buffer-name-history
+          :category 'buffer
+          :state    #'consult--buffer-state
+          :default  t
+          :items    (lambda () (consult--buffer-query
+				:predicate #'tabspaces--local-buffer-p
+				:sort 'visibility
+				:as #'buffer-name)))
+  "Set workspace buffer list for consult-buffer.")
+(add-to-list 'consult-buffer-sources 'consult--source-workspace))
 
 
+(defun my-tabspaces-ibuffer-group ()
+  "Group ibuffer entries by tabspace."
+  (setq ibuffer-filter-groups
+        (mapcar (lambda (tab)`
+                  (let ((tab-index (tab-bar--tab-index-by-name tab)))
+                    (cons tab
+                          `((predicate . (member (buffer-name)
+                                                 (mapcar #'buffer-name
+                                                         (tabspaces--buffer-list nil ,tab-index))))))))
+                (tabspaces--list-tabspaces))))
+(add-hook 'ibuffer-hook #'my-tabspaces-ibuffer-group)
+
+
+(global-set-key (kbd "C-'") 'tabspaces-switch-or-create-workspace)  ; Toggle last buffer
+
+
+;;------------------------------------------------------------
+;; 
+; (setq tab-bar-show t)                      ;; hide bar if <= 1 tabs open
+; (setq tab-bar-close-button-show t) ;;nil)       ;; hide tab close / X button
+; (setq tab-bar-new-tab-choice "*dashboard*");; buffer to show in new tabs
+; (setq tab-bar-tab-hints t)                 ;; show tab numbers
+; (setq tab-bar-format '(tab-bar-format-tabs tab-bar-separator))
+
+; ; (tab-bar-mode -1)
+; ; (setq tab-bar-show t)             ; 
+
+; (tab-bar-mode 1)
+
+
+; (use-package beframe
+;   :config
+;   (beframe-mode 1))
 
 ;;------------------------------------------------------------
 (provide 'init-experiments)

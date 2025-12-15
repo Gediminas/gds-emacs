@@ -27,6 +27,13 @@
 (blink-cursor-mode -1)            ; Disable cursor blink
 (setq inhibit-splash-screen t)    ; Hide emacs page (moved here to also hide it on error)
 
+; Tab-bar
+; (setq tab-bar-show 1)                 ; Hide bar if <= 1 tabs open
+(setq tab-bar-show t)                 ; Hide bar if <= 1 tabs open
+(setq tab-bar-close-button-show nil)  ; Hide tab close / X button
+(setq tab-bar-tab-hints t)            ; Show tab numbers
+(tab-bar-mode 1)                      ; Enable tab bar
+ 
 ;; Startup time measurement
 (add-hook 'emacs-startup-hook (lambda ()
   (message "Loaded in %.2f seconds with %d garbage collections."
@@ -45,7 +52,19 @@
         (unload-feature feature t))) features)
   (load-file user-init-file))
 
-(global-set-key (kbd "C-c r") #'reload-init-file)
+;; C-c r - Reload cofig
+(defun reload-init-file ()
+  "Save current buffer & Reload init.el"
+  (interactive)
+  (save-buffer)
+  ;; Unload all init-* features
+  (mapc (lambda (feature)
+      (when (string-match-p "^init-" (symbol-name feature))
+        (unload-feature feature t))) features)
+  (load-file user-init-file))
+
+(global-set-key (kbd "C-c C-r") #'reload-init-file)
+(global-set-key (kbd "C-c r")   #'package-refresh-contents)
 
 ;; Package system setup
 (setq package-archives '(

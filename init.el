@@ -16,30 +16,29 @@
 ;;------------------------------------------------------------
 ;; Basic Settings
 
-(setq next-screen-context-lines 5      ; PageUp/Down margins (default 2)
-      use-short-answers t              ; y/n instead of yes/no
-      sentence-end-double-space nil)   ; Sentence ends with 1 space
-
-(setq display-line-numbers 'relative)  ; Relative line numbers 
-
-(global-display-line-numbers-mode 1)   ; Line numbers
-(global-hl-line-mode t)                ; Highlight current line
-(column-number-mode 1)                 ; Show column in modeline
-(desktop-save-mode 1)                  ; Restore session on restart
-(global-tab-line-mode t)
-(recentf-mode 1)                       ; track recent files:
-(savehist-mode 1)                      ; Remembers your buffer order
-(repeat-mode 1)                        ; C-x o o o...
-(winner-mode 1)                        ; Undo/redo windows
-
 (use-package emacs
   :init
   ;; https://arne.me/blog/emacs-from-scratch-part-one-foundations
   ;; (setq initial-scratch-message nil)
   (setq-default indent-tabs-mode nil) ; Use spaces
   (setq-default tab-width 2)         ; tab-width for modes that use tabs (Go) 
-  (defalias 'yes-or-no-p 'y-or-n-p))  ; y/n in comfirmation dialogs
+  (defalias 'yes-or-no-p 'y-or-n-p)  ; y/n in comfirmation dialogs
 
+  (setq next-screen-context-lines 5      ; PageUp/Down margins (default 2)
+        use-short-answers t              ; y/n instead of yes/no
+        sentence-end-double-space nil)   ; Sentence ends with 1 space
+
+  (setq display-line-numbers 'relative)  ; Relative line numbers 
+
+  (global-display-line-numbers-mode 1)   ; Line numbers
+  (global-hl-line-mode t)                ; Highlight current line
+  (column-number-mode 1)                 ; Show column in modeline
+  (recentf-mode 1)                       ; track recent files:
+  (savehist-mode 1)                      ; Remembers your buffer order
+  (repeat-mode 1)                        ; C-x o o o...
+  (winner-mode 1)                        ; Undo/redo windows
+  ;(global-tab-line-mode t)
+)
 ;;------------------------------------------------------------
 ;; Modules
  
@@ -52,6 +51,12 @@
 ;; (require 'init-training)
 (require 'init-experiments)
 
+
+; (use-package emacs
+;   :init
+;   (setq desktop-path '("~/.config/emacs/persist/"))
+;   (desktop-save-mode 1)                  ; Restore session on restart
+; )
 
 ;;------------------------------------------------------------
 ;; Custom (auto-generated)

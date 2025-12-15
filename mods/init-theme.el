@@ -3,7 +3,8 @@
 ;;------------------------------------------------------------
 ;; Theme & Appearance
 
-(set-frame-font "Hack:size=15:weight=regular:antialias=true:hinting=true:hintstyle=hintfull" nil t)
+;; (set-frame-font "Hack:size=15:weight=regular:antialias=true:hinting=true:hintstyle=hintfull" nil t)
+(add-to-list 'default-frame-alist '(font . "Hack-12"))
 
 (use-package doom-themes
   :config
@@ -28,60 +29,72 @@
 ;;------------------------------------------------------------
 ;; Customizations
 
-;; (defun my/setup-tab-faces-light ()
-;;   "Setup tab faces for light mode."
-;;   ;; (set-face-attribute 'tab-bar nil
-;;   ;;                     :background "light blue"
-;;   ;;                     :foreground "#000000")
-;;   ;; (set-face-attribute 'tab-bar-tab nil
-;;   ;;                     :background "sky blue"
-;;   ;;                     :foreground "#000000")
-;;   )
+;; ;; (defun my/setup-tab-faces-light ()
+;; ;;   "Setup tab faces for light mode."
+;; ;;   ;; (set-face-attribute 'tab-bar nil
+;; ;;   ;;                     :background "light blue"
+;; ;;   ;;                     :foreground "#000000")
+;; ;;   ;; (set-face-attribute 'tab-bar-tab nil
+;; ;;   ;;                     :background "sky blue"
+;; ;;   ;;                     :foreground "#000000")
+;; ;;   )
 
-;; (defun my/setup-tab-faces-dark ()
-;;   "Setup tab faces for dark mode."
+;; ;; (defun my/setup-tab-faces-dark ()
+;; ;;   "Setup tab faces for dark mode."
 
-;;  ;; '(tab-bar ((t (:background "blue4" :foreground "#1E2029"))))
-;;  ;; '(tab-bar-tab ((t (:background "royal blue" :foreground "#f8f8f2"))))
-;;  ;; '(tab-bar-tab-inactive ((t (:background "blue" :foreground "dim gray"))))
-;;  ;; '(tab-line ((t (:background "dim gray" :foreground "#1E2029"))))
-;;  ;; '(tab-line-tab-current ((t (:background "sea green" :foreground "#f8f8f2"))))
-;;  ;; '(tab-line-tab-inactive ((t (:background "cyan4" :foreground "gainsboro"))))
+;; ;;  ;; '(tab-bar ((t (:background "blue4" :foreground "#1E2029"))))
+;; ;;  ;; '(tab-bar-tab ((t (:background "royal blue" :foreground "#f8f8f2"))))
+;; ;;  ;; '(tab-bar-tab-inactive ((t (:background "blue" :foreground "dim gray"))))
+;; ;;  ;; '(tab-line ((t (:background "dim gray" :foreground "#1E2029"))))
+;; ;;  ;; '(tab-line-tab-current ((t (:background "sea green" :foreground "#f8f8f2"))))
+;; ;;  ;; '(tab-line-tab-inactive ((t (:background "cyan4" :foreground "gainsboro"))))
 
-;;   ;; (set-face-attribute 'tab-bar nil
-;;   ;;                     :background "blue4"
-;;   ;;                     :foreground "#1E2029")
-  (set-face-attribute 'tab-bar-tab nil
-                      :background "#004477"
-                      :foreground "grey")
-  (set-face-attribute 'tab-bar-tab-inactive nil
-                      :background nil
-                      :foreground "#00BBff")
-;;   ;; (set-face-attribute 'tab-line nil
-;;   ;;                     :background "dim gray"
-;;   ;;                     :foreground "#1E2029")
-  (set-face-attribute 'tab-line-tab-current nil
-                      :background "royal blue"
-                      :foreground "white")
+;; ;;   ;; (set-face-attribute 'tab-bar nil
+;; ;;   ;;                     :background "blue4"
+;; ;;   ;;                     :foreground "#1E2029")
 
-;;                       :background nil
-;;                       :foreground "#00BBff")
-;;   )
+; (activities-tabs ((t nil)))
 
-;; ;; Apply dark theme by default
-;; (my/setup-tab-faces-dark)
+;(set-face-attribute 'tab-bar-tab nil
+;                      :background "#333355"
+;                      :foreground "white")
 
-;; ;; Optional: Hook into theme changes
-;; (defun my/apply-theme-tab-faces (theme)
-;;   "Apply appropriate tab faces based on THEME."
-;;   (if (memq theme '(doom-one doom-dark modus-vivendi))
-;;       (my/setup-tab-faces-dark)
-;;     (my/setup-tab-faces-light)))
+; (set-face-attribute 'tab-bar-tab-inactive nil
+;                       :background nil
+;                       ;; :foreground "#00BBff"
+;                       :foreground "#006699"
+;                       )
 
-;; ;; Hook into theme loading
-;; (advice-add 'load-theme :after
-;;             (lambda (theme &rest _)
-;;               (my/apply-Themew-Tabcf-faces theme)))
+; (set-face-attribute 'activities-tabs nil
+;                       )
+; '(activities-tabs ((t (:inherit font-lock-function-name-face))))
+;  '(font-lock-function-name-face ((t (:background "dim gray"))))
+
+;; ;;   ;; (set-face-attribute 'tab-line nil
+;; ;;   ;;                     :background "dim gray"
+;; ;;   ;;                     :foreground "#1E2029")
+;;   (set-face-attribute 'tab-line-tab-current nil
+;;                       :background "royal blue"
+;;                       :foreground "white")
+
+;; ;;                       :background nil
+;; ;;                       :foreground "#00BBff")
+;; ;;   )
+
+;; ;; ;; Apply dark theme by default
+;; ;; (my/setup-tab-faces-dark)
+
+;; ;; ;; Optional: Hook into theme changes
+;; ;; (defun my/apply-theme-tab-faces (theme)
+;; ;;   "Apply appropriate tab faces based on THEME."
+;; ;;   (if (memq theme '(doom-one doom-dark modus-vivendi))
+;; ;;       (my/setup-tab-faces-dark)
+;; ;;     (my/setup-tab-faces-light)))
+
+;; ;; ;; Hook into theme loading
+;; ;; (advice-add 'load-theme :after
+;; ;;             (lambda (theme &rest _)
+;; ;;               (my/apply-Themew-Tabcf-faces theme)))
 
 ;;------------------------------------------------------------
 (provide 'init-theme)
