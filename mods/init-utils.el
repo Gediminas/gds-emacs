@@ -1,6 +1,14 @@
 ;;; -*- lexical-binding: t; -*-
 
 ;;------------------------------------------------------------
+;; C-w delete line if no selectio/mark
+
+(use-package whole-line-or-region
+  :config
+  (whole-line-or-region-global-mode 1))
+
+
+;;------------------------------------------------------------
 ;; Keybinding Help
 
 (use-package which-key
@@ -48,9 +56,11 @@
 
 
 ;;------------------------------------------------------------
-;; Git
+;; Edit text from browser
 
-(use-package magit)
+(use-package edit-server
+  :defer
+  (edit-server-start))
 
 
 ;;------------------------------------------------------------

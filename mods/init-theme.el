@@ -21,37 +21,66 @@
 
 
 ;;------------------------------------------------------------
+;; Current line
+
+;; current line color
+(set-cursor-color "#ffff00") 
+;; (set-face-background 'hl-line "#3e4446")
+(set-face-background 'hl-line "#503050")
+(set-face-foreground 'hl-line nil)
+(set-face-foreground 'highlight nil) ;???
+(set-face-attribute 'region nil :background "#444499")
+
+;;------------------------------------------------------------
 ;; Pretty icons
 
 (use-package nerd-icons)  ; M-x nerd-icons-install-fonts 
 
+(use-package all-the-icons-completion
+ :config
+ (all-the-icons-completion-mode 1))
+
+;; (use-package all-the-icons-dired
+;;  :defer
+;;  (all-the-icons-dired-mode 1))
+
+;; (use-package dired-icon
+;;  :config
+;;  (dired-icon-mode 1))
+
+
+;;------------------------------------------------------------
+;; Line at 80 & 120
+
+(setq whitespace-line-column 80)
+(setq whitespace-line-column 120)
+(setq whitespace-style '(face lines-tail))
+
+
+;;------------------------------------------------------------
+;; 
+;; 80 char limit
+(use-package emacs
+  :init
+  (setq-default fill-column 80)
+  (set-face-attribute 'fill-column-indicator nil
+                      :foreground "#222222"
+                      :background "transparent")
+  (global-display-fill-column-indicator-mode 1))
+
+
+;------------------------------------------------------------
+;; Tab-Bar
+
+(use-package vim-tab-bar
+  :ensure t
+  :commands vim-tab-bar-mode
+  :config (setq vim-tab-bar-show-groups t)
+  :hook (after-init . vim-tab-bar-mode))
+
 
 ;;------------------------------------------------------------
 ;; Customizations
-
-;; ;; (defun my/setup-tab-faces-light ()
-;; ;;   "Setup tab faces for light mode."
-;; ;;   ;; (set-face-attribute 'tab-bar nil
-;; ;;   ;;                     :background "light blue"
-;; ;;   ;;                     :foreground "#000000")
-;; ;;   ;; (set-face-attribute 'tab-bar-tab nil
-;; ;;   ;;                     :background "sky blue"
-;; ;;   ;;                     :foreground "#000000")
-;; ;;   )
-
-;; ;; (defun my/setup-tab-faces-dark ()
-;; ;;   "Setup tab faces for dark mode."
-
-;; ;;  ;; '(tab-bar ((t (:background "blue4" :foreground "#1E2029"))))
-;; ;;  ;; '(tab-bar-tab ((t (:background "royal blue" :foreground "#f8f8f2"))))
-;; ;;  ;; '(tab-bar-tab-inactive ((t (:background "blue" :foreground "dim gray"))))
-;; ;;  ;; '(tab-line ((t (:background "dim gray" :foreground "#1E2029"))))
-;; ;;  ;; '(tab-line-tab-current ((t (:background "sea green" :foreground "#f8f8f2"))))
-;; ;;  ;; '(tab-line-tab-inactive ((t (:background "cyan4" :foreground "gainsboro"))))
-
-;; ;;   ;; (set-face-attribute 'tab-bar nil
-;; ;;   ;;                     :background "blue4"
-;; ;;   ;;                     :foreground "#1E2029")
 
 ; (activities-tabs ((t nil)))
 
@@ -65,36 +94,6 @@
 ;                       :foreground "#006699"
 ;                       )
 
-; (set-face-attribute 'activities-tabs nil
-;                       )
-; '(activities-tabs ((t (:inherit font-lock-function-name-face))))
-;  '(font-lock-function-name-face ((t (:background "dim gray"))))
-
-;; ;;   ;; (set-face-attribute 'tab-line nil
-;; ;;   ;;                     :background "dim gray"
-;; ;;   ;;                     :foreground "#1E2029")
-;;   (set-face-attribute 'tab-line-tab-current nil
-;;                       :background "royal blue"
-;;                       :foreground "white")
-
-;; ;;                       :background nil
-;; ;;                       :foreground "#00BBff")
-;; ;;   )
-
-;; ;; ;; Apply dark theme by default
-;; ;; (my/setup-tab-faces-dark)
-
-;; ;; ;; Optional: Hook into theme changes
-;; ;; (defun my/apply-theme-tab-faces (theme)
-;; ;;   "Apply appropriate tab faces based on THEME."
-;; ;;   (if (memq theme '(doom-one doom-dark modus-vivendi))
-;; ;;       (my/setup-tab-faces-dark)
-;; ;;     (my/setup-tab-faces-light)))
-
-;; ;; ;; Hook into theme loading
-;; ;; (advice-add 'load-theme :after
-;; ;;             (lambda (theme &rest _)
-;; ;;               (my/apply-Themew-Tabcf-faces theme)))
 
 ;;------------------------------------------------------------
 (provide 'init-theme)

@@ -38,17 +38,26 @@
   (repeat-mode 1)                        ; C-x o o o...
   (winner-mode 1)                        ; Undo/redo windows
   ;(global-tab-line-mode t)
+  (setq backup-directory-alist `(("." . "~/.saves"))) ;; Store backup files in ~/.saves
+  (setq use-file-dialog nil)      ; Ask for textual confirmation instead of GUI
+
+  ;(setq auto-revert-use-notify t)
+  ;(global-auto-revert-mode 1)
 )
+
 ;;------------------------------------------------------------
 ;; Modules
  
 (add-to-list 'load-path (expand-file-name "mods" user-emacs-directory))
 
-(require 'init-utils)
 (require 'init-theme)
+(require 'init-utils)
+(require 'init-vertico)
+(require 'init-tabs)
 (require 'init-org)
-(require 'init-rust)
-;; (require 'init-training)
+(require 'init-reading)
+(require 'init-programming)
+(require 'init-training)
 (require 'init-experiments)
 
 
