@@ -12,12 +12,7 @@
 
 
 ;;------------------------------------------------------------
-;; epub/pdf readers
-
-
-(use-package ereader)
-
-(use-package nov)
+;; readers
 
 
 (use-package raindrop
@@ -33,33 +28,7 @@
 
 
 
-; sudo apt install libjpeg-dev zlib1g zlib1g-dev
-; sudo apt install zlib1g-dev libpoppler-glib-dev pkg-config autoconf automake libpng-dev
-; nix: poppler
-(use-package pdf-tools
-  ; :mode
-  ; (("\\.pdf$" . pdf-view-mode))
 
-  :custom
-  pdf-annot-activate-created-annotations t 
-  pdf-view-resize-factor 1.1
-
-  :bind
-  (:map pdf-view-mode-map
-    ;; normal isearch
-	("C-s" . isearch-forward)
-    ;; custom keys 
-	("h" . pdf-annot-activate-created-annotations)
-	("t" . pdf-annot-add-text-annotation)
-	("D" . pdf-annot-delete))
-
-  :hook
-  ((pdf-view-mode) . (lambda () (cua-mode 0)))
-
-  :config
-  (pdf-tools-install)
-
-  (setq-default pdf-view-display-size 'fit-page))
 
 
 

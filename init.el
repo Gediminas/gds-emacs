@@ -6,7 +6,7 @@
 (require 'use-package)             ; Required when used with the line below 
 (require 'use-package-ensure)      ; ???
 (setq use-package-always-ensure t) ; Auto-install packages (no need for ":ensure t")
-;; (setq use-package-always-defer t)  ; always :defer t for lazy loading:
+; (setq use-package-always-defer t)  ; always :defer t for lazy loading:
 
 (package-initialize);              ; Might called by `use-package` but required by the line below
 (unless package-archive-contents
@@ -28,9 +28,6 @@
         use-short-answers t              ; y/n instead of yes/no
         sentence-end-double-space nil)   ; Sentence ends with 1 space
 
-  (setq display-line-numbers 'relative)  ; Relative line numbers 
-
-  (global-display-line-numbers-mode 1)   ; Line numbers
   (global-hl-line-mode t)                ; Highlight current line
   (column-number-mode 1)                 ; Show column in modeline
   (recentf-mode 1)                       ; track recent files:

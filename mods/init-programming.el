@@ -1,6 +1,25 @@
 ;;; -*- lexical-binding: t; -*-
 
 ;;------------------------------------------------------------
+;; Line numbers
+
+; (add-hook 'prog-mode-hook #'display-line-numbers-mode)
+; (add-hook 'text-mode-hook #'display-line-numbers-mode)
+; u
+
+; (global-display-line-numbers-mode 1)   ; Line numbers (conflicts with pdf-tools)
+(use-package display-line-numbers
+  :ensure nil  ; Built-in, no install needed
+  :hook
+  ((prog-mode . display-line-numbers-mode)
+   (text-mode . display-line-numbers-mode)
+   (conf-mode . display-line-numbers-mode))
+  :config
+  (setq display-line-numbers-type 'relative))  ; Relative line numbers
+
+
+ 
+;;------------------------------------------------------------
 ;; Git
 
 (use-package magit)

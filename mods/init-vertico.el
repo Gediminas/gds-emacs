@@ -48,10 +48,10 @@
          ("C-x 5 b" . consult-buffer-other-frame)  ;; orig. switch-to-buffer-other-frame
          ("C-x r b" . consult-bookmark)            ;; orig. bookmark-jump
          ("C-x p b" . consult-project-buffer)      ;; orig. project-switch-to-buffer
-         ;; Other custom bindings
-         ("C-x C-r" . consult-recent-file)
+         ; ;; Other custom bindings
+         ("C-x C-r" . consult-recent-file)         ;; orig. find-file-read-only
          ;; M-g bindings (goto-map)
-         ("M-g g"   . consult-goto-line)             ;; orig. goto-line
+         ("M-g g"   . consult-goto-line)           ;; orig. goto-line
          ("M-g M-g" . consult-goto-line)
          ("M-g i"   . consult-imenu)
          ;; M-s bindings (search-map)
