@@ -29,16 +29,10 @@
 
 ; Tab-bar
 ; (setq tab-bar-show 1)                 ; Hide bar if <= 1 tabs open
-(setq tab-bar-show t)                 ; Hide bar if <= 1 tabs open
+(setq tab-bar-show t)                 ; Show always
 (setq tab-bar-close-button-show nil)  ; Hide tab close / X button
 (setq tab-bar-tab-hints t)            ; Show tab numbers
 (tab-bar-mode 1)                      ; Enable tab bar
- 
-;; Startup time measurement
-(add-hook 'emacs-startup-hook (lambda ()
-  (message "Loaded in %.2f seconds with %d garbage collections."
-     (float-time (time-subtract after-init-time before-init-time))
-     gcs-done)))
 
 ;; C-c r - Reload cofig
 (defun reload-init-file ()
@@ -63,8 +57,8 @@
         (unload-feature feature t))) features)
   (load-file user-init-file))
 
-(global-set-key (kbd "C-c C-r") #'reload-init-file)
-(global-set-key (kbd "C-c r")   #'package-refresh-contents)
+(global-set-key (kbd "C-c r r") #'reload-init-file)
+(global-set-key (kbd "C-c r e")   #'package-refresh-contents)
 
 ;; Package system setup
 (setq package-archives '(

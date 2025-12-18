@@ -1,6 +1,5 @@
 ;;; -*- lexical-binding: t; -*-
 
-
 ;;------------------------------------------------------------
 ;; TabSpaces
 
@@ -24,8 +23,13 @@
   (tabspaces-session t) ; Save sessions automatically
   (tabspaces-session-auto-restore t)    ; Auto-restore sessions on startup and when opening projects
 
-  (tab-bar-new-tab-choice "*scratch*")
+  ; (tab-bar-new-tab-choice "*scratch*")
   ; (tab-bar-new-tab-choice "*Messages*")
+
+  ; :config
+  ; (setq tab-bar-show t)                 ; Show always
+  ; (setq tab-bar-close-button-show nil)  ; Hide tab close / X button
+  ; (setq tab-bar-tab-hints t)            ; Show tab numbers
 
   :bind
     ; (defvar tabspaces-command-map
@@ -103,31 +107,31 @@
 ;;------------------------------------------------------------
 ;; Activities
 
-(use-package activities
-  :config
-  (activities-mode)
-  (activities-tabs-mode)
-  ; (setq edebug-inhibit-emacs-lisp-mode-bindings t) ;; Prevent `edebug' default bindings from interfering.
+; (use-package activities
+;   :config
+;   (activities-mode)
+;   (activities-tabs-mode)
+;   ; (setq edebug-inhibit-emacs-lisp-mode-bindings t) ;; Prevent `edebug' default bindings from interfering.
 
-  ; :custom-face
-  ; (activities-tabs ((t nil)))
+;   ; :custom-face
+;   ; (activities-tabs ((t nil)))
   
-  ; '(activities-tabs ((t (:inherit font-lock-function-name-face))))
-  ;  '(font-lock-function-name-face ((t (:background "dim gray"))))  
+;   ; '(activities-tabs ((t (:inherit font-lock-function-name-face))))
+;   ;  '(font-lock-function-name-face ((t (:background "dim gray"))))  
 
-  :bind
-  (("C-x C-a C-n" . activities-new)
-   ("C-x C-a C-d" . activities-define)
-   ("C-x C-a C-a" . activities-resume)
-   ("C-x C-a C-s" . activities-suspend)
-   ("C-x C-a C-k" . activities-kill)
-   ("C-x C-a RET" . activities-switch)
-   ("C-x C-a b" . activities-switch-buffer)
-   ("C-x C-a g" . activities-revert)
-   ("C-x C-a l" . activities-list))
-   ;("C-c C-a" . activities-resume)
-   ;("C-c C-s" . activities-suspend)
-)
+;   :bind
+;   (("C-x C-a C-n" . activities-new)
+;    ("C-x C-a C-d" . activities-define)
+;    ("C-x C-a C-a" . activities-resume)
+;    ("C-x C-a C-s" . activities-suspend)
+;    ("C-x C-a C-k" . activities-kill)
+;    ("C-x C-a RET" . activities-switch)
+;    ("C-x C-a b" . activities-switch-buffer)
+;    ("C-x C-a g" . activities-revert)
+;    ("C-x C-a l" . activities-list))
+;    ;("C-c C-a" . activities-resume)
+;    ;("C-c C-s" . activities-suspend)
+; )
 
 
 ;;------------------------------------------------------------

@@ -27,8 +27,16 @@
   :defer t)
 
 
-
-
+;; Integrate with bookmarks for persistent reading positions
+(use-package bookmark
+  ; :ensure nil
+  :config
+  (setq bookmark-save-flag 1)  ; Auto-save on changes
+  ; :bind
+  ; (("C-c b m" . bookmark-set)    ; Set bookmark (e.g., current PDF page)
+  ;  ("C-c b j" . bookmark-jump)   ; Jump to bookmark, opens in current/other tab if needed
+  ;  ("C-c b l" . list-bookmarks))
+  )
 
 
 

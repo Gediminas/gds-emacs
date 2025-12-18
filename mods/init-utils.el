@@ -49,6 +49,18 @@
 
 
 ;;------------------------------------------------------------
+;; Scratch info
+
+(with-current-buffer (get-buffer-create "*scratch*")
+  (insert (format ";;
+;;   Loading time : %s seconds
+;;   Garbage col. : %d
+;;   Packages     : %d
+;;
+" (emacs-init-time "%.2f") gcs-done (length package-activated-list))))
+
+
+;;------------------------------------------------------------
 ;; Restart Emacs
 
 (use-package restart-emacs

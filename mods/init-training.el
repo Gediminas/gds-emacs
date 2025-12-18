@@ -40,7 +40,7 @@
 
 (use-package keycast
   :config
-  (keycast-header-line-mode))
+  (keycast-tab-bar-mode))
 
 ;;------------------------------------------------------------
 ;; Auto-update command history (lossage) buffer
