@@ -11,13 +11,22 @@
   (setq doom-themes-enable-bold t    ;???
         doom-themes-enable-italic t) ;???
   (load-theme 'doom-dracula t)
-  ;; (load-theme 'doom-challenger-deep t)
   (doom-themes-org-config)           ; Better org-mode faces???
   (doom-themes-visual-bell-config))
 
 (use-package doom-modeline
   :config
   (doom-modeline-mode 1))
+
+(use-package heaven-and-hell
+  :config
+  (setq heaven-and-hell-theme-type 'dark)
+  (setq heaven-and-hell-themes '((light . doom-one-light)
+                                 (dark  . doom-dracula)))
+  (setq heaven-and-hell-load-theme-no-confirm t)
+  :hook (after-init . heaven-and-hell-init-hook)
+  :bind (("C-c <f5>" . heaven-and-hell-load-default-theme)
+         ("<f5>" . heaven-and-hell-toggle-theme)))
 
 
 ;;------------------------------------------------------------
