@@ -1,5 +1,20 @@
 ;;; -*- lexical-binding: t; -*-
 
+
+;;------------------------------------------------------------
+;; Calibre - Book Library
+
+(use-package calibredb
+  ; :demand t  ; Load eagerly for dashboard access
+  :defer t
+  :config
+  (setq calibredb-root-dir "~/books")
+  (setq calibredb-db-dir (expand-file-name "metadata.db" calibredb-root-dir))
+  (setq calibredb-set-layout 'list)  ; list Or 'dashboard for org-like view
+  :bind
+  ("C-c o l" . calibredb))
+
+
 ;;------------------------------------------------------------
 ;; PDF
 
@@ -10,14 +25,6 @@
   
   :init
   (pdf-loader-install)) ; Lighter than `pdf-tools-install`
-
-
-; (use-package pdf-tools
-;   :custom
-;   pdf-view-resize-factor 1.1 ; zoom step 10% (default 25%)
-;   :config
-;   (pdf-loader-install)  ; Lighter than `pdf-tools-install`
-;   (setq-default pdf-view-display-size 'fit-page))
 
 
 ;;------------------------------------------------------------
@@ -56,7 +63,8 @@
 ;; RSS
 
 (use-package elfeed
-:config
+  :defer t
+  :config
   ;; data is stored in ~/.elfeed
   (setq elfeed-feeds '(
 
@@ -74,7 +82,8 @@
   ; (setq-default elfeed-search-filter "@7-days-ago +unread")
   ; (setq-default elfeed-search-title-max-width 100)
   ; (setq-default elfeed-search-title-min-width 100)
-)
+  :bind
+  ("C-c o r" . elfeed))
 
 
 ;;------------------------------------------------------------

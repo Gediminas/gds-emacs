@@ -3,6 +3,8 @@
 ;;------------------------------------------------------------
 ;; Try
 
+(setq large-file-warning-threshold 100000000) ; 100 MB
+
 (global-set-key (kbd "C-;") 'mode-line-other-buffer)  ; Toggle last buffer
 
 ;; https://emacs.stackexchange.com/questions/728/how-do-i-switch-buffers-quickly
@@ -13,19 +15,6 @@
 
 ;;------------------------------------------------------------
 ;; readers
-
-
-(use-package raindrop
-  :defer t
-  :ensure nil
-  ;:ensure (raindrop :host github :repo "artawower/raindrop.el")
-  )
-
-(use-package raindrop-org
-  :after raindrop
-  :ensure nil
-  :defer t)
-
 
 ;; Integrate with bookmarks for persistent reading positions
 (use-package bookmark
@@ -39,7 +28,16 @@
   )
 
 
+(use-package raindrop
+  :defer t
+  :ensure nil
+  ;:ensure (raindrop :host github :repo "artawower/raindrop.el")
+  )
 
+(use-package raindrop-org
+  :after raindrop
+  :ensure nil
+  :defer t)
 
 
 
