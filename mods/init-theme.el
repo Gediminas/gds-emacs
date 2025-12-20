@@ -30,15 +30,29 @@
 
 
 ;;------------------------------------------------------------
-;; Current line
+;; Colors
 
-;; current line color
-(set-cursor-color "#ffff00") 
-;; (set-face-background 'hl-line "#3e4446")
-(set-face-background 'hl-line "#503050")
+; ; (set-face-background 'hl-line "#3e4446")
+; (set-face-background 'hl-line "#503050")               ; current line color
+; (set-face-foreground 'hl-line nil)
+; (set-cursor-color "#ffff00")                           ; cursor color
+
+; ; (set-face-foreground 'highlight nil) ;???
+
+; (set-face-attribute 'region nil :background "#444477") ; selection color
+
+
+;;------------------------------------------------------------
+;; Colors
+
+(set-face-background 'hl-line "#503050")               ; current line color
 (set-face-foreground 'hl-line nil)
-(set-face-foreground 'highlight nil) ;???
-(set-face-attribute 'region nil :background "#444499")
+(set-face-attribute 'hl-line nil :underline "#ff00ff") ; underline with magenta color
+(set-cursor-color "#ffff00")                           ; cursor color
+
+(set-face-attribute 'region nil :background "#2222ff") ; selection color
+(set-face-attribute 'region nil :background "#9922aa") ; selection color
+
 
 ;;------------------------------------------------------------
 ;; Pretty icons

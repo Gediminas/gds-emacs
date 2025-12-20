@@ -31,22 +31,25 @@
 ;;------------------------------------------------------------
 ;; Visual Focus
 
-(use-package dimmer
-  :custom
-  (dimmer-fraction -0.08)
-  ;(dimmer-adjustment-mode :both)
-  (dimmer-adjustment-mode :background)
-  ;(dimmer-use-colorspace :rgb)
-  (dimmer-use-colorspace :cielab)  ; Better color blending ???
-  (dimmer-buffer-exclusion-regexps '("^ \\*Minibuf-[0-9]+\\*$"
-                                     "^ \\*Echo Area"))
-  :config
-  ;; Don't dim:
-  (dimmer-configure-which-key)
-  (dimmer-configure-helm)
-  (dimmer-configure-org)
-  (dimmer-mode t))
+; (use-package dimmer
+;   :custom
+;   (dimmer-fraction -0.08)
+;   ;(dimmer-adjustment-mode :both)
+;   (dimmer-adjustment-mode :background)
+;   ;(dimmer-use-colorspace :rgb)
+;   (dimmer-use-colorspace :cielab)  ; Better color blending ???
+;   (dimmer-buffer-exclusion-regexps '("^ \\*Minibuf-[0-9]+\\*$"
+;                                      "^ \\*Echo Area"))
+;   :config
+;   ;; Don't dim:
+;   (dimmer-configure-which-key)
+;   (dimmer-configure-helm)
+;   (dimmer-configure-org)
+;   (dimmer-mode t))
 
+(use-package golden-ratio
+  :config
+  (golden-ratio-mode))
 
 ;;------------------------------------------------------------
 ;; Scratch info
