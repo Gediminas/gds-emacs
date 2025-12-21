@@ -104,6 +104,16 @@
 (add-hook 'ibuffer-hook #'my-tabspaces-ibuffer-group)
 
 
+;------------------------------------------------------------
+;; Tab-Bar
+
+(use-package vim-tab-bar
+  :ensure t
+  :commands vim-tab-bar-mode
+  :config (setq vim-tab-bar-show-groups t)
+  :hook (after-init . vim-tab-bar-mode))
+
+
 ;;------------------------------------------------------------
 ;; Activities
 

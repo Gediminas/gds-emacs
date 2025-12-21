@@ -32,26 +32,16 @@
 ;;------------------------------------------------------------
 ;; Colors
 
-; ; (set-face-background 'hl-line "#3e4446")
-; (set-face-background 'hl-line "#503050")               ; current line color
+(set-cursor-color "#ffff00")                ; cursor color
+
+(set-face-attribute 'hl-line nil            ; current / highlight line style
+  :background "#503050" 
+  :box '(:line-width -1 :color "#aa55aa")
+  :extend t)
+; (set-face-background 'hl-line "#503050")
 ; (set-face-foreground 'hl-line nil)
-; (set-cursor-color "#ffff00")                           ; cursor color
 
-; ; (set-face-foreground 'highlight nil) ;???
-
-; (set-face-attribute 'region nil :background "#444477") ; selection color
-
-
-;;------------------------------------------------------------
-;; Colors
-
-(set-face-background 'hl-line "#503050")               ; current line color
-(set-face-foreground 'hl-line nil)
-(set-face-attribute 'hl-line nil :underline "#ff00ff") ; underline with magenta color
-(set-cursor-color "#ffff00")                           ; cursor color
-
-(set-face-attribute 'region nil :background "#2222ff") ; selection color
-(set-face-attribute 'region nil :background "#9922aa") ; selection color
+(set-face-attribute 'region nil :background "#0000ff") ; Text selection color
 
 
 ;;------------------------------------------------------------
@@ -92,17 +82,8 @@
   (global-display-fill-column-indicator-mode 1))
 
 
-;------------------------------------------------------------
-;; Tab-Bar
-
-(use-package vim-tab-bar
-  :ensure t
-  :commands vim-tab-bar-mode
-  :config (setq vim-tab-bar-show-groups t)
-  :hook (after-init . vim-tab-bar-mode))
 
 
-;;------------------------------------------------------------
 ;; Customizations
 
 ; (activities-tabs ((t nil)))
