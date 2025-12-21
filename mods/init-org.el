@@ -1,5 +1,28 @@
 ;;; init-org.el --- Org-mode configuration -*- lexical-binding: t; -*-
 
+; Linux Setup:
+; 
+; https://github.com/alphapapa/org-protocol-capture-html#org-protocol-instructions
+; 
+; ❱ hx ~/.local/share/applications/org-protocol.desktop
+; 
+; [Desktop Entry]
+; Name=org-protocol
+; Comment=Intercept calls from emacsclient to trigger custom actions
+; Categories=Other;
+; Keywords=org-protocol;
+; Icon=emacs
+; Type=Application
+; Exec=emacsclient -- %u
+; Terminal=false
+; StartupWMClass=Emacs
+; MimeType=x-scheme-handler/org-protocol;
+; 
+; ❱ update-desktop-database ~/.local/share/applications/
+;
+; ???:
+; firefox => about:config => network.protocol-handler.expose.org-protocol => true
+
 (use-package org
   :mode ("\\.org\\'" . org-mode)
   
@@ -8,21 +31,69 @@
   (org-default-notes-file (expand-file-name "inbox.org" org-directory))
   (org-agenda-files (list org-directory))
   (org-hide-leading-stars t)
-  (org-return-follows-link t); Enter key opens links
-  (org-startup-indented t); Pretty indentation
-  (org-startup-folded 'content); Start folded, outline view
+  (org-return-follows-link t)
+  (org-startup-indented t)
+  (org-startup-folded 'content)
   (org-log-done 'time)
 
-  (org-capture-templates
-   '(("j" "Work-Log" entry (file+datetree "~/org/work-log.org")              "* %?" :empty-lines 0)
-     ("n" "Note"     entry (file+headline "~/org/notes.org" "Random Notes") "** %?" :empty-lines 0)))
+  (org-capture-templates '(
+     ("j" "Work-Log" entry (file+datetree "~/org/work-log.org")     
+      "* %?" :empty-lines 0)
+     
+     ("n" "Note" entry (file+headline "~/org/notes.org" "Rand") 
+      "** %?" :empty-lines 0)
+
+     ;; Web capture templates with immediate-finish
+     ("p" "web-tsel" entry (file+headline "~/org/inbox.org" "Web")  
+      "* %:description\nSource: %U, %:link\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE"
+      :immediate-finish t :empty-lines 1)
+     
+     ("L" "web-link" entry (file+headline "~/org/inbox.org" "Web")  
+      "* [[%:link][%:description]]\nCaptured On: %U"
+      :immediate-finish t :empty-lines 1)
+
+     ("t" "Todo" entry (file+headline "" "Tasks")        
+      "* TODO %?\n%U\n%a\n" :prepend t)
+     
+     ("m" "Note-General" entry (file+headline "" "Notes")        
+      "* %? :NOTE:\n%U\n%a\n" :prepend t)
+  ))
   
   :hook
-  (org-mode . org-indent-mode)  ; Make the indentation look nicer
+  (org-mode . org-indent-mode)
   
   :bind
   (("C-c a" . org-agenda)
    ("C-c c" . org-capture)
-   ("C-c l" . org-store-link)))
+   ("C-c l" . org-store-link))
+  
+  :init
+  (require 'org-protocol))
+
+;; Auto-finalize with custom message that overrides default
+(with-eval-after-load 'org-capture
+  (defun my/org-capture-finalize-immediate ()
+    "Automatically finalize capture if :immediate-finish is set with custom message."
+    (when (and (org-capture-get :immediate-finish)
+               (org-capture-get :key))
+      (let* ((template-key (org-capture-get :key))
+             (link (ignore-errors (plist-get org-store-link-plist :link)))
+             (description (ignore-errors (plist-get org-store-link-plist :description)))
+             (custom-message
+              (cond
+               ((string= template-key "L")
+                (format "✓ Captured link: %s / %s" 
+                        (or description "No title") 
+                        (or link "No link")))
+               ((string= template-key "p")
+                (format "✓ Captured text: %s / %s" 
+                        (or description "No title") 
+                        (or link "No link")))
+               (t "✓ Capture completed"))))
+        (org-capture-finalize)
+        ;; Override the default message after a tiny delay
+        (run-at-time 0.1 nil (lambda () (message "%s" custom-message))))))
+      
+  (add-hook 'org-capture-mode-hook 'my/org-capture-finalize-immediate))
 
 (provide 'init-org)

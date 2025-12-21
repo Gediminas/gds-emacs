@@ -57,6 +57,7 @@
 (require 'init-training)
 (require 'init-experiments)
 
+(server-start)
 
 ; (use-package emacs
 ;   :init

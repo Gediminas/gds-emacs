@@ -40,6 +40,27 @@
   :defer t)
 
 
+(use-package org-noter :defer (org-noter))
+
+
+
+; ;; Enhance templates for protocol (auto-grab URL/title/selection)
+; (add-to-list 'org-capture-templates
+;              '("p" "Protocol Clip" entry (file+headline "" "Web Captures")
+;                "* %^{Title}\nSource: [[%:link][%:description]]\nCaptured: %U\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE\n%?"
+;                :prepend t :empty-lines 1))
+
+; (use-package org-protocol)
+
+
+
+(use-package s)
+(use-package elfeed-score)
+(use-package org-web-tools)
+
+; (use-package org-protocol-capture-html)
+; (require 'org-protocol-capture-html)
+ 
 
 ;;------------------------------------------------------------
 (provide 'init-experiments)
