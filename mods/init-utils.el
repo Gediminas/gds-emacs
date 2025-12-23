@@ -19,12 +19,12 @@
 ;; Window Management
 
 (use-package ace-window
-  :bind ("M-o" . ace-window)
+  :bind ("M-O" . ace-window)
   ;:bind ("M-O" . ace-delete-window)
   :custom
   (aw-scope 'frame)                        ; Limit to curr frame
   (aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))  ; Use: a s d f g h j k l
-  ; (aw-dispatch-always nil)
+  (aw-dispatch-always t)
   )
 
 

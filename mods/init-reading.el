@@ -86,6 +86,17 @@
   :bind
   ("C-c o r" . elfeed))
 
+(use-package elfeed-score
+  :after elfeed
+  :config
+  (elfeed-score-enable)
+  (define-key elfeed-search-mode-map "=" elfeed-score-map)
+
+  ;; Display/sort for priority (high eBPF/security first in learning flow)
+  (setq elfeed-search-print-entry-function #'elfeed-score-print-entry)
+  ; (setq elfeed-search-sort-function #'elfeed-score-scoring-sort)
+)
+
 
 ;;------------------------------------------------------------
 (provide 'init-reading)

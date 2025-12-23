@@ -24,12 +24,13 @@
 ; firefox => about:config => network.protocol-handler.expose.org-protocol => true
 
 (use-package org
-  :mode ("\\.org\\'" . org-mode)
+  ; :mode ("\\.org\\'" . org-mode)
   
   :custom
   (org-directory "~/org")
   (org-default-notes-file (expand-file-name "inbox.org" org-directory))
-  (org-agenda-files (list org-directory))
+  (org-agenda-files (directory-files-recursively "~/org" "\\.org\\'"))
+  ; (org-agenda-files (list org-directory))
   (org-hide-leading-stars t)
   (org-return-follows-link t)
   (org-startup-indented t)
@@ -37,26 +38,40 @@
   (org-log-done 'time)
 
   (org-capture-templates '(
-     ("j" "Work-Log" entry (file+datetree "~/org/work-log.org")     
-      "* %?" :empty-lines 0)
-     
-     ("n" "Note" entry (file+headline "~/org/notes.org" "Rand") 
-      "** %?" :empty-lines 0)
+
+    ("b" "Book Quote" entry (file+headline "" "Books")
+      "* %^{Title} :book:\nQuote: #+BEGIN_QUOTE\n%?\n#+END_QUOTE\nSource: %^{Book} p.%^{Page}\n%U" :prepend t)
+     ; ("t" "Todo" entry (file+headline "" "Tasks")        
+     ;  "* TODO %?\n%U\n%a\n" :prepend t)
+    ("t" "todo" entry (file "~/org/inbox.org")
+      "* TODO %?\n%U\n%a\n" :clock-in t :clock-resume t :prepend t)
+
+
+    ; ("n" "Note" entry (file+headline "~/org/notes.org" "Rand") 
+    ;   "** %?" :empty-lines 0)
+    ("n" "note" entry (file "~/org/inbox.org")
+      "* %? :NOTE:\n%U\n%a\n" :clock-in t :clock-resume t :prepend t)
+
+    ("r" "RSS/Elfeed Clip" entry (file+headline "~/org/inbox.org" "Feeds")
+     "* %^{Title} :rss:\nSource: [[%l][Link]]\nCaptured: %U\n#+BEGIN_QUOTE\n%?\n#+END_QUOTE" :prepend t)
+
+    ; ("m" "Note-General" entry (file+headline "" "Notes")        
+    ;   "* %? :NOTE:\n%U\n%a\n" :prepend t)
+
+    ; ("j" "Work-Log" entry (file+datetree "~/org/work-log.org")     
+    ;   "* %?" :empty-lines 0)
+    ("j" "Journal" entry (file+datetree "~/org/diary.org")
+      "* %?\n%U\n" :clock-in t :clock-resume t)     
 
      ;; Web capture templates with immediate-finish
-     ("p" "web-tsel" entry (file+headline "~/org/inbox.org" "Web")  
+    ("p" "(web-tsel)" entry (file+headline "~/org/inbox.org" "Web")  
       "* %:description\nSource: %U, %:link\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE"
       :immediate-finish t :empty-lines 1)
      
-     ("L" "web-link" entry (file+headline "~/org/inbox.org" "Web")  
+    ("L" "(web-link)" entry (file+headline "~/org/inbox.org" "Web")  
       "* [[%:link][%:description]]\nCaptured On: %U"
       :immediate-finish t :empty-lines 1)
 
-     ("t" "Todo" entry (file+headline "" "Tasks")        
-      "* TODO %?\n%U\n%a\n" :prepend t)
-     
-     ("m" "Note-General" entry (file+headline "" "Notes")        
-      "* %? :NOTE:\n%U\n%a\n" :prepend t)
   ))
   
   :hook
