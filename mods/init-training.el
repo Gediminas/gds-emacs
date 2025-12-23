@@ -3,10 +3,10 @@
 ;;------------------------------------------------------------
 ;; Always open file in read-only mode, except for org-capture
 
-; (add-hook 'find-file-hook (lambda () (setq buffer-read-only t)))
-(add-hook 'find-file-hook (lambda ()
-  (unless (and (boundp 'org-capture-plist) org-capture-plist)
-    (setq buffer-read-only t))))
+; ; (add-hook 'find-file-hook (lambda () (setq buffer-read-only t)))
+; (add-hook 'find-file-hook (lambda ()
+;   (unless (and (boundp 'org-capture-plist) org-capture-plist)
+;     (setq buffer-read-only t))))
 
 
 ;;------------------------------------------------------------

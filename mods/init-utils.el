@@ -47,9 +47,9 @@
 ;   (dimmer-configure-org)
 ;   (dimmer-mode t))
 
-(use-package golden-ratio
-  :config
-  (golden-ratio-mode))
+; (use-package golden-ratio
+;   :config
+;   (golden-ratio-mode))
 
 ;;------------------------------------------------------------
 ;; Scratch info

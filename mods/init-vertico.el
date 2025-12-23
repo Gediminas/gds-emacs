@@ -34,6 +34,15 @@
   (completion-pcm-leading-wildcard t)) ;; Emacs 31: partial-completion behaves like substring
 
 
+; totry maybe: https://github.com/larstvei/dot-emacs
+; ;; Emacs completion style that matches multiple regexps in any order
+; (use-package orderless
+;   :config
+;   (setq completion-styles '(orderless basic partial-completion)
+;         completion-category-overrides '((file (styles basic partial-completion)))
+;         orderless-component-separator "[ |]"))
+
+
 ;; Rich annotations in minibuffer
 (use-package marginalia
   :init
@@ -58,6 +67,8 @@
          ("M-s l"   . consult-line)                  ;; Alternative: rebind C-s to consult-line
          ("M-s g"   . consult-grep)
          ("M-s r"   . consult-ripgrep))
+  ; totry?: https://github.com/larstvei/dot-emacs
+  ; : config (setq consult-preview-key (list :debounce 0.1 'any))
 )
 
 ;;------------------------------------------------------------
