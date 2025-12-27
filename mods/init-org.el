@@ -58,10 +58,8 @@
     ; ("m" "Note-General" entry (file+headline "" "Notes")        
     ;   "* %? :NOTE:\n%U\n%a\n" :prepend t)
 
-    ; ("j" "Work-Log" entry (file+datetree "~/org/work-log.org")     
-    ;   "* %?" :empty-lines 0)
-    ("j" "Journal" entry (file+datetree "~/org/diary.org")
-      "* %?\n%U\n" :clock-in t :clock-resume t)     
+    ("j" "Journal" entry (file+datetree "~/org/journal.org")     
+      "* %?" :empty-lines 0)
 
      ;; Web capture templates with immediate-finish
     ("p" "(web-tsel)" entry (file+headline "~/org/inbox.org" "Web")  

@@ -1,0 +1,8 @@
+;;; Elfeed score file                                     -*- lisp -*-
+(("title"
+  (:text "bpf"      :value 100 :type s)
+  (:text "rust"     :value 100 :type s)
+  (:text "kernel"   :value  50 :type s)
+  (:text "security" :value  50 :type s)
+  (:text "linux"    :value  30 :type s)
+ ))

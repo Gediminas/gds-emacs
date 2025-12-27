@@ -71,8 +71,13 @@
 (use-package org-noter
   :after (pdf-tools nov)
   :config
-  (setq org-noter-notes-search-path (list org-directory))  ; Notes in org dir
-  (setq org-noter-auto-save-last-location t))  ; Sync position
+  (setq org-noter-notes-search-path (list "~/org/topics/"))
+  (setq org-noter-default-notes-file-names '("def.org" "sys.org" "inv.org" "fit.org" "psy.org"))
+  ; (setq org-noter-notes-search-path (list org-directory))  ; Notes in org dir
+  (setq org-noter-always-create-frame t)
+  (setq org-noter-doc-split-fraction '(0.7 . 0.7)) ; Make doc window larger, notes smaller
+  (setq org-noter-insert-note-no-question t)       ; No question for title
+  (setq org-noter-auto-save-last-location t))      ; Sync position
 
   
 ; ; (use-package org-noter
@@ -94,8 +99,64 @@
 ; ;       (require 'org-noter-pdftools))))
 
 
-(use-package org-node)
+;;------------------------------------------------------------
+;; Refile
 
+(use-package emacs
+  ; gemini
+  :config
+  ;; Set refile targets
+  (setq org-refile-targets '((org-agenda-files :maxlevel . 3)))
+
+  ;; Show full paths for refile targets
+  (setq org-refile-use-outline-path 'file)
+
+  ;; Complete in steps (file then heading)
+  (setq org-outline-path-complete-in-steps nil)
+
+  ;; Allow creating new parent nodes
+  (setq org-refile-allow-creating-parent-nodes 'confirm)
+)
+
+
+
+;;------------------------------------------------------------
+;; Org-Node (Light Zettelkasten)
+
+(use-package org-mem
+  :defer
+  :config
+  ;; At least one of these two is needed
+  (setq org-mem-do-sync-with-org-id t)
+  (setq org-mem-watch-dirs (list "~/org"))
+  (org-mem-updater-mode))
+
+(use-package org-node
+  :init
+  ;; Optional key bindings
+  ;; Tip: Try changing these to just "M-o"!
+  ;(keymap-global-set "M-o n" org-node-global-prefix-map)
+  ;(with-eval-after-load 'org
+  ;  (keymap-set org-mode-map "M-o n" org-node-org-prefix-map))
+  :config
+  (org-node-cache-mode))
+
+  
+; (use-package org-node
+;   :after org
+;   :config
+;   (setq org-node-id-dir org-directory)  ; Indexes ~/org and subdirs (topics/projects)
+;   (org-node-cache-mode 1)  ; Fast caching—auto-updates on save
+;   ;; Optional: Filter out non-learning nodes (e.g., tasks/projects from completions)
+;   (setq org-node-filter-fn (lambda (node) (not (member "project" (org-node-tags node)))))
+;   ; :bind
+;   ; ("C-c o n" . org-node-find)  ; Fuzzy find/create node
+;   ; ("C-c o i" . org-node-insert-link)  ; Insert link to node
+;   ; ("C-c o b" . org-node-backlink-dwim)  ; Show backlinks
+; )
+
+
+  
 
 ; ;; Enhance templates for protocol (auto-grab URL/title/selection)
 ; (add-to-list 'org-capture-templates
