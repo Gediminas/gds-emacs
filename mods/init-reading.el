@@ -95,8 +95,9 @@
   ;; Display/sort for priority (high eBPF/security first in learning flow)
   (setq elfeed-search-print-entry-function #'elfeed-score-print-entry)
   ; (setq elfeed-search-sort-function #'elfeed-score-scoring-sort)
-)
+  )
 
+(use-package elfeed-summary)
 
 ;;------------------------------------------------------------
 (provide 'init-reading)
