@@ -63,6 +63,21 @@
 " (emacs-init-time "%.2f") gcs-done (length package-activated-list))))
 
 
+
+;;------------------------------------------------------------
+;; Truncate or not truncate
+
+
+; https://stackoverflow.com/questions/10235305/in-emacs-can-i-have-one-set-of-line-wrap-settings-for-code-and-one-for-text
+(add-hook 'text-mode-hook '(lambda ()
+    (setq truncate-lines nil
+          word-wrap t)))
+
+(add-hook 'prog-mode-hook '(lambda ()
+    (setq truncate-lines t
+          word-wrap nil)))
+
+
 ;;------------------------------------------------------------
 ;; Restart Emacs
 

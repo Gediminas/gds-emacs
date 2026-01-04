@@ -123,9 +123,13 @@
 ;;------------------------------------------------------------
 ;; LSP
 
-(use-package consult-eglot
-  ;; :custom
-  )
+(use-package eglot
+  :custom
+  (eglot-inlay-hints-mode nil)
+  :bind
+  (("C-c t h" . eglot-inlay-hints-mode)))
+
+(use-package consult-eglot)
 
 (use-package emacs
   :hook (rust-ts-mode . eglot-ensure)
@@ -160,7 +164,10 @@
 
 ; Rust-Build
 (use-package cargo
-  :hook (rust-ts-mode . cargo-minor-mode) )
+  :hook (rust-ts-mode . cargo-minor-mode)
+  :config
+  (setq compilation-scroll-output t)                    ; Autoscroll while compiling
+  (setq cargo-process--command-flags "--color never"))  ; Fix output on NixOS (https://github.com/kwrooijen/cargo.el/pull/46#issuecomment-390115500)
 
 ;; (use-package ron-mode)
 ;; (use-package cargo)
