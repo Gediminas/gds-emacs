@@ -16,7 +16,7 @@
   (tabspaces-exclude-buffers '("*Messages*" "*Compile-Log*"))  ; Additional buffers to exclude
   (tabspaces-keymap-prefix "C-x C-z")  ; Default: C-c TAB
   (tabspaces-initialize-project-with-todo t)
-  (tabspaces-todo-file-name "project-todo.org")
+  (tabspaces-todo-file-name "project.org")
    
   ; (tabspaces-fully-resolve-paths nil)
 

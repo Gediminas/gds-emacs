@@ -35,6 +35,7 @@
   (org-return-follows-link t)
   (org-startup-indented t)
   (org-startup-folded 'content)
+  ;; (org-todo-keywords '((sequence "TODO(t)" "DOING" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)")))
   (org-log-done 'time)
 
   (org-capture-templates '(

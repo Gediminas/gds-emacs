@@ -1,5 +1,8 @@
+# Disable ALL
 *
 .*
+
+# Except config elisp files
 !/mods/
 !/mods/init-*.el
-!/*.el
+!/*init.el

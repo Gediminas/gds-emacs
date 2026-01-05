@@ -20,6 +20,21 @@
 (push '(tool-bar-lines . 0) default-frame-alist)
 (push '(vertical-scroll-bars) default-frame-alist)
 
+;; Split out some not-git files
+(setq user-emacs-directory            "~/.config/emacs/")
+(setq bookmark-default-file           "~/.local/share/emacs/bookmarks")
+(setq elfeed-db-directory             "~/.local/share/emacs/elfeed")
+(setq elfeed-score-rule-stats-file    "~/.local/share/emacs/elfeed.stats")
+;(setq elfeed-score-serde-score-file  "~/.local/share/emacs/elfeed.score") ; FIXME: keep in git for now
+(setq eshell-history-file-name        "~/.local/share/emacs/eshell/history")
+(setq nov-save-place-file             "~/.local/share/emacs/nov-places")
+(setq org-id-locations-file           "~/.local/share/emacs/org-id-locations")
+(setq project-list-file               "~/.local/share/emacs/projects")
+(setq recentf-save-file               "~/.local/share/emacs/recentf")
+(setq savehist-file                   "~/.local/share/emacs/history")
+(setq tramp-histfile-override         "~/.local/share/emacs/tramp_history")
+(setq tramp-persistency-file-name     "~/.local/share/emacs/tramp")
+
 ;; UI elements
 (scroll-bar-mode -1)              ; Hide scrollbars (must be before tool-bar-mode)
 (tool-bar-mode -1)                ; Hide toolbar
