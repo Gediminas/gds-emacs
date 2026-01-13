@@ -42,8 +42,12 @@
 ;; Show last command
 
 (use-package keycast
+  :after vim-tab-bar
   :config
-  (keycast-tab-bar-mode))
+  (keycast-tab-bar-mode)
+  ;; Reapply after vim-tab-bar sets up
+  (add-hook 'vim-tab-bar-mode-hook #'keycast-tab-bar-mode))  ;; vim-tab-bar hides it
+
 
 ;;------------------------------------------------------------
 ;; Auto-update command history (lossage) buffer

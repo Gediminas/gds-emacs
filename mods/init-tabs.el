@@ -7,23 +7,26 @@
   :hook
   (after-init . tabspaces-mode)
   :custom
-  (tabspaces-default-tab "Default")
-  (tabspaces-remove-to-default nil) ; Kill buffers on kill&close
-  (tabspaces-use-filtered-buffers-as-default t) ; remaps switch-to-buffer to tabspaces-switch-to-buffer.
-  ; (tabspaces-session-project-session-store "~/.config/emacs/persist") ;; Store all project sessions in a specific directory
-  ; (tabspaces-session-file "~/.config/emacs/persist/tabsession.el") ;; Store all project sessions in a specific directory
-  (tabspaces-include-buffers '("*scratch*"))
-  (tabspaces-exclude-buffers '("*Messages*" "*Compile-Log*"))  ; Additional buffers to exclude
-  (tabspaces-keymap-prefix "C-x C-z")  ; Default: C-c TAB
-  (tabspaces-initialize-project-with-todo t)
-  (tabspaces-todo-file-name "project.org")
+  ;; (tabspaces-default-tab "Default")
+  ;; ;; (tabspaces-remove-to-default nil) ; Kill buffers on kill&close
+  ;; (tabspaces-remove-to-default t) ; Kill buffers on kill&close
+  ;; (tabspaces-use-filtered-buffers-as-default t) ; remaps switch-to-buffer to tabspaces-switch-to-buffer.
+  ;; ;; (tabspaces-use-filtered-buffers-as-default nil) ; temp.
+  ;; ; (tabspaces-session-project-session-store "~/.config/emacs/persist") ;; Store all project sessions in a specific directory
+  ;; ; (tabspaces-session-file "~/.config/emacs/persist/tabsession.el") ;; Store all project sessions in a specific directory
+  ;; (tabspaces-include-buffers '("*scratch*"))
+  ;; (tabspaces-exclude-buffers '("*Messages*" "*Compile-Log*"))  ; Additional buffers to exclude
+  ;; (tabspaces-keymap-prefix "C-x C-z")  ; Default: C-c TAB
+  (tabspaces-keymap-prefix "C-c p")  ; Default: C-c TAB
+  ;; (tabspaces-initialize-project-with-todo t)
+  ;; (tabspaces-todo-file-name "project.org")
    
   ; (tabspaces-fully-resolve-paths nil)
 
   (tabspaces-session t) ; Save sessions automatically
   (tabspaces-session-auto-restore t)    ; Auto-restore sessions on startup and when opening projects
 
-  ; (tab-bar-new-tab-choice "*scratch*")
+  (tab-bar-new-tab-choice "*scratch*")
   ; (tab-bar-new-tab-choice "*Messages*")
 
   ; :config
@@ -54,7 +57,9 @@
 
 
     (:map tabspaces-command-map
-     ("C-z" . tabspaces-open-or-create-project-and-workspace))
+          ;; ("C-z" . tabspaces-open-or-create-project-and-workspace)
+          ("p" . tabspaces-open-or-create-project-and-workspace)
+          )
     
 
     ; ;; For pdf-view-mode
@@ -91,24 +96,24 @@
 (add-to-list 'consult-buffer-sources 'consult--source-workspace))
 
 
-(defun my-tabspaces-ibuffer-group ()
-  "Group ibuffer entries by tabspace."
-  (setq ibuffer-filter-groups
-        (mapcar (lambda (tab)`
-                  (let ((tab-index (tab-bar--tab-index-by-name tab)))
-                    (cons tab
-                          `((predicate . (member (buffer-name)
-                                                 (mapcar #'buffer-name
-                                                         (tabspaces--buffer-list nil ,tab-index))))))))
-                (tabspaces--list-tabspaces))))
-(add-hook 'ibuffer-hook #'my-tabspaces-ibuffer-group)
+;; (defun my-tabspaces-ibuffer-group ()
+;;   "Group ibuffer entries by tabspace."
+;;   (setq ibuffer-filter-groups
+;;         (mapcar (lambda (tab)`
+;;                   (let ((tab-index (tab-bar--tab-index-by-name tab)))
+;;                     (cons tab
+;;                           `((predicate . (member (buffer-name)
+;;                                                  (mapcar #'buffer-name
+;;                                                          (tabspaces--buffer-list nil ,tab-index))))))))
+;;                 (tabspaces--list-tabspaces))))
+;; (add-hook 'ibuffer-hook #'my-tabspaces-ibuffer-group)
 
 
 ;------------------------------------------------------------
 ;; Tab-Bar
 
 (use-package vim-tab-bar
-  :ensure t
+  ;:ensure t
   :commands vim-tab-bar-mode
   :config (setq vim-tab-bar-show-groups t)
   :hook (after-init . vim-tab-bar-mode))

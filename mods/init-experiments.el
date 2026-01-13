@@ -6,6 +6,8 @@
 (setq large-file-warning-threshold 100000000) ; 100 MB
 
 (global-set-key (kbd "C-;") 'mode-line-other-buffer)  ; Toggle last buffer
+(global-set-key (kbd "M-o") 'other-window)
+;; - mapping C-; to other-window (cycling through windows)
 
 ;; https://emacs.stackexchange.com/questions/728/how-do-i-switch-buffers-quickly
 ;; - mapping C-; to other-window (cycling through windows)
@@ -205,6 +207,41 @@
 ;   (setq org-ref-get-pdf-filename-function 'org-ref-get-mendeley-filename))
 
 
-    
+(setq org-clock-mode-line-total 'today)
+
+
+
+
+;; Jump immediately when only one definition exists
+(setq xref-show-definitions-function
+      #'xref-show-definitions-completing-read)
+
+
+
+
+
+
+
+(defun my/project-switch-to-buffer (&optional all-buffers)
+  (interactive "P")
+  (if (or (not (project-current)) all-buffers)
+      (call-interactively #'switch-to-buffer)
+      (call-interactively #'project-switch-to-buffer)))
+
+(keymap-global-set "C-c b" #'my/project-switch-to-buffer)
+
+
+; switch-to-buffer
+; project-switch-to-buffer
+; tabspaces-switch-to-buffer
+; consult-buffer
+; consult-project-buffer
+; my/project-switch-to-buffe
+
+
+
+
+
+
 ;;------------------------------------------------------------
 (provide 'init-experiments)

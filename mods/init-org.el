@@ -35,9 +35,33 @@
   (org-return-follows-link t)
   (org-startup-indented t)
   (org-startup-folded 'content)
-  ;; (org-todo-keywords '((sequence "TODO(t)" "DOING" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)")))
   (org-log-done 'time)
 
+  (org-todo-keywords
+   '((sequence "TODO(t)" "PROG(p)" "WAIT(w)" "|" "DONE(d)" "KILL(k)")))
+
+  (org-todo-keyword-faces
+   '(("TODO" . (:foreground "red" :weight bold))
+     ("PROG" . (:foreground "orange" :weight bold))
+     ("WAIT" . (:foreground "cyan" :weight bold))
+     ("DONE" . (:foreground "green" :weight bold))
+     ("KILL" . (:foreground "dim gray" :weight bold))))
+
+  
+  ;; Cleaner agenda view
+  (org-agenda-prefix-format
+   '((agenda . " %i %-12:c%?-12t% s")
+     (todo   . " %-20:c")  ;; 20 chars for filename
+     (tags   . " %-20:c")
+     (search . " %-20:c")))
+
+  ;; Compact TODO keywords to 4-5 chars
+  (org-agenda-todo-keyword-format "%-5s")
+
+  ;; Add blank line between different categories
+  (org-agenda-block-separator ?─)  ;; visual separator
+
+  
   (org-capture-templates '(
 
     ("b" "Book Quote" entry (file+headline "" "Books")

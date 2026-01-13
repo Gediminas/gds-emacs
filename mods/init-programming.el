@@ -80,7 +80,7 @@
 (use-package cape
   ;; Bind prefix keymap providing all Cape commands under a mnemonic key.
   ;; Press C-c p ? to for help.
-  :bind ("C-c p" . cape-prefix-map) ;; Alternative key: M-<tab>, M-p, M-+
+  :bind ("C-c z" . cape-prefix-map) ;; Alternative key: M-<tab>, M-p, M-+
   ;; Alternatively bind Cape commands individually.
   ;; :bind (("C-c p d" . cape-dabbrev)
   ;;        ("C-c p h" . cape-history)
@@ -181,6 +181,12 @@
 (use-package markdown-mode
   :config
   (setq markdown-fontify-code-blocks-natively t))
+
+;;------------------------------------------------------------
+;; Others
+
+(use-package just-mode
+  :defer t)
 
 
 ;;------------------------------------------------------------

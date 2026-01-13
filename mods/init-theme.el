@@ -3,8 +3,14 @@
 ;;------------------------------------------------------------
 ;; Theme & Appearance
 
-;; (set-frame-font "Hack:size=15:weight=regular:antialias=true:hinting=true:hintstyle=hintfull" nil t)
-(add-to-list 'default-frame-alist '(font . "Hack-12"))
+;; (set-frame-font "Hack:size=12:weight=regular:antialias=true:hinting=true:hintstyle=hintfull" nil t)
+;; (add-to-list 'default-frame-alist '(font . "Hack-16"))
+
+;; (set-face-attribute 'default nil :font "Hack:size=12:weight=bold")
+(set-face-attribute 'default nil :font "Hack:size=15:weight=regular")
+
+
+(setq-default line-spacing 0)
 
 (use-package doom-themes
   :config
@@ -98,6 +104,16 @@
 ;                       :foreground "#006699"
 ;                       )
 
+
+;; Set frame divider widths
+(modify-frame-parameters (selected-frame) 
+                         '((right-divider-width . 2 ) 
+                           (bottom-divider-width . 2)))
+
+;; Correct way to set face attributes
+(set-face-attribute 'vertical-border nil 
+                    :background "blue" 
+                    :foreground "dark magenta")
 
 ;;------------------------------------------------------------
 (provide 'init-theme)
