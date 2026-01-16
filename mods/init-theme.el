@@ -7,7 +7,7 @@
 ;; (add-to-list 'default-frame-alist '(font . "Hack-16"))
 
 ;; (set-face-attribute 'default nil :font "Hack:size=12:weight=bold")
-(set-face-attribute 'default nil :font "Hack:size=15:weight=regular")
+(set-face-attribute 'default nil :font "Hack:size=12:weight=regular")
 
 
 (setq-default line-spacing 0)
