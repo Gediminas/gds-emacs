@@ -6,9 +6,9 @@
 ;; (set-frame-font "Hack:size=12:weight=regular:antialias=true:hinting=true:hintstyle=hintfull" nil t)
 ;; (add-to-list 'default-frame-alist '(font . "Hack-16"))
 
-;; (set-face-attribute 'default nil :font "Hack:size=12:weight=bold")
-(set-face-attribute 'default nil :font "Hack:size=12:weight=regular")
-
+; (set-face-attribute 'default nil :font "Hack:size=13:weight=regular")
+; (set-face-attribute 'default nil :font "HackNerdFont:size=13:weight=regular" :height 130)
+(set-face-attribute 'default nil :font "JetBrainsMono:size=12:weight=regular" :height 120)
 
 (setq-default line-spacing 0)
 
